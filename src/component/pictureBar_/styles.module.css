@@ -1,0 +1,25 @@
+.pictureBar {
+  width: 20%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  background-color: red;
+}
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: whitesmoke;
+}
+.imageContainer img {
+  display: flex;
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  background-color: white;
+}
