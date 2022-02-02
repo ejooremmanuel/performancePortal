@@ -1,0 +1,28 @@
+.contanier {
+  height: 100vh;
+  background-color: rgb(240, 236, 247);
+}
+
+.dashboard_contanier {
+  display: flex;
+  height: auto;
+  background-color: purple;
+  border-radius: 5px;
+  margin-top: 2rem;
+}
+
+.dashboard_cards {
+  width: 20%;
+  margin-left: 4%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  height: 50%;
+  padding: 1.5rem;
+  background-color: whitesmoke;
+  border-radius: 10px;
+}
+
+.cards_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}

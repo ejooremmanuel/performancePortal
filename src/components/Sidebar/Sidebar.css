@@ -1,0 +1,102 @@
+.sidebar {
+  width: 15%;
+  float: left;
+  height: 100vh;
+  background-color: whitesmoke;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 15px;
+}
+
+.sidebar_container {
+  margin-top: 40px;
+  margin-left: 30px;
+}
+
+.sidebar_title {
+  padding-top: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(83, 83, 170);
+}
+
+.sidebar_container a {
+  text-decoration: none;
+}
+
+.sidebar_icons {
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
+.sidebarIcons {
+  font-size: 1.5rem;
+}
+
+.sidebar_icons ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.sidebar_icons ul li {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 4rem;
+}
+
+.sidebar_icons ul li a {
+  text-decoration: none;
+  color: black;
+  padding-bottom: 12rem;
+}
+
+.sidebar_icons ul li a svg {
+  margin-top: 7px;
+  margin-right: 2rem;
+  color: black;
+}
+
+.company_logo img {
+  height: 50px;
+}
+
+.company_logo h6 {
+  color: purple;
+}
+
+/* phone-only */
+
+@media (max-width: 599px) {
+  .sidebar_container {
+    width: 100%;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+  }
+
+  .sidebar_icons {
+    flex-direction: row;
+    margin-top: 50px;
+    margin-right: 0.6rem;
+    border-radius: 10px;
+  }
+  .sidebar_icons ul {
+    display: flex;
+    margin: 0px;
+    list-style: none;
+    font-size: 16px;
+  }
+
+  .sidebar_icons ul li {
+    width: 100%;
+    margin: 10px;
+    height: 4rem;
+  }
+
+  .sidebar_icons ul li p {
+    display: none;
+  }
+}
