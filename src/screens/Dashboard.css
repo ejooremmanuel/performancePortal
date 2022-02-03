@@ -1,5 +1,5 @@
 .contanier {
-  height: 100vh;
+  height: auto;
   background-color: rgb(240, 236, 247);
 }
 
@@ -22,7 +22,33 @@
   border-radius: 10px;
 }
 
+.card_icons {
+  font-size: 1.5rem;
+}
+
 .cards_title {
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.charts {
+  display: flex;
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.4s; /* Animation */
+}
+
+.charts:hover {
+  transform: scale(1.6);
+}
+
+.chart_span {
+  padding-right: 10px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.myteam_container {
+  display: flex;
 }

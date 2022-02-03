@@ -8,7 +8,7 @@
 }
 
 .sidebar_container {
-  margin-top: 40px;
+  margin-top: 30px;
   margin-left: 30px;
 }
 
@@ -37,6 +37,11 @@
   margin: 0;
   list-style: none;
   font-size: 14px;
+  transition: transform 0.4s; /* Animation */
+}
+
+.sidebar_icons ul:hover {
+  transform: scale(0.9);
 }
 
 .sidebar_icons ul li {
@@ -60,6 +65,10 @@
 
 .company_logo img {
   height: 50px;
+}
+
+.company_logo {
+  padding-bottom: 20px;
 }
 
 .company_logo h6 {

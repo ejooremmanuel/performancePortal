@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import staffPic from "../../assets/staffPic.png";
 import "./Header.css";
 
@@ -17,7 +18,9 @@ function Header({ title }) {
         </div>
         <div className="header_option">
           <div className="header_btn">
-            <button>Do you have any Suggetions?</button>
+            <Link to="/startappraisal">
+              <button>Do you have any Suggetions?</button>
+            </Link>
           </div>
           <div className="header_btn2">
             <button>Make a Complaint</button>

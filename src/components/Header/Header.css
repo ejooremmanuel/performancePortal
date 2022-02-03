@@ -37,6 +37,11 @@
   padding: 10px;
   border-radius: 15px;
   color: aliceblue;
+  transition: transform 0.4s; /* Animation */
+}
+
+.header_btn:hover {
+  transform: scale(0.9);
 }
 
 .header_btn2 {
@@ -44,4 +49,9 @@
   padding: 10px;
   border-radius: 15px;
   color: azure;
+  transition: transform 0.4s; /* Animation */
+}
+
+.header_btn2:hover {
+  transform: scale(1.1);
 }
