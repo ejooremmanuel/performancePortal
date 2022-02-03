@@ -12,8 +12,10 @@ const EmergencyInfo = () => {
     const [emergencyContactState,setEmergencyContactState] = useState("")
     const [emergencyContactAddress,setEmergencyContactAddress] = useState("")
     const [relationship,setRelationship] = useState("")
+    const submitHandler = () =>{
+
+    }
     
-    const user = "shola"
   return <div >
         <div> 
             <Header/>
@@ -22,33 +24,33 @@ const EmergencyInfo = () => {
                 <div className={styles.editContainer}>
                     <EditNavbar emergency={styles.remote} />
                     <div className={styles.formContainer}>
-                        <form>
+                        <form onSubmit={submitHandler}>
                         <div className={styles.inputContainer_}>
                       <label>Emergency Contact Name</label>
-                      <input type="text" value={emergencyContactName} />
+                      <input type="text" value={emergencyContactName} onChange={(e) => setEmergencyContactName(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
-                      <label>EmergencyContactEmail</label>
-                      <input type="text" value={emergencyContactEmail} />
+                      <label>Emergency Contact Email</label>
+                      <input type="text" value={emergencyContactEmail} onChange={(e) => setEmergencyContactEmail(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Emergency Contact Phone</label>
-                      <input type="text" value={emergencyContactPhone} />
+                      <input type="text" value={emergencyContactPhone} onChange={(e) => setEmergencyContactPhone(e.target.value)}/>
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Emergency Contact state</label>
-                      <input type="email" value={emergencyContactState} />
+                      <input type="email" value={emergencyContactState} onChange={(e) => setEmergencyContactState(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Relationship</label>
-                      <input type="text" value={relationship} />
+                      <input type="text" value={relationship} onChange={(e) => setRelationship(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Emergency Contact Address</label>
-                      <input type="textarea" value={emergencyContactAddress} />
+                      <textarea type="text" value={emergencyContactAddress} onChange={(e) => setEmergencyContactAddress(e.target.value)}/>
                     </div>
                         </form>
-                    <button className={styles.btn}>Save information</button><Link to="/edit/officailInfo"><div className={styles.btn}>Save information</div></Link>
+                        <button onClick={submitHandler} className={`${styles.btn} ${styles.lilac}`}>Save information</button> <Link to="/edit/officailInfo"> <div className={`${styles.btn} ${styles.purple}`}>Official Information</div></Link>
                     </div>
                 </div>
             </div>

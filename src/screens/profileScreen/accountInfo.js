@@ -11,9 +11,9 @@ const AccountInfo = () => {
     const [accountName ,setAccountName ] = useState("")
     const [bvn,setBvn] = useState("")
     const [nin,setNin] = useState("")
-    
-    
-    const user = "shola"
+    const submitHandler = () =>{
+      
+    }
   return <div >
         <div> 
             <Header/>
@@ -22,29 +22,37 @@ const AccountInfo = () => {
                 <div className={styles.editContainer}>
                     <EditNavbar account={styles.remote} />
                     <div className={styles.formContainer}>
-                        <form>
+                        <form onSubmit={submitHandler}>
                         <div className={styles.inputContainer_}>
                       <label>Bank</label>
-                      <input type="date" value={bank} />
+                      <select
+                        onChange={(e) => setBank(e.target.value)}
+                        value={bank}
+                      >
+                      <option>Select</option>
+                        <option value="firstBank">First Bank</option>
+                        <option value="Zenith">Zenith bank
+                        </option>
+                      </select>
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Account Number</label>
-                      <input type="text" value={accountNumber} />
+                      <input type="text" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Account Name </label>
-                      <input type="text" value={accountName } />
+                      <input type="text" value={accountName} onChange={(e) => setAccountName(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>BVN Number</label>
-                      <input type="email" value={bvn} />
+                      <input type="email" value={bvn} onChange={(e) => setBvn(e.target.value)}/>
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>NIN</label>
-                      <input type="textarea" value={nin} />
+                      <input type="textarea" value={nin}  onChange={(e) => setNin(e.target.value)}/>
                     </div>
                         </form>
-                    <button className={styles.btn}>Save information</button> <Link to="/edit/profileImage"><div className={styles.btn}>Save information</div></Link> 
+                        <button onClick={submitHandler} className={`${styles.btn} ${styles.lilac}`}>Save information</button> <Link to="/edit/profileImage"> <div className={`${styles.btn} ${styles.purple}`}>Photo Upload</div></Link> 
                     </div>
                 </div>
             </div>

@@ -12,8 +12,9 @@ const OfficialInfo = () => {
     const [cugNumber,setCugNumber] = useState("")
     const [location,setLocation] = useState("")
     const [Manager,setManager] = useState("")
-    
-    const user = "shola"
+    const submitHandler = () =>{
+      
+    }
   return <div >
         <div> 
             <Header/>
@@ -25,30 +26,50 @@ const OfficialInfo = () => {
                         <form>
                         <div className={styles.inputContainer_}>
                       <label>Resumption Date</label>
-                      <input type="date" value={resumptionDate} />
+                      <input type="date" value={resumptionDate} onChange={(e) => setResumptionDate(e.target.value)}/>
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Position</label>
-                      <input type="text" value={position} />
+                      <input type="text" value={position} onChange={(e) => setPosition(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Department</label>
-                      <input type="text" value={department} />
+                      <select
+                        onChange={(e) => setDepartment(e.target.value)}
+                        value={department}
+                      >
+                        <option>Select</option>
+                        <option value="Male">Marketing</option>
+                        <option value="Female">Sales
+                        </option>
+                      </select>
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>CUG Number</label>
-                      <input type="email" value={cugNumber} />
+                      <input type="email" value={cugNumber} onChange={(e) => setCugNumber(e.target.value)} />
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Manager</label>
-                      <input type="text" value={Manager} />
+                      <select
+                        onChange={(e) => setManager(e.target.value)}
+                        value={Manager}
+                      >
+                        <option>Select</option>
+                        <option value="Male">Lanre Onipede</option>
+                        <option value="Female">Sunday Are
+                        </option>
+                      </select>
                     </div>
                     <div className={styles.inputContainer_}>
                       <label>Location</label>
-                      <input type="textarea" value={location} />
+                      <select value={location} onChange={(e) => setLocation(e.target.value)} >
+                      <option>Select</option>
+                        <option value="Male">Lagos</option>
+                        <option value="Female">Abuja</option>
+                      </select>
                     </div>
                         </form>
-                    <button className={styles.btn}>Save information</button> <Link to="/edit/accountInfo"><div className={styles.btn}>Save information</div></Link> 
+                        <button onClick={submitHandler} className={`${styles.btn} ${styles.lilac}`}>Save information</button> <Link to="/edit/accountInfo"> <div className={`${styles.btn} ${styles.purple}`}>Account Information</div></Link>
                     </div>
                 </div>
             </div>
