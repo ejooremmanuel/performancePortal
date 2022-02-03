@@ -1,5 +1,5 @@
 .header {
-  height: 5rem;
+  height: 4rem;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
@@ -11,6 +11,12 @@
 }
 .leftHeader {
   display: flex;
+}
+.purple {
+  color: #ff2222;
+}
+.orange {
+  color: rgb(136, 255, 0);
 }
 .rightHeader {
   display: flex;
