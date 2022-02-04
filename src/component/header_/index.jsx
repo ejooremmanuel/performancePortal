@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from "./styles.module.css"
-function Header() {
+function Header({ pageName }) {
   return( 
         <div className={styles.header}>
           <div className={styles.leftHeader}>
-           <div>Edit Profile</div>
-            
+           <div>{pageName}</div>
             </div>
           <div className={styles.rightHeader}>
               <ul>

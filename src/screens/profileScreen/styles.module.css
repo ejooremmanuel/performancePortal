@@ -1,11 +1,14 @@
 .layout {
+  margin: 0;
   padding: 0.5% 1%;
   display: flex;
   min-height: 100vh;
   background-color: rgba(67, 64, 255, 0.226);
 }
-.editCOntainer {
-  width: 80%;
+.editContainer {
+  width: 70%;
+  height: 100%;
+  padding-bottom: 5%;
 }
 .remote {
   background-color: #fff;
@@ -17,6 +20,7 @@
   margin-top: 5%;
   width: 80%;
   margin-left: 5%;
+  height: 100%;
 }
 form {
   display: grid;
@@ -62,4 +66,32 @@ select {
 .lilac {
   color: white;
   background-image: linear-gradient(315deg, #b3a9d6 0%, #5a29df 74%);
+}
+.profile {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.profileHeader {
+  display: flex;
+  font-size: 36px;
+}
+.editBtn {
+  display: flex;
+  background-color: rgb(172, 26, 164);
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: white;
+  margin-right: 3%;
+}
+.tableContainer {
+  width: 100%;
+  overflow-x: scroll;
+  min-height: 100vh;
+  padding: 5%;
+  background-color: rgba(67, 64, 255, 0.226);
 }

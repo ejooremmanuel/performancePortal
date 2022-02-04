@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import data from '../../component/data';
 import Header from '../../component/header_';
 import EditNavbar from '../../component/navigation_';
 import PictureBar from '../../component/pictureBar_';
@@ -17,13 +18,12 @@ const BasicProfileInfo = () => {
     const [address,setAddress] = useState("")
     const [bio,setBio] = useState("")
     const user = "shola"
+    const submitHandler =() =>{
 
-    const submitHandler = () =>{
-      
     }
   return <div >
         <div> 
-            <Header/>
+            <Header pageName="Edit Profile"/>
             <div className={styles.layout}>
                 <PictureBar/>
                 <div className={styles.editContainer}>

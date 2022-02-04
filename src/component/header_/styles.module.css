@@ -6,14 +6,15 @@
   align-items: center;
   width: 100%;
   color: white;
-  background-image: linear-gradient(270deg, #833eb1 0%, #4239c0 54%);
+  background-image: linear-gradient(270deg, #833eb1 0%, #581696 54%);
   padding: 0 5%;
 }
 .leftHeader {
   display: flex;
 }
 .purple {
-  color: #ff2222;
+  color: #ff0707;
+  font-weight: 300;
 }
 .orange {
   color: rgb(136, 255, 0);

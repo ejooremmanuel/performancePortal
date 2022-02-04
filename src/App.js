@@ -8,7 +8,9 @@ import AccountInfo from "./screens/profileScreen/accountInfo";
 import BasicProfileInfo from "./screens/profileScreen/basicProfileInfo";
 import EmergencyInfo from "./screens/profileScreen/emergency";
 import OfficialInfo from "./screens/profileScreen/officialInfo";
+import Profile from "./screens/profileScreen/profile";
 import ProfileImage from "./screens/profileScreen/profileImage";
+import Table from "./screens/profileScreen/table";
 
 function App() {
   return (
@@ -21,7 +23,8 @@ function App() {
           <Route path="/edit/officailInfo" exact element={<OfficialInfo />} />
           <Route path="/edit/accountInfo" exact element={<AccountInfo />} />
           <Route path="/edit/profileImage" exact element={<ProfileImage />} />
-          
+          <Route path="/edit/profile" exact element={<Profile />} />
+          <Route path="/table" exact element={<Table />} />
           
         </Routes>
       </Router>

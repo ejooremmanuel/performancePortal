@@ -18,7 +18,7 @@ const EmergencyInfo = () => {
     
   return <div >
         <div> 
-            <Header/>
+            <Header pageName="Edit Profile"/>
             <div className={styles.layout}>
                 <PictureBar/>
                 <div className={styles.editContainer}>
