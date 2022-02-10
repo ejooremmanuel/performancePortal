@@ -35,7 +35,7 @@
   margin-right: 20px;
   margin-left: 20px;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: 10px;
   color: aliceblue;
   transition: transform 0.4s; /* Animation */
 }
@@ -47,7 +47,7 @@
 .header_btn2 {
   background-color: rgb(167, 35, 35);
   padding: 10px;
-  border-radius: 15px;
+  border-radius: 10px;
   color: azure;
   transition: transform 0.4s; /* Animation */
 }

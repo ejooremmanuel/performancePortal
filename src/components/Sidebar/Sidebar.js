@@ -18,7 +18,9 @@ function Sidebar() {
     <div className="sidebar">
       <div className="sidebar_container">
         <div className="company_logo">
-          <img src={lotusPic} alt="" />
+          <Link to="/">
+            <img src={lotusPic} alt="" />
+          </Link>
           <h6>Lotus Beta Analytics</h6>
         </div>
         <div className="sidebar_icons">

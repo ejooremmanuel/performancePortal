@@ -1,5 +1,5 @@
 .sidebar {
-  width: 15%;
+  width: 100%;
   float: left;
   height: 100vh;
   background-color: whitesmoke;
@@ -73,6 +73,7 @@
 
 .company_logo h6 {
   color: purple;
+  font-weight: bold;
 }
 
 /* phone-only */

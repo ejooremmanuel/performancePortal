@@ -1,23 +1,67 @@
-.contanier {
-  height: auto;
-  background-color: rgb(240, 236, 247);
+.container {
+  height: 100vh;
+  background-color: rgb(248, 244, 248);
+  /* background-image: url(../assets/backgroundPic.jpg); */
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+.sidebarContainer {
+  display: flex;
+  width: 15%;
+}
+
+.right {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gridbox__container {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card__container {
+  padding: 1rem;
+  display: grid;
+  margin-top: 20px;
+  grid-template-columns: 50% 50%;
+  grid-gap: 15px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.eachcard1__container {
+  display: grid;
+  padding: 10px;
+  width: 100%;
+  height: 350px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .dashboard_contanier {
   display: flex;
   height: auto;
-  background-color: purple;
-  border-radius: 5px;
-  margin-top: 2rem;
+  margin-right: 13px;
+  margin-bottom: 30px;
+}
+
+.eachcard1__container span {
+  margin-left: 1.5rem;
+  font-weight: bold;
 }
 
 .dashboard_cards {
-  width: 20%;
-  margin-left: 4%;
+  width: 25%;
+  margin-left: 3%;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  height: 50%;
-  padding: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   background-color: whitesmoke;
   border-radius: 10px;
 }
@@ -31,24 +75,153 @@
   font-weight: bold;
 }
 
+.chart__container {
+  padding: 1rem;
+}
+
 .charts {
+  padding: 1rem;
+  display: grid;
+  margin-top: 10px;
+  grid-template-columns: 50% 50%;
+  grid-gap: 15px;
+  justify-content: center;
+  /* transition: transform 0.4s; Animation */
+}
+
+/* .charts:hover {
+  transform: scale(1.6);
+} */
+
+.chart {
+  height: 50%;
+  width: 240px;
+  margin-right: 20px;
+}
+/* .chart_span {
+} */
+.color__details {
+  width: 100%;
   display: flex;
-  width: 25%;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.color__details img {
+  width: 30%;
+  height: 30px;
+  margin-left: 10px;
+}
+
+.color__details span {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.rating__picker {
+  display: flex;
+  padding: 10px;
+}
+
+.Twocontainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.teams__header {
+  display: flex;
+  height: 35px;
+  font-weight: bold;
+  padding: 5px;
+  padding-left: 1rem;
+}
+.rowy {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.teams__container {
+  display: flex;
+  width: 50%;
+  height: 220px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.teams__img img {
+  width: 70%;
+  height: 35%;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.teams__img {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+}
+
+.teams__content {
+  width: 70%;
+  display: flex;
+  background-color: whitesmoke;
+  border-radius: 10px;
+}
+
+.teams__details {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.teams__details header {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.teams__container2 {
+  display: flex;
+  width: 50%;
+  height: 220px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.viewTeam__btn {
+  width: 85%;
+  height: 15%;
+  background-color: lightgrey;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-left: 14%;
   transition: transform 0.4s; /* Animation */
 }
 
-.charts:hover {
-  transform: scale(1.6);
+.viewTeam__btn:hover {
+  transform: scale(0.9);
 }
 
-.chart_span {
-  padding-right: 10px;
-  font-size: 25px;
+/* .myTeam__title {
+  width: 100%;
+  height: 50px;
+  margin-left: 25px;
   font-weight: bold;
 }
 
-.myteam_container {
-  display: flex;
+.myTeam__container {
+  display: grid;
+  height: 32vh;
+  grid-template-columns: 50% 50%;
+  background-color: whitesmoke;
+  grid-gap: 15px;
 }
+
+.myTeam__card img {
+  width: 10%;
+  height: 60px;
+  border-radius: 50%;
+} */
