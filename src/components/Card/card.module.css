@@ -1,0 +1,74 @@
+.hra__cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+    padding: 2rem 1.5rem;
+    margin-bottom: 1rem;
+    flex-basis: 23%;
+
+}
+
+.hra__cards:hover {
+    transform: scale(1.1);
+}
+
+.hra__url {
+    text-decoration: none;
+}
+
+.hra__icons {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: .5rem 1rem;
+    border-radius: 5px;
+    justify-content: right;
+    align-items: flex-end;
+}
+
+
+.hra__icons svg {
+    font-size: 2.5rem;
+    display: flex;
+    color: white;
+
+}
+
+.hra__text {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.hra__text h1 {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.hra__text h3 {
+    font-size: 1.3rem;
+    color: white;
+}
+
+
+@media screen and (max-width: 1050px) {
+    .hra__url {
+        flex-basis: 30%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .hra__url {
+        flex-basis: 45%;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .hra__url {
+        flex-basis: 100%;
+    }
+}

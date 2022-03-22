@@ -12,15 +12,144 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-body::-webkit-scrollbar {
-  width: 14px;
-}
 
-body::-webkit-scrollbar-track {
+
+.contentsRight::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
 }
 
-body::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid rgb(149, 154, 158);
+.contentsRight::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+.contentsRight::-webkit-scrollbar-thumb {
+  background-color: #0ae;
+
+  background-image: -webkit-gradient(linear, 0 0, 0 100%,
+      color-stop(.5, rgba(255, 255, 255, .2)),
+      color-stop(.5, transparent), to(transparent));
+}
+
+
+
+
+.appContainer {
+  display: flex;
+  height: 100vh;
+  justify-content: space-around;
+  padding: .5rem 1rem;
+  padding-right: 0;
+}
+
+.contentsRight {
+  flex-grow: 1;
+  padding: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  flex: 0.95;
+  background: rgb(250, 248, 248);
+}
+
+
+/* INput Styles */
+
+.hra__InputFlex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.hra__child {
+  flex-basis: 50%;
+}
+
+.hra__adult {
+  flex-basis: 100%;
+}
+
+.hra__InputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  padding: .5rem 2rem;
+}
+
+label {
+  font-size: 13px;
+  margin-left: .3rem;
+  margin-bottom: .5rem;
+}
+
+.hra__InputContainer input {
+  width: 100%;
+  height: 3.5rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  padding: .5rem 1.5rem;
+  border-radius: 5px;
+  background: white;
+}
+
+.hra__InputContainer input:read-only {
+  background: whitesmoke
+}
+
+.hra__InputContainer select {
+  width: 100%;
+  height: 3.5rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  padding: .5rem 1.5rem;
+  border-radius: 5px;
+  background: white;
+  padding-right: 3rem;
+}
+
+.hra__InputContainer textarea {
+  width: 100%;
+  height: 7rem;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  padding: .5rem 1.5rem;
+  border-radius: 10px;
+  background: white;
+}
+
+.hra__InputContainer span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hra__InputContainer input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  background-clip: content-box;
+  border: 1px solid gainsboro;
+  border-radius: 50%;
+  margin: 0 1rem;
+}
+
+.hra__InputContainer input[type="radio"]:checked {
+  background-color: #640ad2;
+}
+
+.hra__RadioContainer {
+  display: flex;
+  /* justify-content: space-between; */
+}
+
+.radioFlex {
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 }

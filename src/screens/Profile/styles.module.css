@@ -1,0 +1,34 @@
+.formContainer {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 5rem;
+}
+
+.smContainer {
+    display: flex;
+    flex: 0.15;
+    flex-direction: column;
+}
+
+.lgContainer {
+    display: flex;
+    flex: 0.8;
+    flex-direction: row;
+    background: white;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.url {
+    width: 100%;
+    display: flex;
+    padding: 2rem 1rem;
+    background: white;
+    align-items: center;
+    border-radius: 5px;
+    color: black;
+    margin-bottom: 1rem;
+    justify-content: left;
+    border: 1px solid gainsboro;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}

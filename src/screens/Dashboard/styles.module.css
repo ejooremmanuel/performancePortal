@@ -1,0 +1,56 @@
+.red {
+    background: linear-gradient(90deg, rgb(255, 135, 118), rgb(255, 114, 148));
+    color: white;
+}
+
+.blue {
+    background: linear-gradient(90deg, rgb(53, 196, 194), rgb(26, 171, 202));
+    color: white;
+}
+
+.purple {
+    background: linear-gradient(90deg, rgb(228, 119, 238), rgb(145, 105, 228));
+    color: white;
+}
+
+.cardContainer {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.objectContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.quickLinks {
+    display: flex;
+    flex: 0.4;
+    flex-direction: column;
+    padding: 1rem 2rem;
+
+}
+
+.linkContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.link {
+    display: flex;
+    background: white;
+    padding: 2rem 1rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    flex-basis: 30%;
+    border-radius: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.link svg {
+    font-size: 1.5rem;
+}
