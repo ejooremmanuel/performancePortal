@@ -66,7 +66,7 @@ const LoginScreen = () => {
           <CircularProgress isIndeterminate color="purple.500" />
         ) : (
           <MicrosoftLogin
-            clientId="74371100-2b65-4dbf-b2cd-cfd1b8ec4ebf"
+            clientId={process.env.REACT_APP_CLIENTID}
             authCallback={authHandler}
             // useLocalStorageCache={true}
           />
