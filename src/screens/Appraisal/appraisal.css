@@ -1,0 +1,120 @@
+.appraisal__intro__text {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  grid-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 2.5rem;
+}
+.appraisal__intro__text div {
+  padding-right: 10rem;
+  line-height: 2rem;
+}
+.appraisal__intro__text h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.appraisal__intro__text ul {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+  padding-right: 10rem;
+}
+
+.create__appraisal__container {
+  width: 40vw;
+  height: 60vh;
+  display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  top: 50%;
+  margin-top: 20%;
+}
+.create__appraisal__container form {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 30px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.appraisal__scores__intro {
+  display: flex;
+  grid-gap: 5px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.appraisal__scores__intro article {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+article h4 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 5px 0px rgba(85, 84, 84, 0.507);
+}
+
+.orange {
+  background: linear-gradient(180deg, #ea8808, #b36909);
+}
+
+.blue {
+  background: linear-gradient(180deg, #2f7cb2, #0a5d94);
+}
+
+.pink {
+  background: linear-gradient(180deg, #db26c3, #a61292);
+}
+
+.green {
+  background: linear-gradient(180deg, #61b043, #3a9416);
+}
+
+.red {
+  background: linear-gradient(180deg, #dd2d44, #b3162b);
+}
+
+.view__score {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 20px;
+}
+.view__score article {
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(180deg, #a52ddd, #a116b3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.score__btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.score__btns div:nth-of-type(2) {
+  display: flex;
+  align-items: center;
+  grid-gap: 20px;
+  margin-top: 20px;
+}

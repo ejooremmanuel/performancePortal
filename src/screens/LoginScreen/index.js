@@ -28,7 +28,7 @@ const LoginScreen = () => {
       const accessToken = data.accessToken;
       console.log(data);
       dispatch(userLogin(accessToken));
-      // dispatch(getDp(accessToken));
+      dispatch(getDp(accessToken));
 
       sessionStorage.clear();
     }

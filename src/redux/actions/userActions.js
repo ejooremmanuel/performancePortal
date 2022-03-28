@@ -82,14 +82,24 @@ export const logout = () => (dispatch) => {
   dispatch({ type: AUTH_RESET });
 };
 
-export const getDp = (accessToken) => async (dispatch) => {
+export const getDp = (accessToken) => async (dispatch, getState) => {
   try {
+    console.log(accessToken);
     dispatch({ type: GET_DP_REQUEST });
 
+    const {
+      auth: { staffInfo },
+    } = getState();
+
+    console.log(staffInfo.token, "staffInfo");
     const config = {
       headers: {
         "Content-Type": "application/json",
         token: `${accessToken}`,
+        "access-token": `${staffInfo.token}`,
+      },
+      data: {
+        accessToken,
       },
     };
     const { data } = await axios.get(`/api/v1/staff/auth/photo`, config);
