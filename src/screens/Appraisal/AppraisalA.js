@@ -2,7 +2,7 @@
 import axios from "axios";
 import React from "react";
 import AppraisalHeading from "../../components/AppraisalHeading/AppraisalHeading";
-import { Button, useToast } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon, RepeatIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigation, Header, Greeting } from "../../components";
@@ -21,7 +21,6 @@ const AppraisalA = () => {
   const [loading, setLoading] = React.useState(false);
 
   const dispatch = useDispatch();
-  const toast = useToast();
   const navigate = useNavigate();
 
   const userProfile = useSelector((state) => state.userProfile);
@@ -85,7 +84,7 @@ const AppraisalA = () => {
   React.useEffect(() => {
     Promise.all([
       axios
-        .get("http://localhost:8000/api/v1/option")
+        .get("https://lotusportalapi.herokuapp.com/api/v1/option")
         .then((res) => {
           setOptions(res.data.data);
         })
@@ -93,7 +92,7 @@ const AppraisalA = () => {
           console.log(err);
         }),
       axios
-        .get("http://localhost:8000/api/v1/section/a")
+        .get("https://lotusportalapi.herokuapp.com/api/v1/section/a")
         .then((res) => {
           setList(res.data.data);
         })

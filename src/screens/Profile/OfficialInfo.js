@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navigation, Header, Input, Options, Select } from "../../components";
-import { CustomSelect } from "../../components/Select";
 import styles from "./styles.module.css";
 
 const OfficialInfo = () => {
@@ -17,6 +17,8 @@ const OfficialInfo = () => {
   const [fetching, setFetching] = useState(false);
   const toast = useToast();
 
+  console.log(managers, showManagerField);
+
   const selectBranchHandler = (e) => {
     setBranch(e.target.value);
   };
@@ -27,6 +29,8 @@ const OfficialInfo = () => {
     console.log(e.target.value);
     setManager(e.target.value);
   };
+
+  console.log(selectManagerHandler);
 
   const getStaffData = () => {
     setFetching(true);

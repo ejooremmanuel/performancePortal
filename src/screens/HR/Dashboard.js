@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Check, Error, Search } from "@material-ui/icons";
-import { FiCamera, FiSearch, FiUpload } from "react-icons/fi";
+import { Check, Error } from "@material-ui/icons";
+import { FiSearch } from "react-icons/fi";
 import { PeopleOutlineSharp } from "@mui/icons-material";
 import React from "react";
 import Card from "../../components/Card";
@@ -101,6 +101,8 @@ export function HRHeader() {
   const [img, setImg] = React.useState("");
   const reader = new FileReader();
 
+  console.log(img);
+
   React.useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
@@ -140,6 +142,8 @@ export function HRHeader() {
         });
     };
   };
+
+  console.log(uploadDp);
 
   return (
     <div className="hr__dashboard__header">

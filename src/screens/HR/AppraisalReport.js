@@ -25,8 +25,6 @@ import Filter from "../../components/Filter/Filter";
 
 const AppraisalReport = () => {
   const [list, setList] = React.useState([]);
-  const [findingData, setFindingData] = React.useState(false);
-  const [divisions, setDivisions] = React.useState([]);
   const [filtered, setFiltered] = React.useState([]);
   const [selected, setSelected] = React.useState("Choose Division");
   const [showDivisionSelect, setShowDivisionSelection] = React.useState(false);
@@ -70,6 +68,8 @@ const AppraisalReport = () => {
     });
     setFiltered(filteredData);
   };
+
+  console.log(filtered);
 
   return (
     <div style={{ overflowX: "hidden" }}>

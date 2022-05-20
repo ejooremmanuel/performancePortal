@@ -19,7 +19,7 @@ export const createScore = (data, next) => {
       });
       const token = JSON.parse(localStorage.getItem("staffInfo"));
       const config = {
-        url: "http://localhost:8000/api/v1/score",
+        url: "https://lotusportalapi.herokuapp.com/api/v1/score",
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const patchStaffScore = (staffid, questionid, data, next, toast) => {
       });
       const token = JSON.parse(localStorage.getItem("staffInfo"));
       const config = {
-        url: `http://localhost:8000/api/v1/score/staff/${staffid}/${questionid}`,
+        url: `https://lotusportalapi.herokuapp.com/api/v1/score/staff/${staffid}/${questionid}`,
         method: "patch",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export const createScoreB = (data, next) => {
       });
       const token = JSON.parse(localStorage.getItem("staffInfo"));
       const config = {
-        url: "http://localhost:8000/api/v1/score",
+        url: "https://lotusportalapi.herokuapp.com/api/v1/score",
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -223,7 +223,7 @@ export const acceptResult = async (setLoading, close, setAccepted) => {
       },
     };
 
-    const res = await axios.patch("/api/v1/result/accept", {}, config);
+    await axios.patch("/api/v1/result/accept", {}, config);
     setLoading(false);
     close();
     setAccepted(true);
@@ -243,7 +243,7 @@ export const rejectResult = async (setLoading, close, setRejected) => {
       },
     };
 
-    const res = await axios.patch("/api/v1/result/reject", {}, config);
+    await axios.patch("/api/v1/result/reject", {}, config);
     setLoading(false);
     setRejected(true);
     close();

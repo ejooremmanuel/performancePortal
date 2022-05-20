@@ -17,9 +17,8 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
-import { MoreHorizOutlined } from "@material-ui/icons";
 import MaterialTable from "material-table";
-import { HRNavbar, Options, Select } from "../../components";
+import { HRNavbar } from "../../components";
 import { HRHeader } from "./CreateAppraisal";
 import { useNavigate } from "react-router-dom";
 import {
@@ -77,6 +76,7 @@ const Calibrate = () => {
 
   React.useEffect(() => {
     getEmployees();
+    console.log(setActionBtn);
   }, []);
 
   const actionHandler = (response) => {

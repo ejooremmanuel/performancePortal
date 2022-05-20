@@ -12,7 +12,6 @@ import "./hr.styles.css";
 const StartAppraisal = () => {
   const date = new Date();
   const [loading, setLoading] = React.useState(false);
-  const [started, setStarted] = React.useState(false);
   const toast = useToast();
 
   React.useEffect(() => {

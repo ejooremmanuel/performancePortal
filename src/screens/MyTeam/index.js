@@ -18,7 +18,7 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { UserContext } from "../../context/UserContext";
 import MaterialTable from "material-table";
-import styles from "./styles.module.css";
+
 const Team = () => {
   const { myTeam } = React.useContext(UserContext);
 

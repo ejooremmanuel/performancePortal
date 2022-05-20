@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./login.module.css";
 import MicrosoftLogin from "react-microsoft-login";
 import logo from "../../assets/purple.png";

@@ -16,7 +16,7 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [state, setState] = useState("");
   const [bio, setBio] = useState("");
-  const [branch, setBranch] = useState("");
+  // const [branch, setBranch] = useState("");
   const [mobile, setMobile] = useState("");
   const [addresses, setAddress] = useState("");
   const [fetching, setFetching] = useState(false);
@@ -52,11 +52,14 @@ const Profile = () => {
         setRole(data.data.staff.role);
         setDepartment(data.data.staff.department);
         setFetching(false);
+
+        console.log(middleName, email, dob, gender, state, mobile, addresses);
       })
       .catch((err) => {
         setFetching(false);
         console.log(err.message || err.msg);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

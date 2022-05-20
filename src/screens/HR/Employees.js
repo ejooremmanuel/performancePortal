@@ -54,6 +54,8 @@ const Employees = () => {
 
   const navigate = useNavigate();
 
+  console.log(setActionBtn);
+
   const getEmployees = () => {
     setFetching(true);
     axios
