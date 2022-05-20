@@ -28,10 +28,12 @@ const Initiative = () => {
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
   const [list, setList] = React.useState([]);
+  const [perspective, setPerspective] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
+    setLoading(true);
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
-
     axios
       .get("/api/v1/initiative", {
         headers: {
@@ -40,11 +42,12 @@ const Initiative = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setList(response.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err.response);
+        setLoading(false);
       });
   }, []);
 
@@ -63,7 +66,13 @@ const Initiative = () => {
           </Button>
         </div>
         <div className="display__initiative" style={{ marginLeft: "20px" }}>
-          <TableDisplay itemsPerPage={5} list={list} setList={setList} />
+          <TableDisplay
+            itemsPerPage={5}
+            list={list}
+            setList={setList}
+            perspective={perspective}
+            loading={loading}
+          />
         </div>
         <CreateInititiveForm
           isOpen={isOpen}
@@ -114,7 +123,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
       })
       .then((response) => {
         setList((prev) => {
-          return [ response.data.data,...prev];
+          return [response.data.data, ...prev];
         });
         setInitiative("");
         setTarget("");
@@ -125,6 +134,10 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
         console.log(err.response);
         onClose();
       });
+
+    axios.get(`/api/v1/perspective`).then((response) => {
+      setPerspective(response.data.data);
+    });
   };
 
   return (
@@ -154,7 +167,10 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
                 {options.map((option) => {
                   return (
                     <>
-                      <option value={option._id}>{option.title}</option>;
+                      <option value={option._id} key={option._id}>
+                        {option.title}
+                      </option>
+                      ;
                     </>
                   );
                 })}

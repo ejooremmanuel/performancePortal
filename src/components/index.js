@@ -11,3 +11,6 @@ export { default as Options } from "./Options";
 export { default as Tooltip } from "./Tooltip";
 export { default as Greeting } from "./Greeting";
 export { default as Chart } from "./Chart";
+export { default as StaffScoreTable } from "./AllStaffScores/StaffScoreTable";
+export { default as HRNavbar } from "./HR Navbar";
+export { default as Filter } from "./Filter/Filter";

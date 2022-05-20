@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 body {
   margin: 0;
@@ -9,37 +9,37 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-
-
 
 .contentsRight::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .contentsRight::-webkit-scrollbar {
   width: 10px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .contentsRight::-webkit-scrollbar-thumb {
   background-color: #0ae;
 
-  background-image: -webkit-gradient(linear, 0 0, 0 100%,
-      color-stop(.5, rgba(255, 255, 255, .2)),
-      color-stop(.5, transparent), to(transparent));
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    color-stop(0.5, rgba(255, 255, 255, 0.2)),
+    color-stop(0.5, transparent),
+    to(transparent)
+  );
 }
-
-
-
 
 .appContainer {
   display: flex;
   height: 100vh;
   justify-content: space-around;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   padding-right: 0;
 }
 
@@ -52,7 +52,6 @@ body {
   flex: 0.95;
   background: rgb(250, 248, 248);
 }
-
 
 /* INput Styles */
 
@@ -76,13 +75,13 @@ body {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
 }
 
 label {
   font-size: 13px;
-  margin-left: .3rem;
-  margin-bottom: .5rem;
+  margin-left: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .hra__InputContainer input {
@@ -90,13 +89,13 @@ label {
   height: 3.5rem;
   outline: none;
   border: 1px solid rgba(0, 0, 0, 0.26);
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 5px;
   background: white;
 }
 
 .hra__InputContainer input:read-only {
-  background: whitesmoke
+  background: whitesmoke;
 }
 
 .hra__InputContainer select {
@@ -104,7 +103,7 @@ label {
   height: 3.5rem;
   outline: none;
   border: 1px solid rgba(0, 0, 0, 0.26);
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 5px;
   background: white;
   padding-right: 3rem;
@@ -115,7 +114,7 @@ label {
   height: 7rem;
   outline: none;
   border: 1px solid rgba(0, 0, 0, 0.26);
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 10px;
   background: white;
 }

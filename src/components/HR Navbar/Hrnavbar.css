@@ -1,0 +1,73 @@
+.hrnavbar__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  padding: 30px 0px;
+  height: 100vh;
+  width: 200px;
+  position: fixed;
+  top: 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  z-index: 999;
+}
+.hrnavbar__container__logo {
+  width: 70%;
+  box-sizing: border-box;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  padding-left: 30px;
+}
+.hrnavbar__container__logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.hrnavbar__container__links {
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 50px;
+}
+.hrnavbar__container__links div {
+  width: 100%;
+  box-sizing: border-box;
+  height: 30px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-left: 30px;
+}
+.hrnavbar__container__links div:hover {
+  cursor: pointer;
+  border-right: 3px solid purple;
+  color: purple;
+  text-transform: uppercase;
+}
+
+.hrnavbar__menu__icon {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .hrnavbar__menu__icon {
+    display: flex;
+    background: none;
+  }
+
+  .hrnavbar__container {
+    display: none;
+    background: none;
+  }
+  .hrnavbar__container__mobile {
+    width: 100%;
+    height: 100vh;
+    z-index: 99;
+    border: 1px solid red;
+    background: red;
+  }
+}

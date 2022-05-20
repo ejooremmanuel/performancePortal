@@ -4,67 +4,90 @@ import ReactPaginate from "react-paginate";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
 
-const TableDisplay = ({ itemsPerPage, list, setList }) => {
+const TableDisplay = ({
+  itemsPerPage,
+  list,
+  setList,
+  perspective,
+  loading,
+}) => {
+  const token = JSON.parse(localStorage.getItem("staffInfo")).token;
   const onDelete = (id) => {
     const check = window.confirm(`Are you sure you want to delete this item?`);
     if (check) {
-      axios.delete(`/api/v1/initiative/${id}`).then((response) => {
-        setList(list.filter((item) => item._id !== id));
-      });
+      axios
+        .delete(`/api/v1/initiative/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": token,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          setList(list.filter((item) => item._id !== id));
+        });
     }
   };
 
   function Items({ currentItems }) {
-    return list.length > 0 ? (
-      <table>
-        <thead>
-          <tr>
-            <th>SN</th>
-            <th>PERSPECTIVE</th>
-            <th>OBJECTIVES</th>
-            <th>MEASURES</th>
-            <th>TARGETS</th>
-            <th>INITIATIVES</th>
-            <th>SESSION</th>
-            <th>DATE ADDED</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems &&
-            currentItems.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.perspective.title}</td>
-                  <td>{item.objective}</td>
-                  <td>{item.measures}</td>
-                  <td>{item.target}</td>
-                  <td>{item.initiative}</td>
-                  <td>{item.session}</td>
-                  <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                  <td>
-                    <Button
-                      colorScheme="red"
-                      onClick={() => {
-                        onDelete(item._id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
-    ) : (
-      <div style={{ width: "80%", height: "200px", textAlign: "center" }}>
-        <h4>You have not set any initiative</h4>
-        <span>
-          Click <strong>Set initiative</strong> to get started.
-        </span>
-      </div>
+    return (
+      <>
+        {loading ? (
+          <div>Fetching...</div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>SN</th>
+                <th>PERSPECTIVE</th>
+                <th>OBJECTIVES</th>
+                <th>MEASURES</th>
+                <th>TARGETS</th>
+                <th>INITIATIVES</th>
+                <th>SESSION</th>
+                <th>DATE ADDED</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems &&
+                currentItems.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{item.perspective && item.perspective.title}</td>
+                      <td>{item.objective}</td>
+                      <td>{item.measures}</td>
+                      <td>{item.target}</td>
+                      <td>{item.initiative}</td>
+                      <td>{item.session}</td>
+                      <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+                      <td>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => {
+                            onDelete(item._id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        )}
+
+        {list.length < 0 && (
+          <div style={{ width: "80%", height: "200px", textAlign: "center" }}>
+            <h4>You have not set any initiative</h4>
+            <span>
+              Click <strong>Set initiative</strong> to get started.
+            </span>
+          </div>
+        )}
+      </>
     );
   }
 

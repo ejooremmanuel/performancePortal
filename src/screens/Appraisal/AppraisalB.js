@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/appraisal.actions";
 import { useNavigate } from "react-router-dom";
 import { FiLoader } from "react-icons/fi";
+import swal from "sweetalert";
 
 const AppraisalB = () => {
   const [list, setList] = React.useState([]);
@@ -21,6 +22,7 @@ const AppraisalB = () => {
   const [options, setOptions] = React.useState([]);
   const [question, setQuestion] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  const [fetching, setFetching] = React.useState(false);
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -51,11 +53,12 @@ const AppraisalB = () => {
   const onReset = () => {
     localStorage.setItem("userResB", JSON.stringify({}));
     setChecked(null);
+    setIndex(0);
   };
 
   React.useEffect(() => {
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
-
+    setFetching(true);
     axios
       .get("/api/v1/initiative", {
         headers: {
@@ -64,13 +67,14 @@ const AppraisalB = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setList(response.data.data);
         if (response.data.data.length < 1) {
           alert("No data found");
         }
+        setFetching(false);
       })
       .catch((err) => {
+        setFetching(false);
         console.log(err);
       });
   }, []);
@@ -85,6 +89,35 @@ const AppraisalB = () => {
       });
   }, []);
 
+  React.useEffect(() => {
+    axios
+      .get("/api/v1/result/current", {
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.data.sectionbscore) {
+          swal({
+            title: "You have completed Section B of your Appraisal.",
+            icon: "success",
+            text: "See your Manager Rating",
+            button: {
+              text: "Go",
+            },
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+          }).then((willDelete) => {
+            if (willDelete) {
+              navigate("/report");
+            }
+          });
+        }
+      });
+  }, [navigate]);
+
   const next = () => {
     setIndex((prev) => {
       return prev + 1;
@@ -93,7 +126,6 @@ const AppraisalB = () => {
   };
 
   const onSubmit = (questionId, next) => {
-    console.log(questionId);
     const data = {
       question: questionId,
       _qid: "Initiative",
@@ -150,80 +182,59 @@ const AppraisalB = () => {
               Reset
             </Button>
           </section>
-          <div>
-            {list.length < 1 ? (
-              <h4>You have not created any initiative yet!</h4>
-            ) : (
-              list
-                .filter((item, i) => {
-                  return i === index;
-                })
-                .map((item, i) => {
-                  return (
-                    <div key={item._id}>
-                      <AppraisalHeadingB
-                        title={item.perspective.title}
-                        target={item.target}
-                        objective={item.objective}
-                        measures={item.measures}
-                        initiative={item.initiative}
-                        number={index + 1}
-                        total={list.length}
-                      />
-                      {options.map((option) => {
-                        return (
-                          <div
-                            key={option._id}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-start",
-                              gridGap: "15px",
-                            }}
-                          >
-                            <>
-                              <input
-                                type="radio"
-                                name={item.title}
-                                value={option.value}
-                                onChange={(e) => {
-                                  onChange(e, item._id, option._id);
-                                  setQuestion(option._id);
-                                }}
-                                checked={checked == option.value}
-                              />
-                              <span>{option.title}</span>
-                            </>
-                          </div>
-                        );
-                      })}
-
-                      <>
-                        {index === 0 ? (
-                          <Button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              onSubmit(item._id, next);
-                            }}
-                            rightIcon={<ArrowForwardIcon />}
-                            colorScheme="green"
-                          >
-                            Next
-                          </Button>
-                        ) : index > 0 && index !== list.length - 1 ? (
-                          <div style={{ display: "flex", gridGap: "20px" }}>
-                            <Button
-                              onClick={() => {
-                                onPrevClick();
-                                setIndex((prev) => {
-                                  return prev - 1;
-                                });
+          {fetching ? (
+            <div>Fetching...</div>
+          ) : (
+            <div>
+              {list.length < 1 ? (
+                <h4>You have not created any initiative yet!</h4>
+              ) : (
+                list
+                  .filter((item, i) => {
+                    return i === index;
+                  })
+                  .map((item, i) => {
+                    return (
+                      <div key={item._id}>
+                        <AppraisalHeadingB
+                          title={item.perspective.title}
+                          target={item.target}
+                          objective={item.objective}
+                          measures={item.measures}
+                          initiative={item.initiative}
+                          number={index + 1}
+                          total={list.length}
+                        />
+                        {options.map((option) => {
+                          return (
+                            <div
+                              key={option._id}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "flex-start",
+                                gridGap: "15px",
                               }}
-                              leftIcon={<ArrowBackIcon />}
-                              colorScheme="orange"
                             >
-                              Previous
-                            </Button>
+                              <>
+                                <input
+                                  type="radio"
+                                  name={item.title}
+                                  value={option.value}
+                                  onChange={(e) => {
+                                    onChange(e, item._id, option._id);
+                                    setQuestion(option._id);
+                                  }}
+                                  checked={checked == option.value}
+                                />
+                                <span>{option.title}</span>
+                              </>
+                            </div>
+                          );
+                        })}
+
+                        <>
+                          {index === 0 ? (
                             <Button
                               onClick={(e) => {
                                 e.preventDefault();
@@ -234,52 +245,89 @@ const AppraisalB = () => {
                             >
                               Next
                             </Button>
-                          </div>
-                        ) : index === list.length - 1 ? (
-                          <div style={{ display: "flex", gridGap: "20px" }}>
-                            <Button
-                              onClick={() => {
-                                onPrevClick();
-                                setIndex((prev) => {
-                                  return prev - 1;
-                                });
-                              }}
-                              leftIcon={<ArrowBackIcon />}
-                              colorScheme="orange"
-                            >
-                              Previous
-                            </Button>
-                            {loading ? (
+                          ) : index > 0 && index !== list.length - 1 ? (
+                            <div style={{ display: "flex", gridGap: "20px" }}>
                               <Button
-                                colorScheme="yellow"
-                                leftIcon={<FiLoader />}
+                                onClick={() => {
+                                  onPrevClick();
+                                  setIndex((prev) => {
+                                    return prev - 1;
+                                  });
+                                }}
+                                leftIcon={<ArrowBackIcon />}
+                                colorScheme="orange"
                               >
-                                Fetching your score...
+                                Previous
                               </Button>
-                            ) : (
                               <Button
-                                type="submit"
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  setLoading(true);
-                                  onSubmit(item._id);
-                                  getResultB(navigate, setLoading);
+                                  onSubmit(item._id, next);
                                 }}
-                                colorScheme="yellow"
+                                rightIcon={<ArrowForwardIcon />}
+                                colorScheme="green"
                               >
-                                Finish Appraisal
+                                Next
                               </Button>
-                            )}
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </>
-                    </div>
-                  );
-                })
-            )}
-          </div>
+                            </div>
+                          ) : index === list.length - 1 ? (
+                            <div style={{ display: "flex", gridGap: "20px" }}>
+                              <Button
+                                onClick={() => {
+                                  onPrevClick();
+                                  setIndex((prev) => {
+                                    return prev - 1;
+                                  });
+                                }}
+                                leftIcon={<ArrowBackIcon />}
+                                colorScheme="orange"
+                              >
+                                Previous
+                              </Button>
+                              {loading ? (
+                                <Button
+                                  colorScheme="yellow"
+                                  leftIcon={<FiLoader />}
+                                >
+                                  Fetching your score...
+                                </Button>
+                              ) : (
+                                <Button
+                                  type="submit"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setLoading(true);
+                                    onSubmit(item._id);
+                                    swal({
+                                      text: "Once you click proceed, you won't be allowed to take section B again.",
+                                      button: {
+                                        text: "Proceed",
+                                        closeModal: true,
+                                      },
+                                    }).then((willSearch) => {
+                                      if (willSearch) {
+                                        return getResultB(navigate, setLoading);
+                                      } else {
+                                        setLoading(false);
+                                      }
+                                    });
+                                  }}
+                                  colorScheme="yellow"
+                                >
+                                  Finish Appraisal
+                                </Button>
+                              )}
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      </div>
+                    );
+                  })
+              )}
+            </div>
+          )}
         </section>
       </div>
     </div>

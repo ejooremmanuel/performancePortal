@@ -34,7 +34,7 @@ td {
 }
 
 tr {
-  width: 90vw;
+  width: 87vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,11 +42,8 @@ tr {
   grid-gap: 30px;
   padding: 0px 20px;
   text-align: center;
-  margin-top: 20px;
-}
-
-table {
-  margin-top: 20px;
+  padding-top: 20px;
+  box-sizing: border-box;
 }
 
 .items {
@@ -89,4 +86,211 @@ table {
 
 .paginate li:hover {
   background: rgba(0, 0, 0, 0.12);
+}
+
+/* Dashboard */
+.hr__dashboard__container {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: 100vh;
+  position: relative;
+  left: 13%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: rgba(228, 227, 227, 0.216);
+}
+
+.hr__dashboard__header {
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  height: 70px;
+  width: 100%;
+  padding-left: 40px;
+  box-sizing: border-box;
+  position: relative;
+  background: #fff;
+}
+
+.header__search {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  flex: 1;
+}
+.header__search input {
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+
+.header__divider {
+  border-right: 2px solid rgba(158, 158, 158, 0.512);
+  height: 50%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex: 1;
+  position: absolute;
+  left: 40%;
+}
+.header__details {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+  box-sizing: border-box;
+  justify-content: flex-end;
+  padding-right: 10%;
+}
+.header__details img {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  border-radius: 50%;
+}
+.header__details img:hover {
+  cursor: pointer;
+}
+
+.uploadDp {
+  position: relative;
+  background: none;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  right: 55px;
+  top: 5px;
+  color: rgba(255, 255, 255, 0.008);
+  border-radius: 50%;
+}
+.uploadDp:hover {
+  background: rgba(0, 0, 0, 0.53);
+  color: #000;
+}
+
+.hr__dashboard__text {
+  width: 100%;
+  height: 100px;
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.hr__dashboard__cards {
+  display: grid;
+  box-sizing: border-box;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40px;
+  padding-left: 40px;
+}
+
+.dashboard__activities__card {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(95, 94, 94, 0.1);
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.dashboard__activities {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 550px;
+  height: 320px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  margin-left: 40px;
+  margin-top: 20px;
+  background: #fff;
+}
+
+/* Appraisal Report */
+.container__content__select {
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 20px;
+  max-height: 200px;
+}
+.container__content__select:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: context-menu;
+}
+
+/* Employees Page */
+
+.btn__action::after {
+  content: "";
+  display: flex;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  background: #fff;
+  z-index: 99;
+}
+
+.btn {
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
+  gap: "10px";
+}
+.btn button {
+  width: 100px;
+  height: 50px;
+  background: rgb(76, 97, 237);
+  color: #fff;
+}
+
+/* Start Appraisal */
+
+.StartAppraisal__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.quarter__container {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+}
+.quarter__container button {
+  display: flex;
+  gap: 10px;
 }

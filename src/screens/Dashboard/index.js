@@ -17,17 +17,45 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../../redux/actions/userActions";
+import axios from "axios";
+import { UserContext } from "../../context/UserContext";
 
 const Dashboard = () => {
   // Helpers
   const dispatch = useDispatch();
-
+  const { myTeam, setMyTeam } = React.useContext(UserContext);
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
+  const [appraisalScore, setAppraisalScore] = React.useState(0);
+  const [managerscore, setManagerscore] = React.useState(0);
+  const [overallScore, setOverallScore] = React.useState(0);
+  const [department, setDepartment] = React.useState("");
+  const [team, setTeam] = React.useState([]);
 
   useEffect(() => {
-    dispatch(getMe());
+    dispatch(getMe(setDepartment));
   }, [dispatch]);
+
+  React.useEffect(() => {
+    axios
+      .get("/api/v1/result/current", {
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then(({ data }) => {
+        setAppraisalScore(data.data.sectionascore + data.data.sectionbscore);
+        setManagerscore(data.data.managerscore);
+        setOverallScore(data.data.score);
+        axios.get("/api/v1/staff/auth/employees/all").then((response) => {
+          setTeam(
+            response.data.data.filter((item) => item.department === department)
+          );
+          setMyTeam(response.data.data);
+        });
+      });
+  }, [department]);
   return (
     <div className="appContainer">
       <Navigation />
@@ -37,28 +65,28 @@ const Dashboard = () => {
         <div className={styles.cardContainer}>
           <Card
             title="Appraisal Score"
-            count="10"
+            count={appraisalScore}
             Icon={BsFillAwardFill}
             color={styles.red}
             url="/dashboard"
           />
           <Card
             title="Manager Score"
-            count="20"
+            count={managerscore}
             Icon={BsPersonBadgeFill}
             color={styles.blue}
             url="/frontdesk/guest/awaitingHost"
           />
           <Card
             title="Overall Score"
-            count="20"
+            count={overallScore}
             Icon={BsReception4}
             color={styles.purple}
             url="/frontdesk/guest/awaitingHost"
           />
           <Card
             title="My Team"
-            count="20"
+            count={team.length}
             Icon={FiUsers}
             color={styles.red}
             url="/frontdesk/guest/awaitingHost"
@@ -70,7 +98,7 @@ const Dashboard = () => {
             <h2>Quick Links</h2>
             <br />
             <div className={styles.linkContainer}>
-              <Link to="/" className={styles.link}>
+              <Link to="/appraisal" className={styles.link}>
                 <FaRegChartBar />
                 Appraisal
               </Link>
@@ -78,7 +106,7 @@ const Dashboard = () => {
                 <FaSwimmer />
                 Leave Request
               </Link>
-              <Link to="/" className={styles.link}>
+              <Link to="/appraisal/initiatives" className={styles.link}>
                 <FaSortAlphaDown />
                 Initiatives
               </Link>
@@ -86,7 +114,7 @@ const Dashboard = () => {
                 <FaRegClock />
                 Clockin
               </Link>
-              <Link to="/" className={styles.link}>
+              <Link to="/team" className={styles.link}>
                 <FaUsers />
                 My Team
               </Link>

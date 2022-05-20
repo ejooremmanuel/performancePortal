@@ -1,8 +1,11 @@
 import axios from "axios";
 import {
   START_CREATE_SCORE,
+  START_PATCH_SCORE,
   CREATE_SCORE_SUCCESS,
+  PATCH_SCORE_SUCCESS,
   CREATE_SCORE_FAIL,
+  PATCH_SCORE_FAIL,
   START_CREATE_SCOREB,
   CREATE_SCORE_SUCCESSB,
   CREATE_SCORE_FAILB,
@@ -24,7 +27,9 @@ export const createScore = (data, next) => {
         },
         data: data,
       };
-      const res = await axios(config);
+
+      const [res] = await Promise.all([axios(config)]); //run both axios calls at the same time
+
       dispatch({
         type: CREATE_SCORE_SUCCESS,
         payload: res.data,
@@ -33,6 +38,43 @@ export const createScore = (data, next) => {
     } catch (err) {
       dispatch({
         type: CREATE_SCORE_FAIL,
+        payload: err,
+      });
+      //   next();
+    }
+  };
+};
+export const patchStaffScore = (staffid, questionid, data, next, toast) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: START_PATCH_SCORE,
+      });
+      const token = JSON.parse(localStorage.getItem("staffInfo"));
+      const config = {
+        url: `http://localhost:8000/api/v1/score/staff/${staffid}/${questionid}`,
+        method: "patch",
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": token.token,
+        },
+        data: data,
+      };
+      const res = await axios(config);
+      dispatch({
+        type: PATCH_SCORE_SUCCESS,
+        payload: res.data,
+      });
+      next();
+    } catch (err) {
+      toast({
+        status: "error",
+        description: err.response.data.msg,
+        isClosable: true,
+        duration: 9000,
+      });
+      dispatch({
+        type: PATCH_SCORE_FAIL,
         payload: err,
       });
       //   next();
@@ -71,7 +113,7 @@ export const createScoreB = (data, next) => {
   };
 };
 
-export const getResult = async (navigate, setLoading) => {
+export const getManagerResult = async (navigate, setLoading) => {
   try {
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
     const config = {
@@ -84,11 +126,68 @@ export const getResult = async (navigate, setLoading) => {
     const res = await axios.post("/api/v1/result/", {}, config);
     console.log(res.data);
     setLoading(false);
-    localStorage.removeItem("userRes");
-    navigate(`/user/score/a/${res.data.data.score}`);
+    localStorage.removeItem("m");
+    navigate(
+      `/manager/staff/${res.data.data.score}/${res.data.data.managerscore}`
+    );
   } catch (err) {
     console.log(err);
     setLoading(false);
+    return err;
+  }
+};
+export const getManagerResultB = async (navigate, setLoading) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "access-token": token,
+      },
+    };
+
+    const res = await axios.post("/api/v1/result/", {}, config);
+    console.log(res.data);
+    setLoading(false);
+    localStorage.removeItem("mb");
+    navigate(
+      `/manager/staff/b/${res.data.data.score}/${res.data.data.managerscore}`
+    );
+  } catch (err) {
+    console.log(err);
+    setLoading(false);
+    return err;
+  }
+};
+export const getResult = async (navigate, setLoading, swal) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "access-token": token,
+      },
+    };
+
+    const res = await axios.post(
+      "/api/v1/check/section/a/result",
+      {
+        status: "Completed",
+      },
+      config
+    );
+    console.log(res.data);
+    // setLoading(false);
+    localStorage.removeItem("userRes");
+    // navigate("/appraisal/section/b");
+  } catch (err) {
+    console.log(err);
+    setLoading(false);
+    swal(
+      "Oops!",
+      "We encountered an error while processing your request.",
+      "error"
+    );
     return err;
   }
 };
@@ -111,5 +210,45 @@ export const getResultB = async (navigate, setLoading) => {
     console.log(err);
     setLoading(false);
     return err;
+  }
+};
+
+export const acceptResult = async (setLoading, close, setAccepted) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "access-token": token,
+      },
+    };
+
+    const res = await axios.patch("/api/v1/result/accept", {}, config);
+    setLoading(false);
+    close();
+    setAccepted(true);
+  } catch (err) {
+    console.log(err);
+    setLoading(false);
+    return err;
+  }
+};
+export const rejectResult = async (setLoading, close, setRejected) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "access-token": token,
+      },
+    };
+
+    const res = await axios.patch("/api/v1/result/reject", {}, config);
+    setLoading(false);
+    setRejected(true);
+    close();
+  } catch (err) {
+    setLoading(false);
+    console.log(err);
   }
 };

@@ -43,7 +43,7 @@ export const userLogin = (accessToken) => async (dispatch) => {
   }
 };
 
-export const getMe = () => async (dispatch, getState) => {
+export const getMe = (setDepartment) => async (dispatch, getState) => {
   try {
     dispatch({ type: GET_ME_REQUEST });
 
@@ -61,7 +61,7 @@ export const getMe = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/v1/staff/auth/`, config);
-
+    setDepartment(data.data.staff.department);
     dispatch({
       type: GET_ME_SUCCESS,
       payload: data,

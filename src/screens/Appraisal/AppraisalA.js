@@ -10,6 +10,7 @@ import "./appraisal.css";
 import { createScore, getResult } from "../../redux/actions/appraisal.actions";
 import { useNavigate } from "react-router-dom";
 import { FiLoader } from "react-icons/fi";
+import swal from "sweetalert";
 
 const AppraisalA = () => {
   const [list, setList] = React.useState([]);
@@ -48,27 +49,58 @@ const AppraisalA = () => {
   const onReset = () => {
     localStorage.setItem("userRes", JSON.stringify({}));
     setChecked(null);
+    setIndex(0);
   };
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/section/a")
-      .then((res) => {
-        setList(res.data.data);
+      .get("/api/v1/check/section/a/result", {
+        headers: {
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then(({ data }) => {
+        if (data.data.status === "Completed") {
+          swal({
+            title: "You have completed Section A.",
+            text: "Proceed to Section B",
+            icon: "success",
+            button: {
+              text: "Go",
+            },
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+          }).then((willDelete) => {
+            if (willDelete) {
+              navigate("/appraisal/section/b");
+            }
+          });
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
       });
-  }, []);
+  }, [navigate]);
+
   React.useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/v1/option")
-      .then((res) => {
-        setOptions(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    Promise.all([
+      axios
+        .get("http://localhost:8000/api/v1/option")
+        .then((res) => {
+          setOptions(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        }),
+      axios
+        .get("http://localhost:8000/api/v1/section/a")
+        .then((res) => {
+          setList(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        }),
+    ]);
   }, []);
 
   const next = () => {
@@ -229,7 +261,7 @@ const AppraisalA = () => {
                         </Button>
                         {loading ? (
                           <Button colorScheme="yellow" leftIcon={<FiLoader />}>
-                            Fetching your score...
+                            redirecting...
                           </Button>
                         ) : (
                           <Button
@@ -238,11 +270,27 @@ const AppraisalA = () => {
                               e.preventDefault();
                               setLoading(true);
                               onSubmit(item._id);
-                              getResult(navigate, setLoading);
+                              swal({
+                                text: "Once you click proceed, you won't be allowed to take section A again.",
+                                button: {
+                                  text: "Proceed",
+                                  closeModal: true,
+                                },
+                              }).then(async (willSearch) => {
+                                if (willSearch) {
+                                  return await getResult(swal).then(() => {
+                                    localStorage.removeItem("userRes");
+                                    setLoading(false);
+                                    navigate("/appraisal/section/b");
+                                  });
+                                } else {
+                                  setLoading(false);
+                                }
+                              });
                             }}
                             colorScheme="yellow"
                           >
-                            Finish Section A
+                            Proceed to Section B
                           </Button>
                         )}
                       </div>
