@@ -22,7 +22,7 @@ export const userLogin = (accessToken) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `/api/v1/staff/auth/`,
+      `https://lotusportalapi.herokuapp.com/api/v1/staff/auth/`,
       { accessToken },
       config
     );
@@ -60,7 +60,10 @@ export const getMe = (setDepartment) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/v1/staff/auth/`, config);
+    const { data } = await axios.get(
+      `https://lotusportalapi.herokuapp.com/api/v1/staff/auth/`,
+      config
+    );
     setDepartment(data.data.staff.department);
     dispatch({
       type: GET_ME_SUCCESS,
@@ -102,7 +105,10 @@ export const getDp = (accessToken) => async (dispatch, getState) => {
         accessToken,
       },
     };
-    const { data } = await axios.get(`/api/v1/staff/auth/photo`, config);
+    const { data } = await axios.get(
+      `https://lotusportalapi.herokuapp.com/api/v1/staff/auth/photo`,
+      config
+    );
     localStorage.setItem("photo", JSON.stringify(data.photo));
     dispatch({
       type: GET_DP_SUCCESS,
