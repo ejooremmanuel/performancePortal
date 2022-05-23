@@ -23,7 +23,7 @@ import { UserContext } from "../../context/UserContext";
 const Dashboard = () => {
   // Helpers
   const dispatch = useDispatch();
-  const { myTeam, setMyTeam } = React.useContext(UserContext);
+  const { setMyTeam } = React.useContext(UserContext);
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
   const [appraisalScore, setAppraisalScore] = React.useState(0);
@@ -38,7 +38,7 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/result/current", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -48,14 +48,20 @@ const Dashboard = () => {
         setAppraisalScore(data.data.sectionascore + data.data.sectionbscore);
         setManagerscore(data.data.managerscore);
         setOverallScore(data.data.score);
-        axios.get("/api/v1/staff/auth/employees/all").then((response) => {
-          setTeam(
-            response.data.data.filter((item) => item.department === department)
-          );
-          setMyTeam(response.data.data);
-        });
+        axios
+          .get(
+            "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all"
+          )
+          .then((response) => {
+            setTeam(
+              response.data.data.filter(
+                (item) => item.department === department
+              )
+            );
+            setMyTeam(response.data.data);
+          });
       });
-  }, [department]);
+  }, [department, setMyTeam]);
   return (
     <div className="appContainer">
       <Navigation />

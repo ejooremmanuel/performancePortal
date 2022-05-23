@@ -18,7 +18,7 @@ const CreateAppraisal = () => {
     setLoading(true);
     const data = { title, description };
     axios
-      .post("/api/v1/section/a", data)
+      .post("https://lotusportalapi.herokuapp.com/api/v1/section/a", data)
       .then((res) => {
         toast({
           title: "Success",

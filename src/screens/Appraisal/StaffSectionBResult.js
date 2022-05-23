@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 import { ArrowBackIcon, ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
@@ -12,8 +13,6 @@ import {
   acceptResult,
   rejectResult,
 } from "../../redux/actions/appraisal.actions";
-import loadingSpinner from "../../assets/loading.gif";
-import Spinner from "../../components/Spinner/Spinner";
 
 const StaffSectionBResult = () => {
   const dispatch = useDispatch();
@@ -43,7 +42,7 @@ const StaffSectionBResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/result/current", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -62,7 +61,7 @@ const StaffSectionBResult = () => {
   React.useEffect(() => {
     setFetching(true);
     axios
-      .get(`/api/v1/score/current`, {
+      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/current`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -80,7 +79,7 @@ const StaffSectionBResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/perspective")
+      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
       .then(({ data }) => {
         setPerspective(data.data);
       })

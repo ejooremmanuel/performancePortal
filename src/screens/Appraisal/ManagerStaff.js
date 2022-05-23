@@ -70,7 +70,7 @@ const ManagerStaff = () => {
 
   React.useEffect(() => {
     axios
-      .get(`/api/v1/score/staff/${id}`, {
+      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/staff/${id}`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -85,7 +85,7 @@ const ManagerStaff = () => {
   }, [id, name]);
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/option")
+      .get("https://lotusportalapi.herokuapp.com/api/v1/option")
       .then((res) => {
         setOptions(res.data.data);
       })

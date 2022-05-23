@@ -15,12 +15,15 @@ const HRDashboard = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/staff/auth/employees/all", {
-        headers: {
-          "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-        },
-      })
+      .get(
+        "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          },
+        }
+      )
       .then(({ data }) => {
         console.log(data.data);
         setNumberOfEmployees(data.data.length);
@@ -106,7 +109,7 @@ export function HRHeader() {
   React.useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("/api/v1/staff/auth/", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -128,7 +131,7 @@ export function HRHeader() {
       const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
       axios
         .patch(
-          "/api/v1/staff/auth/userdp",
+          "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/userdp",
           { img: reader.result },
           {
             headers: {

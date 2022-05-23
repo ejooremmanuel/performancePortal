@@ -3,7 +3,7 @@ import { ArrowBackIcon, ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
-import { FiLoader } from "react-icons/fi";
+// import { FiLoader } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Greeting, Header, Navigation } from "../../components";
@@ -13,7 +13,7 @@ import {
   getManagerResultB,
 } from "../../redux/actions/appraisal.actions";
 import loadingSpinner from "../../assets/loading.gif";
-import Spinner from "../../components/Spinner/Spinner";
+// import Spinner from "../../components/Spinner/Spinner";
 
 const ManagerStaffSectionB = () => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const ManagerStaffSectionB = () => {
 
   React.useEffect(() => {
     axios
-      .get(`/api/v1/score/staff/${id}`, {
+      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/staff/${id}`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -84,7 +84,7 @@ const ManagerStaffSectionB = () => {
   }, [id, name]);
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/option")
+      .get("https://lotusportalapi.herokuapp.com/api/v1/option")
       .then(({ data }) => {
         setOptions(data.data);
       })
@@ -94,7 +94,7 @@ const ManagerStaffSectionB = () => {
   }, []);
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/perspective")
+      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
       .then(({ data }) => {
         setPerspective(data.data);
       })

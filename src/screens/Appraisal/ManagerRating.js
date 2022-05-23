@@ -7,20 +7,24 @@ const ManagerRating = () => {
   const [staffId, setStaffId] = React.useState("");
 
   React.useEffect(() => {
-    axios.get("/api/v1/staff/auth/employees/all").then(({ data }) => {
-      setStaffScore(
-        data.data.filter((staff) => {
-          return staff.manager && staff.manager._id === staffId;
-        })
-      );
-      // setStaffScore(data.data);
-    });
+    axios
+      .get(
+        "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all"
+      )
+      .then(({ data }) => {
+        setStaffScore(
+          data.data.filter((staff) => {
+            return staff.manager && staff.manager._id === staffId;
+          })
+        );
+        // setStaffScore(data.data);
+      });
   }, [staffId]);
 
   //Get the authenticated staff id
   React.useEffect(() => {
     axios
-      .get("/api/v1/staff/auth", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth", {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,

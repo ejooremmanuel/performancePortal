@@ -8,7 +8,7 @@ const HeaderImageUpload = () => {
   React.useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("/api/v1/staff/auth/", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -30,7 +30,7 @@ const HeaderImageUpload = () => {
       const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
       axios
         .patch(
-          "/api/v1/staff/auth/userdp",
+          "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/userdp",
           { img: reader.result },
           {
             headers: {

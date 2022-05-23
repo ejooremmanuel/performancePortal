@@ -57,7 +57,7 @@ const Calibrate = () => {
   const getEmployees = () => {
     setFetching(true);
     axios
-      .get("/api/v1/result", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/result", {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,

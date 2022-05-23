@@ -59,7 +59,7 @@ const AppraisalB = () => {
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
     setFetching(true);
     axios
-      .get("/api/v1/initiative", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/initiative", {
         headers: {
           "Content-Type": "application/json",
           "access-token": token,
@@ -90,7 +90,7 @@ const AppraisalB = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/result/current", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,

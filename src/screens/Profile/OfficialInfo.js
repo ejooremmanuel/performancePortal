@@ -36,7 +36,7 @@ const OfficialInfo = () => {
     setFetching(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("/api/v1/staff/auth/", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -55,13 +55,16 @@ const OfficialInfo = () => {
             localStorage.getItem("staffInfo")
           ).token;
           axios
-            .get("/api/v1/staff/auth/allstaff", {
-              headers: {
-                "Content-Type": "application/json",
-                // Authorization: `Bearer ${staffInfo.token}`,
-                "access-token": `${accessToken}`,
-              },
-            })
+            .get(
+              "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/allstaff",
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  // Authorization: `Bearer ${staffInfo.token}`,
+                  "access-token": `${accessToken}`,
+                },
+              }
+            )
             .then(({ data }) => {
               //find manager for staff department
               const foundManagers = data.data.filter((item) => {
@@ -109,7 +112,7 @@ const OfficialInfo = () => {
     };
     setLoading(true);
     axios
-      .patch("/api/v1/staff/auth/", data, {
+      .patch("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", data, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,

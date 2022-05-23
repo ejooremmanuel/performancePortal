@@ -53,11 +53,14 @@ const AppraisalA = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/check/section/a/result", {
-        headers: {
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-        },
-      })
+      .get(
+        "https://lotusportalapi.herokuapp.com/api/v1/check/section/a/result",
+        {
+          headers: {
+            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          },
+        }
+      )
       .then(({ data }) => {
         if (data.data.status === "Completed") {
           swal({

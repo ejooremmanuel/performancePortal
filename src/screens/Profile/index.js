@@ -28,7 +28,7 @@ const Profile = () => {
     setFetching(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("/api/v1/staff/auth/", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,

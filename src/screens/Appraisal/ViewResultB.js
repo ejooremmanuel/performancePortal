@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button } from "@chakra-ui/react";
 import React from "react";
 import { FaArrowRight, FaSpinner } from "react-icons/fa";

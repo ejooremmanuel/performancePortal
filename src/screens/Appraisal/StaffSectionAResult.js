@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 import { ArrowBackIcon, ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
@@ -31,7 +32,7 @@ const StaffSectionAResult = () => {
   React.useEffect(() => {
     setFetching(true);
     axios
-      .get(`/api/v1/score/current`, {
+      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/current`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },

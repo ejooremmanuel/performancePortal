@@ -59,12 +59,15 @@ const Employees = () => {
   const getEmployees = () => {
     setFetching(true);
     axios
-      .get("/api/v1/staff/auth/employees/all", {
-        headers: {
-          "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-        },
-      })
+      .get(
+        "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         setList(response.data.data);
@@ -222,7 +225,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
     setLoading(true);
     axios
       .patch(
-        `/api/v1/staff/auth/manager/${id}`,
+        `https://lotusportalapi.herokuapp.com/api/v1/staff/auth/manager/${id}`,
         {
           department: department,
         },

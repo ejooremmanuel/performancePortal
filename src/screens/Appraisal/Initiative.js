@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Header, Navigation, Greeting } from "../../components";
 import { useSelector } from "react-redux";
@@ -35,7 +36,7 @@ const Initiative = () => {
     setLoading(true);
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("/api/v1/initiative", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/initiative", {
         headers: {
           "Content-Type": "application/json",
           "access-token": token,
@@ -91,9 +92,11 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
   const btnRef = React.useRef();
 
   React.useEffect(() => {
-    axios.get("/api/v1/perspective").then((response) => {
-      setOptions(response.data.data);
-    });
+    axios
+      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
+      .then((response) => {
+        setOptions(response.data.data);
+      });
   }, []);
 
   const [initiative, setInitiative] = React.useState("");
@@ -115,7 +118,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
 
     axios
-      .post("/api/v1/initiative", data, {
+      .post("https://lotusportalapi.herokuapp.com/api/v1/initiative", data, {
         headers: {
           "Content-Type": "application/json",
           "access-token": token,
@@ -135,9 +138,11 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
         onClose();
       });
 
-    axios.get(`/api/v1/perspective`).then((response) => {
-      setPerspective(response.data.data);
-    });
+    axios
+      .get(`https://lotusportalapi.herokuapp.com/api/v1/perspective`)
+      .then((response) => {
+        setPerspective(response.data.data);
+      });
   };
 
   return (

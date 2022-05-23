@@ -22,7 +22,7 @@ const AppraisalResult = () => {
   const navigate = useNavigate();
 
   const [list, setList] = React.useState([]);
-  const [index, setIndex] = React.useState(0);
+  // const [index, setIndex] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [fetching, setFetching] = React.useState(false);
   const [resultType, setResultType] = React.useState("AppraisalA");
@@ -42,7 +42,7 @@ const AppraisalResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/result/current", {
+      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -60,7 +60,7 @@ const AppraisalResult = () => {
   React.useEffect(() => {
     setFetching(true);
     axios
-      .get(`http://localhost:8000/api/v1/score/current`, {
+      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/current`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -78,7 +78,7 @@ const AppraisalResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/perspective")
+      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
       .then(({ data }) => {
         console.log(data.data);
         setPerspective(data.data);

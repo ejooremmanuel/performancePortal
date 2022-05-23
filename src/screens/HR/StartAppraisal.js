@@ -15,9 +15,11 @@ const StartAppraisal = () => {
   const toast = useToast();
 
   React.useEffect(() => {
-    axios.get("/api/v1/appraisal/").then((res) => {
-      console.log(res.data);
-    });
+    axios
+      .get("https://lotusportalapi.herokuapp.com/api/v1/appraisal/")
+      .then((res) => {
+        console.log(res.data);
+      });
   }, []);
 
   const setStartAppraisal = {
@@ -30,7 +32,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "/api/v1/appraisal/",
+            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
             {
               quarter: "First Quarter",
               session: date.getFullYear(),
@@ -48,7 +50,7 @@ const StartAppraisal = () => {
             console.log(data);
             axios
               .patch(
-                `/api/v1/appraisal/start/${data.data._id}`,
+                `https://lotusportalapi.herokuapp.com/api/v1/appraisal/start/${data.data._id}`,
                 {},
                 {
                   headers: {
@@ -97,7 +99,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "/api/v1/appraisal/",
+            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
             {
               quarter: "Second Quarter",
               session: date.getFullYear(),
@@ -137,7 +139,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "/api/v1/appraisal/",
+            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
             {
               quarter: "Third Quarter",
               session: date.getFullYear(),
@@ -177,7 +179,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "/api/v1/appraisal/",
+            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
             {
               quarter: "Fourth Quarter",
               session: date.getFullYear(),
