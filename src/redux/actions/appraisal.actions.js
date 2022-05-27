@@ -123,7 +123,11 @@ export const getManagerResult = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post("/api/v1/result/", {}, config);
+    const res = await axios.post(
+      "https://lotusportalapi.herokuapp.com/api/v1/result/",
+      {},
+      config
+    );
     console.log(res.data);
     setLoading(false);
     localStorage.removeItem("m");
@@ -146,7 +150,11 @@ export const getManagerResultB = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post("/api/v1/result/", {}, config);
+    const res = await axios.post(
+      "https://lotusportalapi.herokuapp.com/api/v1/result/",
+      {},
+      config
+    );
     console.log(res.data);
     setLoading(false);
     localStorage.removeItem("mb");
@@ -170,7 +178,7 @@ export const getResult = async (navigate, setLoading, swal) => {
     };
 
     const res = await axios.post(
-      "/api/v1/check/section/a/result",
+      "https://lotusportalapi.herokuapp.com/api/v1/check/section/a/result",
       {
         status: "Completed",
       },
@@ -201,7 +209,11 @@ export const getResultB = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post("/api/v1/result/", {}, config);
+    const res = await axios.post(
+      "https://lotusportalapi.herokuapp.com/api/v1/result/",
+      {},
+      config
+    );
     console.log(res.data);
     setLoading(false);
     localStorage.removeItem("userResB");
@@ -223,7 +235,11 @@ export const acceptResult = async (setLoading, close, setAccepted) => {
       },
     };
 
-    await axios.patch("/api/v1/result/accept", {}, config);
+    await axios.patch(
+      "https://lotusportalapi.herokuapp.com/api/v1/result/accept",
+      {},
+      config
+    );
     setLoading(false);
     close();
     setAccepted(true);
@@ -243,7 +259,11 @@ export const rejectResult = async (setLoading, close, setRejected) => {
       },
     };
 
-    await axios.patch("/api/v1/result/reject", {}, config);
+    await axios.patch(
+      "https://lotusportalapi.herokuapp.com/api/v1/result/reject",
+      {},
+      config
+    );
     setLoading(false);
     setRejected(true);
     close();
