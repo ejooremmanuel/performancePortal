@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
+import { BASE_URL } from "../../config";
 
 const Initiative = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -36,7 +37,7 @@ const Initiative = () => {
     setLoading(true);
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/initiative", {
+      .get(`${BASE_URL}/api/v1/initiative`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": token,
@@ -92,11 +93,9 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
   const btnRef = React.useRef();
 
   React.useEffect(() => {
-    axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
-      .then((response) => {
-        setOptions(response.data.data);
-      });
+    axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
+      setOptions(response.data.data);
+    });
   }, []);
 
   const [initiative, setInitiative] = React.useState("");
@@ -118,7 +117,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
 
     axios
-      .post("https://lotusportalapi.herokuapp.com/api/v1/initiative", data, {
+      .post(`${BASE_URL}/api/v1/initiative`, data, {
         headers: {
           "Content-Type": "application/json",
           "access-token": token,
@@ -138,11 +137,9 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
         onClose();
       });
 
-    axios
-      .get(`https://lotusportalapi.herokuapp.com/api/v1/perspective`)
-      .then((response) => {
-        setPerspective(response.data.data);
-      });
+    axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
+      setPerspective(response.data.data);
+    });
   };
 
   return (

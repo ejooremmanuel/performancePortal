@@ -11,6 +11,8 @@ import { createScore, getResult } from "../../redux/actions/appraisal.actions";
 import { useNavigate } from "react-router-dom";
 import { FiLoader } from "react-icons/fi";
 import swal from "sweetalert";
+import { BASE_URL } from "../../config";
+
 
 const AppraisalA = () => {
   const [list, setList] = React.useState([]);
@@ -54,7 +56,7 @@ const AppraisalA = () => {
   React.useEffect(() => {
     axios
       .get(
-        "https://lotusportalapi.herokuapp.com/api/v1/check/section/a/result",
+        `${BASE_URL}/api/v1/check/section/a/result`,
         {
           headers: {
             "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -87,7 +89,7 @@ const AppraisalA = () => {
   React.useEffect(() => {
     Promise.all([
       axios
-        .get("https://lotusportalapi.herokuapp.com/api/v1/option")
+        .get(`${BASE_URL}/api/v1/option`)
         .then((res) => {
           setOptions(res.data.data);
         })
@@ -95,7 +97,7 @@ const AppraisalA = () => {
           console.log(err);
         }),
       axios
-        .get("https://lotusportalapi.herokuapp.com/api/v1/section/a")
+        .get(`${BASE_URL}/api/v1/section/a`)
         .then((res) => {
           setList(res.data.data);
         })

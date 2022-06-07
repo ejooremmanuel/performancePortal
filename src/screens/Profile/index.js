@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Navigation, Header, Options } from "../../components";
+import { BASE_URL } from "../../config";
 import styles from "./styles.module.css";
 
 const Profile = () => {
@@ -23,12 +24,14 @@ const Profile = () => {
   const [role, setRole] = useState("");
   const [department, setDepartment] = useState("");
 
+  const navigate = useNavigate();
+
   // Get user data from server
   React.useEffect(() => {
     setFetching(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -94,7 +97,14 @@ const Profile = () => {
                   <h1>
                     {firstName}&nbsp;{lastName}
                   </h1>
-                  <span>
+                  <span
+                    onClick={() => {
+                      navigate("/profile/basicInfo");
+                    }}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
                     <FaEdit />
                   </span>
                 </div>

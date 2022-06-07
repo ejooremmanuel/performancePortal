@@ -31,6 +31,7 @@ import {
   ModalCloseButton,
   useToast,
 } from "@chakra-ui/react";
+import { BASE_URL } from "../../config";
 
 const Employees = () => {
   const [list, setList] = React.useState([]);
@@ -59,15 +60,12 @@ const Employees = () => {
   const getEmployees = () => {
     setFetching(true);
     axios
-      .get(
-        "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-          },
-        }
-      )
+      .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
       .then((response) => {
         console.log(response.data);
         setList(response.data.data);
@@ -225,7 +223,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
     setLoading(true);
     axios
       .patch(
-        `https://lotusportalapi.herokuapp.com/api/v1/staff/auth/manager/${id}`,
+        `${BASE_URL}/api/v1/staff/auth/manager/${id}`,
         {
           department: department,
         },

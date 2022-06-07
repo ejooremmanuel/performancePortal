@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Greeting, Header, Navigation } from "../../components";
 import AppraisalHeading from "../../components/AppraisalHeading/AppraisalHeading";
+import { BASE_URL } from "../../config";
 import {
   patchStaffScore,
   getManagerResult,
@@ -18,13 +19,14 @@ const ManagerStaff = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const { id, name } = useParams();
+  const { id } = useParams();
   const [list, setList] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [checked, setChecked] = React.useState(null);
   const [options, setOptions] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [question, setQuestion] = React.useState();
+  const [staff, setStaff] = React.useState({});
 
   const onNextClick = () => {
     setChecked(JSON.parse(localStorage.getItem("m"))[index + 1]);
@@ -46,7 +48,7 @@ const ManagerStaff = () => {
   };
 
   const onSubmit = (staffid, questionId, next) => {
-    localStorage.setItem("staffRecord", JSON.stringify({ id, name }));
+    localStorage.setItem("staffRecord", JSON.stringify({ id }));
     const data = {
       question: questionId,
       _qid: "AppraisalA",
@@ -70,7 +72,7 @@ const ManagerStaff = () => {
 
   React.useEffect(() => {
     axios
-      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/staff/${id}`, {
+      .get(`${BASE_URL}/api/v1/score/staff/${id}`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -81,11 +83,38 @@ const ManagerStaff = () => {
             return res._qid === "AppraisalA";
           })
         );
+        // console.log(
+        //   response.data.data.filter((res) => {
+        //     return res._qid === "AppraisalA";
+        //   })
+        // );
       });
-  }, [id, name]);
+  }, [id]);
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/option")
+      .get(`${BASE_URL}/api/v1/staff/auth/${id}`, {
+        headers: {
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then((response) => {
+        setStaff(response.data.data);
+      });
+  }, [id]);
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
+        headers: {
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+      });
+  }, [id]);
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/option`)
       .then((res) => {
         setOptions(res.data.data);
       })
@@ -112,7 +141,7 @@ const ManagerStaff = () => {
             totalled and averaged for overall performance score.
             <br />
             <span>
-              Staff Name: <strong>{name}</strong>
+              Staff Name: <strong>{staff.fullname}</strong>
             </span>
           </div>
           <section>
@@ -165,6 +194,9 @@ const ManagerStaff = () => {
                         />
                         <span>
                           Staff Selection: <strong>{item.score.title}</strong>
+                          <br />
+                          Manager Selection:&nbsp;
+                          <strong>{item.managerscore.title}</strong>
                         </span>
                         {options.map((option) => {
                           return (
@@ -186,11 +218,12 @@ const ManagerStaff = () => {
                                     onChange(e, item._id, option._id);
                                     setQuestion(option._id);
                                   }}
-                                  checked={
-                                    // eslint-disable-next-line eqeqeq
+                                  checked={checked == option.value}
 
-                                    checked == option.value
-                                  }
+                                  // eslint-disable-next-line eqeqeq
+
+                                  //  ||
+                                  // option.value == item.managerscore.title
                                 />
                                 <span>{option.title}</span>
                               </>
@@ -288,7 +321,7 @@ const ManagerStaff = () => {
                   })}
               </>
             ) : (
-              <div>{name} is yet to start Appraisal Section A</div>
+              <div>{staff.fullname} is yet to start Appraisal Section A</div>
             )}
           </div>
         </section>

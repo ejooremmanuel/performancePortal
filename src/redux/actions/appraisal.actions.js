@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BASE_URL } from "../../config";
 import {
   START_CREATE_SCORE,
   START_PATCH_SCORE,
@@ -19,7 +20,7 @@ export const createScore = (data, next) => {
       });
       const token = JSON.parse(localStorage.getItem("staffInfo"));
       const config = {
-        url: "https://lotusportalapi.herokuapp.com/api/v1/score",
+        url: `${BASE_URL}/api/v1/score`,
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +53,7 @@ export const patchStaffScore = (staffid, questionid, data, next, toast) => {
       });
       const token = JSON.parse(localStorage.getItem("staffInfo"));
       const config = {
-        url: `https://lotusportalapi.herokuapp.com/api/v1/score/staff/${staffid}/${questionid}`,
+        url: `${BASE_URL}/api/v1/score/staff/${staffid}/${questionid}`,
         method: "patch",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +90,7 @@ export const createScoreB = (data, next) => {
       });
       const token = JSON.parse(localStorage.getItem("staffInfo"));
       const config = {
-        url: "https://lotusportalapi.herokuapp.com/api/v1/score",
+        url: `${BASE_URL}/api/v1/score`,
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -123,11 +124,7 @@ export const getManagerResult = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post(
-      "https://lotusportalapi.herokuapp.com/api/v1/result/",
-      {},
-      config
-    );
+    const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
     console.log(res.data);
     setLoading(false);
     localStorage.removeItem("m");
@@ -150,11 +147,7 @@ export const getManagerResultB = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post(
-      "https://lotusportalapi.herokuapp.com/api/v1/result/",
-      {},
-      config
-    );
+    const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
     console.log(res.data);
     setLoading(false);
     localStorage.removeItem("mb");
@@ -178,7 +171,7 @@ export const getResult = async (navigate, setLoading, swal) => {
     };
 
     const res = await axios.post(
-      "https://lotusportalapi.herokuapp.com/api/v1/check/section/a/result",
+      `${BASE_URL}/api/v1/check/section/a/result`,
       {
         status: "Completed",
       },
@@ -209,11 +202,7 @@ export const getResultB = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post(
-      "https://lotusportalapi.herokuapp.com/api/v1/result/",
-      {},
-      config
-    );
+    const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
     console.log(res.data);
     setLoading(false);
     localStorage.removeItem("userResB");
@@ -235,11 +224,7 @@ export const acceptResult = async (setLoading, close, setAccepted) => {
       },
     };
 
-    await axios.patch(
-      "https://lotusportalapi.herokuapp.com/api/v1/result/accept",
-      {},
-      config
-    );
+    await axios.patch(`${BASE_URL}/api/v1/result/accept`, {}, config);
     setLoading(false);
     close();
     setAccepted(true);
@@ -259,11 +244,7 @@ export const rejectResult = async (setLoading, close, setRejected) => {
       },
     };
 
-    await axios.patch(
-      "https://lotusportalapi.herokuapp.com/api/v1/result/reject",
-      {},
-      config
-    );
+    await axios.patch(`${BASE_URL}/api/v1/result/reject`, {}, config);
     setLoading(false);
     setRejected(true);
     close();

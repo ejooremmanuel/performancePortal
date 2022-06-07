@@ -83,11 +83,11 @@ const Team = () => {
                 <ViewColumn {...props} ref={ref} />
               )),
             }}
-            title=""
+            title="Team Members"
             columns={columns}
             data={myTeam}
             options={{
-              exportButton: true,
+              exportButton: false,
               actionsCellStyle: {
                 color: "#FF00dd",
               },
@@ -103,20 +103,6 @@ const Team = () => {
               boxSizing: "border-box",
               paddingLeft: "20px",
               background: "none",
-            }}
-            actions={[
-              {
-                icon: "more_horiz",
-                iconProps: {
-                  style: { fontSize: "20px", color: "gold" },
-                },
-                tooltip: "View More",
-
-                onClick: (event, rowData) => {},
-              },
-            ]}
-            components={{
-              Action: (props) => <button onClick={(event) => {}}>...</button>,
             }}
           />
         </div>

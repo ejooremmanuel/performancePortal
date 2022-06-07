@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navigation, Header, Input, Options, Select } from "../../components";
+import { BASE_URL } from "../../config";
 import styles from "./styles.module.css";
 
 const OfficialInfo = () => {
@@ -36,7 +37,7 @@ const OfficialInfo = () => {
     setFetching(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -56,7 +57,7 @@ const OfficialInfo = () => {
           ).token;
           axios
             .get(
-              "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/allstaff",
+              `${BASE_URL}/api/v1/staff/auth/allstaff`,
               {
                 headers: {
                   "Content-Type": "application/json",
@@ -112,7 +113,7 @@ const OfficialInfo = () => {
     };
     setLoading(true);
     axios
-      .patch("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", data, {
+      .patch(`${BASE_URL}/api/v1/staff/auth/`, data, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -120,7 +121,7 @@ const OfficialInfo = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data);
+
         setCug(data.data.cug);
         setDepartment(data.data.department);
         setBranch(data.data.branch);

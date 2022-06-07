@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Greeting, Header, Navigation } from "../../components";
 import AppraisalHeadingB from "../../components/AppraisalHeading/AppraisalHeadingB";
+import { BASE_URL } from "../../config";
 import {
   acceptResult,
   rejectResult,
@@ -42,7 +43,7 @@ const StaffSectionBResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
+      .get(`${BASE_URL}/api/v1/result/current`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -61,7 +62,7 @@ const StaffSectionBResult = () => {
   React.useEffect(() => {
     setFetching(true);
     axios
-      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/current`, {
+      .get(`${BASE_URL}/api/v1/score/current`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -79,7 +80,7 @@ const StaffSectionBResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
+      .get(`${BASE_URL}/api/v1/perspective`)
       .then(({ data }) => {
         setPerspective(data.data);
       })

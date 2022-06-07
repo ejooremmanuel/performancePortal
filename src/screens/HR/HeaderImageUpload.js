@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { FiCamera } from "react-icons/fi";
+import { BASE_URL } from "../../config";
 
 const HeaderImageUpload = () => {
   const [img, setImg] = React.useState("");
@@ -8,7 +9,7 @@ const HeaderImageUpload = () => {
   React.useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -30,7 +31,7 @@ const HeaderImageUpload = () => {
       const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
       axios
         .patch(
-          "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/userdp",
+          `${BASE_URL}/api/v1/staff/auth/userdp`,
           { img: reader.result },
           {
             headers: {

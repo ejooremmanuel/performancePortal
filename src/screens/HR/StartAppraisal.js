@@ -8,6 +8,7 @@ import { Button, useToast } from "@chakra-ui/react";
 import { FaRocket } from "react-icons/fa";
 
 import "./hr.styles.css";
+import { BASE_URL } from "../../config";
 
 const StartAppraisal = () => {
   const date = new Date();
@@ -15,11 +16,9 @@ const StartAppraisal = () => {
   const toast = useToast();
 
   React.useEffect(() => {
-    axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/appraisal/")
-      .then((res) => {
-        console.log(res.data);
-      });
+    axios.get(`${BASE_URL}/api/v1/appraisal/`).then((res) => {
+      console.log(res.data);
+    });
   }, []);
 
   const setStartAppraisal = {
@@ -32,7 +31,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
+            `${BASE_URL}/api/v1/appraisal/`,
             {
               quarter: "First Quarter",
               session: date.getFullYear(),
@@ -50,7 +49,7 @@ const StartAppraisal = () => {
             console.log(data);
             axios
               .patch(
-                `https://lotusportalapi.herokuapp.com/api/v1/appraisal/start/${data.data._id}`,
+                `${BASE_URL}/api/v1/appraisal/start/${data.data._id}`,
                 {},
                 {
                   headers: {
@@ -99,7 +98,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
+            `${BASE_URL}/api/v1/appraisal/`,
             {
               quarter: "Second Quarter",
               session: date.getFullYear(),
@@ -139,7 +138,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
+            `${BASE_URL}/api/v1/appraisal/`,
             {
               quarter: "Third Quarter",
               session: date.getFullYear(),
@@ -179,7 +178,7 @@ const StartAppraisal = () => {
         setLoading(true);
         axios
           .post(
-            "https://lotusportalapi.herokuapp.com/api/v1/appraisal/",
+            `${BASE_URL}/api/v1/appraisal/`,
             {
               quarter: "Fourth Quarter",
               session: date.getFullYear(),

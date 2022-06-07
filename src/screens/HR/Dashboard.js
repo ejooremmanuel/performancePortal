@@ -9,6 +9,8 @@ import "./hr.styles.css";
 import styles from "../Dashboard/styles.module.css";
 import { recentActivites } from "../../components/recent";
 import HeaderImageUpload from "./HeaderImageUpload";
+import { BASE_URL } from "../../config";
+
 
 const HRDashboard = () => {
   const [numberOfEmployees, setNumberOfEmployees] = React.useState(0);
@@ -16,7 +18,7 @@ const HRDashboard = () => {
   React.useEffect(() => {
     axios
       .get(
-        "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all",
+        `${BASE_URL}/api/v1/staff/auth/employees/all`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -105,11 +107,10 @@ export function HRHeader() {
   const reader = new FileReader();
 
   console.log(img);
-
   React.useEffect(() => {
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -131,7 +132,7 @@ export function HRHeader() {
       const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
       axios
         .patch(
-          "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/userdp",
+          `${BASE_URL}/api/v1/staff/auth/userdp`,
           { img: reader.result },
           {
             headers: {

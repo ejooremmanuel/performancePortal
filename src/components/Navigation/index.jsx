@@ -119,7 +119,7 @@ const Navigation = () => {
             </ul>
           </div>
 
-          <Tooltip text="Leave request">
+          {/* <Tooltip text="Leave request">
             <li>
               <Link to="/frontdesk/admin">
                 <FaSwimmer />
@@ -139,7 +139,7 @@ const Navigation = () => {
                 <FaWalking />
               </Link>
             </li>
-          </Tooltip>
+          </Tooltip> */}
           <Tooltip text="Logout">
             <li>
               <Link to="/#logout" onClick={logoutUser}>

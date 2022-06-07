@@ -17,6 +17,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Greeting, Header, Navigation, Textarea } from "../../components";
 import { Skeleton } from "@chakra-ui/react";
+import { BASE_URL } from "../../config";
+
 
 const AppraisalResult = () => {
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ const AppraisalResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
+      .get(`${BASE_URL}/api/v1/result/current`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -60,7 +62,7 @@ const AppraisalResult = () => {
   React.useEffect(() => {
     setFetching(true);
     axios
-      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/current`, {
+      .get(`${BASE_URL}/api/v1/score/current`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -78,7 +80,7 @@ const AppraisalResult = () => {
 
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
+      .get(`${BASE_URL}/api/v1/perspective`)
       .then(({ data }) => {
         console.log(data.data);
         setPerspective(data.data);

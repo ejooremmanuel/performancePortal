@@ -32,6 +32,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
+import { BASE_URL } from "../../config";
 
 const Calibrate = () => {
   const [list, setList] = React.useState([]);
@@ -57,7 +58,7 @@ const Calibrate = () => {
   const getEmployees = () => {
     setFetching(true);
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/result", {
+      .get(`${BASE_URL}/api/v1/result`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,

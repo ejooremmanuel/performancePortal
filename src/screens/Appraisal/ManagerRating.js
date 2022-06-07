@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Header, Navigation, StaffScoreTable } from "../../components";
+import { BASE_URL } from "../../config";
 
 const ManagerRating = () => {
   const [staffScores, setStaffScore] = React.useState([]);
@@ -8,9 +9,7 @@ const ManagerRating = () => {
 
   React.useEffect(() => {
     axios
-      .get(
-        "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all"
-      )
+      .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
       .then(({ data }) => {
         setStaffScore(
           data.data.filter((staff) => {
@@ -24,17 +23,18 @@ const ManagerRating = () => {
   //Get the authenticated staff id
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth", {
+      .get(`${BASE_URL}/api/v1/staff/auth`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
       })
       .then(({ data }) => {
-        console.log(data.data.staff._id);
         setStaffId(data.data.staff._id);
       });
   }, []);
+
+  console.log(staffScores);
 
   return (
     <div className="appContainer">

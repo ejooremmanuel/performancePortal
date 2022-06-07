@@ -8,6 +8,7 @@ import { FiLoader } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import { Greeting, Header, Navigation } from "../../components";
 import AppraisalHeading from "../../components/AppraisalHeading/AppraisalHeading";
+import { BASE_URL } from "../../config";
 
 const StaffSectionAResult = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const StaffSectionAResult = () => {
   React.useEffect(() => {
     setFetching(true);
     axios
-      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/current`, {
+      .get(`${BASE_URL}/api/v1/score/current`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },

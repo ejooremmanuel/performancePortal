@@ -13,6 +13,7 @@ import {
   getManagerResultB,
 } from "../../redux/actions/appraisal.actions";
 import loadingSpinner from "../../assets/loading.gif";
+import { BASE_URL } from "../../config";
 // import Spinner from "../../components/Spinner/Spinner";
 
 const ManagerStaffSectionB = () => {
@@ -73,7 +74,7 @@ const ManagerStaffSectionB = () => {
 
   React.useEffect(() => {
     axios
-      .get(`https://lotusportalapi.herokuapp.com/api/v1/score/staff/${id}`, {
+      .get(`${BASE_URL}/api/v1/score/staff/${id}`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
@@ -84,7 +85,7 @@ const ManagerStaffSectionB = () => {
   }, [id, name]);
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/option")
+      .get(`${BASE_URL}/api/v1/option`)
       .then(({ data }) => {
         setOptions(data.data);
       })
@@ -94,7 +95,7 @@ const ManagerStaffSectionB = () => {
   }, []);
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/perspective")
+      .get(`${BASE_URL}/api/v1/perspective`)
       .then(({ data }) => {
         setPerspective(data.data);
       })

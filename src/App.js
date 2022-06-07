@@ -79,11 +79,7 @@ function App() {
             element={<NotifyStaff />}
           />
           <Route path="/manager/score/a" exact element={<ManagerRating />} />
-          <Route
-            path="/manager/rating/:name/:id"
-            exact
-            element={<ManagerStaff />}
-          />
+          <Route path="/manager/rating/:id" exact element={<ManagerStaff />} />
           <Route
             path="/manager/rating/b/:name/:id"
             exact

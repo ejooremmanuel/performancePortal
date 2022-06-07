@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../../redux/actions/userActions";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
+import { BASE_URL } from "../../config";
 
 const Dashboard = () => {
   // Helpers
@@ -38,7 +39,7 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/result/current", {
+      .get(`${BASE_URL}/api/v1/result/current`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -49,9 +50,7 @@ const Dashboard = () => {
         setManagerscore(data.data.managerscore);
         setOverallScore(data.data.score);
         axios
-          .get(
-            "https://lotusportalapi.herokuapp.com/api/v1/staff/auth/employees/all"
-          )
+          .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
           .then((response) => {
             setTeam(
               response.data.data.filter(
@@ -81,21 +80,21 @@ const Dashboard = () => {
             count={managerscore}
             Icon={BsPersonBadgeFill}
             color={styles.blue}
-            url="/frontdesk/guest/awaitingHost"
+            url="#"
           />
           <Card
             title="Overall Score"
             count={overallScore}
             Icon={BsReception4}
             color={styles.purple}
-            url="/frontdesk/guest/awaitingHost"
+            url="#"
           />
           <Card
             title="My Team"
             count={team.length}
             Icon={FiUsers}
             color={styles.red}
-            url="/frontdesk/guest/awaitingHost"
+            url="/team"
           />
         </div>
         <div className={styles.objectContainer}>
@@ -108,18 +107,18 @@ const Dashboard = () => {
                 <FaRegChartBar />
                 Appraisal
               </Link>
-              <Link to="/" className={styles.link}>
+              {/* <Link to="/" className={styles.link}>
                 <FaSwimmer />
                 Leave Request
-              </Link>
-              <Link to="/appraisal/initiatives" className={styles.link}>
+              </Link> */}
+              <Link to="/appraisal/initiative" className={styles.link}>
                 <FaSortAlphaDown />
                 Initiatives
               </Link>
-              <Link to="/" className={styles.link}>
+              {/* <Link to="/" className={styles.link}>
                 <FaRegClock />
                 Clockin
-              </Link>
+              </Link> */}
               <Link to="/team" className={styles.link}>
                 <FaUsers />
                 My Team

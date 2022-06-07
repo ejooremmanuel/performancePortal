@@ -4,6 +4,7 @@ import axios from "axios";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
 import { HRNavbar } from "../../components";
+import { BASE_URL } from "../../config";
 import "../Appraisal/appraisal.css";
 import HeaderImageUpload from "./HeaderImageUpload";
 
@@ -18,7 +19,7 @@ const CreateAppraisal = () => {
     setLoading(true);
     const data = { title, description };
     axios
-      .post("https://lotusportalapi.herokuapp.com/api/v1/section/a", data)
+      .post(`${BASE_URL}/api/v1/section/a`, data)
       .then((res) => {
         toast({
           title: "Success",

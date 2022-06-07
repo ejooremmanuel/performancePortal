@@ -22,6 +22,7 @@ import { HRNavbar } from "../../components";
 import { HRHeader } from "./CreateAppraisal";
 import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter/Filter";
+import { BASE_URL } from "../../config";
 
 const AppraisalReport = () => {
   const [list, setList] = React.useState([]);
@@ -45,7 +46,7 @@ const AppraisalReport = () => {
 
   React.useEffect(() => {
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/result", {
+      .get(`${BASE_URL}/api/v1/result`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
