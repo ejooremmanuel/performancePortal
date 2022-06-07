@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./styles.module.css";
@@ -44,6 +45,8 @@ const Navigation = () => {
       });
   }, []);
 
+  console.log(staff.role);
+
   return (
     <div className={styles.hra__navigation}>
       <div className={styles.hra__logo}>
@@ -87,7 +90,7 @@ const Navigation = () => {
               className={toggle ? styles.hra__showGuest : styles.hra__hideGuest}
             >
               <ul>
-                {staff.role === "Manager" && (
+                {staff.role == "Manager" && (
                   <Tooltip text="Appraise Staff">
                     <li>
                       <Link to="/manager/score/a">
