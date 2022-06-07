@@ -7,7 +7,7 @@ import Card from "../../components/Card";
 import HRNavbar from "../../components/HR Navbar";
 import "./hr.styles.css";
 import styles from "../Dashboard/styles.module.css";
-import { recentActivites } from "../../components/recent";
+// import { recentActivites } from "../../components/recent";
 import HeaderImageUpload from "./HeaderImageUpload";
 import { BASE_URL } from "../../config";
 import Logs from "./Logs";
