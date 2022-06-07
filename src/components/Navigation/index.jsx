@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
 import React, { useState } from "react";
 import axios from "axios";
@@ -21,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { Tooltip } from "..";
 import { logout } from "../../redux/actions/userActions";
 import { UserContext } from "../../context/UserContext";
+import { BASE_URL } from "../../config";
 
 const Navigation = () => {
   const [toggle, setToggle] = useState(false);
@@ -35,7 +37,7 @@ const Navigation = () => {
 
   React.useEffect(() => {
     axios
-      .get("/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
