@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { ArrowBackIcon, ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Button, useToast } from "@chakra-ui/react";
@@ -9,10 +10,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Greeting, Header, Navigation } from "../../components";
 import AppraisalHeading from "../../components/AppraisalHeading/AppraisalHeading";
 import { BASE_URL } from "../../config";
+import { UserContext } from "../../context/UserContext";
 import {
   patchStaffScore,
   getManagerResult,
 } from "../../redux/actions/appraisal.actions";
+import swal from "sweetalert";
 
 const ManagerStaff = () => {
   const dispatch = useDispatch();
@@ -27,6 +30,8 @@ const ManagerStaff = () => {
   const [loading, setLoading] = React.useState(false);
   const [question, setQuestion] = React.useState();
   const [staff, setStaff] = React.useState({});
+  const { quarter } = React.useContext(UserContext);
+  const [rejected, setRejected] = React.useState(false);
 
   const onNextClick = () => {
     setChecked(JSON.parse(localStorage.getItem("m"))[index + 1]);
@@ -109,9 +114,27 @@ const ManagerStaff = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
+        if (
+          response.data.data[quarter][0].status === "Pending" ||
+          response.data.data[quarter][0].status === "Accepted"
+        ) {
+          setRejected(true);
+        }
       });
   }, [id]);
+
+  React.useEffect(() => {
+    if (rejected) {
+      swal({
+        buttons: [false],
+        text: "Staff already rated",
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        icon: "info",
+      });
+    }
+  }, [rejected]);
+
   React.useEffect(() => {
     axios
       .get(`${BASE_URL}/api/v1/option`)

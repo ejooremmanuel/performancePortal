@@ -35,8 +35,19 @@ import StartAppraisal from "./screens/HR/StartAppraisal";
 
 function App() {
   const [myTeam, setMyTeam] = React.useState([]);
+  const [appraisalStarted, setAppraisalStarted] = React.useState(true);
+  const [quarter, setQuarter] = React.useState("firstQuarter");
   return (
-    <UserContext.Provider value={{ myTeam, setMyTeam }}>
+    <UserContext.Provider
+      value={{
+        myTeam,
+        setMyTeam,
+        appraisalStarted,
+        setAppraisalStarted,
+        quarter,
+        setQuarter,
+      }}
+    >
       <Router>
         <Routes>
           <Route path="/" exact element={<LoginScreen />} />
@@ -81,7 +92,7 @@ function App() {
           <Route path="/manager/score/a" exact element={<ManagerRating />} />
           <Route path="/manager/rating/:id" exact element={<ManagerStaff />} />
           <Route
-            path="/manager/rating/b/:name/:id"
+            path="/manager/rating/b/:id"
             exact
             element={<ManagerStaffSectionB />}
           />

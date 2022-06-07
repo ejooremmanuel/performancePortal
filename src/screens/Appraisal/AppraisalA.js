@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { FiLoader } from "react-icons/fi";
 import swal from "sweetalert";
 import { BASE_URL } from "../../config";
-
+import { UserContext } from "../../context/UserContext";
 
 const AppraisalA = () => {
   const [list, setList] = React.useState([]);
@@ -21,12 +21,15 @@ const AppraisalA = () => {
   const [options, setOptions] = React.useState([]);
   const [question, setQuestion] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  const { appraisalStarted } = React.useContext(UserContext);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
+
+  console.log(appraisalStarted, "appraisalStarte");
 
   const onNextClick = () => {
     setChecked(JSON.parse(localStorage.getItem("userRes"))[index + 1]);
@@ -55,14 +58,11 @@ const AppraisalA = () => {
 
   React.useEffect(() => {
     axios
-      .get(
-        `${BASE_URL}/api/v1/check/section/a/result`,
-        {
-          headers: {
-            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-          },
-        }
-      )
+      .get(`${BASE_URL}/api/v1/check/section/a/result`, {
+        headers: {
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
       .then(({ data }) => {
         if (data.data.status === "Completed") {
           swal({

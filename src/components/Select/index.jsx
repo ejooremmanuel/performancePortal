@@ -45,7 +45,11 @@ export const CustomSelect = ({
           {title}
         </option>
         {options &&
-          options.map((item) => <option value={item._id}>{item.value}</option>)}
+          options.map((item) => (
+            <option value={item._id} key={item._id}>
+              {item.value}
+            </option>
+          ))}
       </select>
     </div>
   );

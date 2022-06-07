@@ -235,7 +235,6 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
         }
       )
       .then((response) => {
-        console.log(response.data);
         onClose();
         toast({
           title: "Success",
@@ -249,7 +248,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
         setDepartment("");
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error.response.data.msg);
         toast({
           title: "Error",
           description: `An error has occurred!`,
@@ -279,88 +278,54 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                 justifyContent: "center",
               }}
             >
-              {data.data && data.data.isManager ? (
+              <>
+                <h3>
+                  Do you want to make &nbsp;
+                  <strong>{data.data && data.data.fullname}</strong> a Manager?
+                </h3>
                 <div>
-                  <h3>
-                    Do you want to Remove &nbsp;
-                    <strong>{data.data && data.data.fullname}</strong> as
-                    Manager?
-                  </h3>
                   <br />
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "20px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <div className="btn">
+                  <div>Choose Department</div>
+                  <Select
+                    options={Options.Departments}
+                    value={department}
+                    onChange={onChangeHandler}
+                    required={true}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "20px",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <div className="btn">
+                    <button
+                      onClick={() => {
+                        onClose();
+                      }}
+                    >
+                      No
+                    </button>
+                  </div>
+                  <div className="btn">
+                    {loading ? (
+                      <button>Updating...</button>
+                    ) : (
                       <button
                         onClick={() => {
-                          onClose();
+                          yesHandler(data.data && data.data._id);
                         }}
                       >
-                        No
+                        Yes
                       </button>
-                    </div>
-                    <div className="btn">
-                      <button onClick={() => {}}>Yes</button>
-                    </div>
+                    )}
                   </div>
                 </div>
-              ) : (
-                <>
-                  <h3>
-                    Do you want to make &nbsp;
-                    <strong>{data.data && data.data.fullname}</strong> a
-                    Manager?
-                  </h3>
-                  <div>
-                    <br />
-                    <div>Choose Department</div>
-                    <Select
-                      options={Options.Departments}
-                      value={department}
-                      onChange={onChangeHandler}
-                      required={true}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "20px",
-                      justifyContent: "center",
-                      width: "100%",
-                    }}
-                  >
-                    <div className="btn">
-                      <button
-                        onClick={() => {
-                          onClose();
-                        }}
-                      >
-                        No
-                      </button>
-                    </div>
-                    <div className="btn">
-                      {loading ? (
-                        <button>Updating...</button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            yesHandler(data.data && data.data._id);
-                          }}
-                        >
-                          Yes
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </>
-              )}
+              </>
             </div>
           </ModalBody>
         </ModalContent>

@@ -1,7 +1,7 @@
 import logo from "../../assets/purple.png";
 import React from "react";
 import {
-  FaBook,
+  // FaBook,
   FaEdit,
   FaHome,
   FaPlus,

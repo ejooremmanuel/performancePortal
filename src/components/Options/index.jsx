@@ -96,4 +96,5 @@ const Months = [
 
 const Locations = [{ value: "Abuja" }, { value: "Lagos" }, { value: "Others" }];
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default { ProfileLinks, Gender, States, Departments, Locations, Months };

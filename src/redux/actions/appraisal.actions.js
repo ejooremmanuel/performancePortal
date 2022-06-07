@@ -125,7 +125,7 @@ export const getManagerResult = async (navigate, setLoading) => {
     };
 
     const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
-    console.log(res.data);
+
     setLoading(false);
     localStorage.removeItem("m");
     navigate(

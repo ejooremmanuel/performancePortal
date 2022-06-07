@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./header.module.css";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { FiCamera } from "react-icons/fi";
 import axios from "axios";
 
 const Header = ({ title, children, name }) => {
-  const navigate = useNavigate();
-  const photo = JSON.parse(localStorage.getItem("photo"));
+  // const navigate = useNavigate();
+  // const photo = JSON.parse(localStorage.getItem("photo"));
   const [img, setImg] = React.useState("");
   const reader = new FileReader();
 

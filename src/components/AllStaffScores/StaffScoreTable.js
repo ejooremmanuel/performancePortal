@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TableIcons } from "../TableIcons/TableIcons";
 import MaterialTable from "material-table";
 
-const StaffScoreTable = ({ itemsPerPage, list }) => {
+const StaffScoreTable = ({ list }) => {
   const navigate = useNavigate();
   const onGetUserScore = (id, name) => {
     navigate(`/manager/rating/${id}`);

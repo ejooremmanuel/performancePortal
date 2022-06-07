@@ -9,7 +9,7 @@ const ManagerStaffResult = () => {
   const { score, managerscore } = useParams();
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
-  const { id, name } =
+  const { id } =
     JSON.parse(localStorage.getItem("staffRecord")) &&
     JSON.parse(localStorage.getItem("staffRecord"));
 
@@ -20,7 +20,7 @@ const ManagerStaffResult = () => {
   };
   const proceed = () => {
     localStorage.removeItem("m");
-    navigate(`/manager/rating/b/${name}/${id}`);
+    navigate(`/manager/rating/b/${id}`);
   };
   return (
     <div className="appContainer">

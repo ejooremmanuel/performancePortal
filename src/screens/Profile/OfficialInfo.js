@@ -49,25 +49,23 @@ const OfficialInfo = () => {
         setDepartment(data.data.staff.department);
         setBranch(data.data.staff.branch);
         setManager(data.data.staff.manager.fullname);
-        console.log(data.data.staff.manager.fullname);
+
         if (data.data.staff.department) {
           setShowManagerField(true);
           const accessToken = JSON.parse(
             localStorage.getItem("staffInfo")
           ).token;
           axios
-            .get(
-              `${BASE_URL}/api/v1/staff/auth/allstaff`,
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  // Authorization: `Bearer ${staffInfo.token}`,
-                  "access-token": `${accessToken}`,
-                },
-              }
-            )
+            .get(`${BASE_URL}/api/v1/staff/auth/allstaff`, {
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${staffInfo.token}`,
+                "access-token": `${accessToken}`,
+              },
+            })
             .then(({ data }) => {
               //find manager for staff department
+
               const foundManagers = data.data.filter((item) => {
                 return (
                   item.department === department &&
@@ -121,7 +119,6 @@ const OfficialInfo = () => {
         },
       })
       .then(({ data }) => {
-
         setCug(data.data.cug);
         setDepartment(data.data.department);
         setBranch(data.data.branch);
@@ -137,11 +134,10 @@ const OfficialInfo = () => {
         });
       })
       .catch((err) => {
-        console.log(err.message || err.msg);
         setLoading(false);
         toast({
           title: "Error",
-          description: "Profile update failed",
+          description: `Profile update failed: ${err.response.data.msg}`,
           status: "error",
           duration: 9000,
           isClosable: true,

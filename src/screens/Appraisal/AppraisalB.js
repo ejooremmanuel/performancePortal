@@ -16,7 +16,6 @@ import { FiLoader } from "react-icons/fi";
 import swal from "sweetalert";
 import { BASE_URL } from "../../config";
 
-
 const AppraisalB = () => {
   const [list, setList] = React.useState([]);
   const [index, setIndex] = React.useState(0);
@@ -99,7 +98,6 @@ const AppraisalB = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.data.sectionbscore) {
           swal({
             title: "You have completed Section B of your Appraisal.",

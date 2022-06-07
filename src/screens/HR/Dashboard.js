@@ -10,24 +10,20 @@ import styles from "../Dashboard/styles.module.css";
 import { recentActivites } from "../../components/recent";
 import HeaderImageUpload from "./HeaderImageUpload";
 import { BASE_URL } from "../../config";
-
+import Logs from "./Logs";
 
 const HRDashboard = () => {
   const [numberOfEmployees, setNumberOfEmployees] = React.useState(0);
 
   React.useEffect(() => {
     axios
-      .get(
-        `${BASE_URL}/api/v1/staff/auth/employees/all`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-          },
-        }
-      )
+      .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
       .then(({ data }) => {
-        console.log(data.data);
         setNumberOfEmployees(data.data.length);
       })
       .catch((error) => {
@@ -78,21 +74,7 @@ const HRDashboard = () => {
             Recent Activities
           </h1>
 
-          {recentActivites.slice(0, 3).map((activity) => {
-            return (
-              <div className="dashboard__activities__card" key={activity.id}>
-                <div className="dashboard__activities__card__title">
-                  <h3>{activity.title}</h3>
-                </div>
-                <div className="dashboard__activities__card__date">
-                  <h3>{activity.date}</h3>
-                </div>
-                <div className="dashboard__activities__card__name">
-                  <h3>{activity.name}</h3>
-                </div>
-              </div>
-            );
-          })}
+          <Logs />
         </div>
         <div></div>
       </div>

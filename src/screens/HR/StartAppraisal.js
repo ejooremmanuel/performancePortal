@@ -6,13 +6,14 @@ import HeaderImageUpload from "./HeaderImageUpload";
 import { Options } from "../../components";
 import { Button, useToast } from "@chakra-ui/react";
 import { FaRocket } from "react-icons/fa";
-
 import "./hr.styles.css";
 import { BASE_URL } from "../../config";
+import { UserContext } from "../../context/UserContext";
 
 const StartAppraisal = () => {
   const date = new Date();
   const [loading, setLoading] = React.useState(false);
+  const { setAppraisalStarted, setQuarter } = React.useContext(UserContext);
   const toast = useToast();
 
   React.useEffect(() => {
@@ -47,6 +48,8 @@ const StartAppraisal = () => {
           )
           .then(({ data }) => {
             console.log(data);
+            setAppraisalStarted(true);
+            setQuarter("firstQuarter");
             axios
               .patch(
                 `${BASE_URL}/api/v1/appraisal/start/${data.data._id}`,
@@ -115,6 +118,8 @@ const StartAppraisal = () => {
           .then(({ data }) => {
             console.log(data);
             setLoading(false);
+            setAppraisalStarted(true);
+            setQuarter("secondQuarter");
           })
           .catch((err) => {
             toast({
@@ -154,6 +159,8 @@ const StartAppraisal = () => {
           )
           .then(({ data }) => {
             console.log(data);
+            setAppraisalStarted(true);
+            setQuarter("thirdQuarter");
             setLoading(false);
           })
           .catch((err) => {
@@ -194,6 +201,8 @@ const StartAppraisal = () => {
           )
           .then(({ data }) => {
             console.log(data);
+            setAppraisalStarted(true);
+            setQuarter("fourthQuarter");
             setLoading(false);
           })
           .catch((err) => {
@@ -233,7 +242,7 @@ const StartAppraisal = () => {
                 Start <FaRocket />
               </Button>
             </div>
-          ) : currentMonth === "July" ? (
+          ) : currentMonth === "July" || currentMonth === "June" ? (
             <div className="quarter__container">
               <div>Start Second Quarter Appraisal for {date.getFullYear()}</div>
               <Button

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { ArrowBackIcon, ArrowForwardIcon, RepeatIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
@@ -14,13 +15,14 @@ import {
 } from "../../redux/actions/appraisal.actions";
 import loadingSpinner from "../../assets/loading.gif";
 import { BASE_URL } from "../../config";
-// import Spinner from "../../components/Spinner/Spinner";
+import { UserContext } from "../../context/UserContext";
+import swal from "sweetalert";
 
 const ManagerStaffSectionB = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { id, name } =
+  const { id } =
     JSON.parse(localStorage.getItem("staffRecord")) &&
     JSON.parse(localStorage.getItem("staffRecord"));
 
@@ -31,6 +33,9 @@ const ManagerStaffSectionB = () => {
   const [loading, setLoading] = React.useState(false);
   const [question, setQuestion] = React.useState();
   const [perspective, setPerspective] = React.useState([]);
+  const [staff, setStaff] = React.useState({});
+  const { quarter } = React.useContext(UserContext);
+  const [rejected, setRejected] = React.useState(false);
   const onNextClick = () => {
     setChecked(JSON.parse(localStorage.getItem("mb"))[index + 1]);
   };
@@ -82,7 +87,48 @@ const ManagerStaffSectionB = () => {
       .then((response) => {
         setList(response.data.data.filter(({ _qid }) => _qid === "Initiative"));
       });
-  }, [id, name]);
+  }, [id]);
+
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/staff/auth/${id}`, {
+        headers: {
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then((response) => {
+        setStaff(response.data.data);
+      });
+  }, [id]);
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
+        headers: {
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then((response) => {
+        if (
+          response.data.data[quarter][0].status === "Pending" ||
+          response.data.data[quarter][0].status === "Accepted"
+        ) {
+          setRejected(true);
+        }
+      });
+  }, [id]);
+
+  React.useEffect(() => {
+    if (rejected) {
+      swal({
+        buttons: [false],
+        text: "Staff already rated",
+        closeOnClickOutside: false,
+        closeOnEsc: false,
+        icon: "info",
+      });
+    }
+  }, [rejected]);
+
   React.useEffect(() => {
     axios
       .get(`${BASE_URL}/api/v1/option`)
@@ -100,7 +146,7 @@ const ManagerStaffSectionB = () => {
         setPerspective(data.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.msg);
       });
   }, []);
   return (
@@ -122,7 +168,7 @@ const ManagerStaffSectionB = () => {
             totalled and averaged for overall performance score.
             <br />
             <span>
-              Staff Name: <strong>{name}</strong>
+              Staff Name: <strong>{staff.fullname}</strong>
             </span>
           </div>
           <section>
@@ -183,6 +229,8 @@ const ManagerStaffSectionB = () => {
                         />
                         <span>
                           Staff Selection: <strong>{item.score.title}</strong>
+                          Manager Selection:&nbsp;
+                          <strong>{item.managerscore.title}</strong>
                         </span>
                         {options.map((option) => {
                           return (
@@ -309,7 +357,7 @@ const ManagerStaffSectionB = () => {
                   })}
               </>
             ) : (
-              <div>{name} is yet to start Appraisal Section B</div>
+              <div>{staff.fullname} is yet to start Appraisal Section B</div>
             )}
           </div>
         </section>

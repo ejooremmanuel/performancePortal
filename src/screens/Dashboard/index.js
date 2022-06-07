@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 import {
   FaRegChartBar,
   FaSortAlphaDown,
-  FaRegClock,
+  // FaRegClock,
   FaUsers,
-  FaSwimmer,
+  // FaSwimmer,
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../../redux/actions/userActions";
@@ -57,7 +57,11 @@ const Dashboard = () => {
                 (item) => item.department === department
               )
             );
-            setMyTeam(response.data.data);
+            setMyTeam(
+              response.data.data.filter(
+                (item) => item.department === department
+              )
+            );
           });
       });
   }, [department, setMyTeam]);
@@ -98,7 +102,7 @@ const Dashboard = () => {
           />
         </div>
         <div className={styles.objectContainer}>
-          <Chart />
+          <Chart id={staff && staff._id} />
           <div className={styles.quickLinks}>
             <h2>Quick Links</h2>
             <br />

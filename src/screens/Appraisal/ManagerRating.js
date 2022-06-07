@@ -34,8 +34,6 @@ const ManagerRating = () => {
       });
   }, []);
 
-  console.log(staffScores);
-
   return (
     <div className="appContainer">
       <Navigation />
@@ -43,7 +41,7 @@ const ManagerRating = () => {
       <div className="contentsRight">
         <Header title="Manager Appraisal of Staff" />
         <div style={{ width: "100%", height: "100%" }}>
-          <StaffScoreTable itemsPerPage={4} list={staffScores} />
+          <StaffScoreTable list={staffScores} />
         </div>
       </div>
     </div>

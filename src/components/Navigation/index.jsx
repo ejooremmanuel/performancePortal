@@ -9,20 +9,22 @@ import {
   FaRegChartBar,
   FaVoteYea,
   FaSortAlphaDown,
-  FaWalking,
-  FaRegClock,
-  FaUsers,
+  // FaWalking,
+  // FaRegClock,
+  // FaUsers,
   FaSignOutAlt,
-  FaSwimmer,
+  // FaSwimmer,
   FaBook,
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Tooltip } from "..";
 import { logout } from "../../redux/actions/userActions";
+import { UserContext } from "../../context/UserContext";
 
 const Navigation = () => {
   const [toggle, setToggle] = useState(false);
   const [staff, setStaff] = useState({});
+  const { appraisalStarted } = React.useContext(UserContext);
   const dispatch = useDispatch();
 
   const logoutUser = () => {
@@ -41,8 +43,6 @@ const Navigation = () => {
         setStaff(data.data.staff);
       });
   }, []);
-
-  console.log(staff);
 
   return (
     <div className={styles.hra__navigation}>
@@ -82,42 +82,52 @@ const Navigation = () => {
               </li>
             </Tooltip>
           )}
-          <div
-            className={toggle ? styles.hra__showGuest : styles.hra__hideGuest}
-          >
-            <ul>
-              {staff.role === "Manager" && staff.isManager && (
-                <Tooltip text="Appraise Staff">
+          {appraisalStarted ? (
+            <div
+              className={toggle ? styles.hra__showGuest : styles.hra__hideGuest}
+            >
+              <ul>
+                {staff.role === "Manager" && staff.isManager && (
+                  <Tooltip text="Appraise Staff">
+                    <li>
+                      <Link to="/manager/score/a">
+                        <FaRegChartBar />
+                      </Link>
+                    </li>
+                  </Tooltip>
+                )}
+                <Tooltip text="Start Appraisal">
                   <li>
-                    <Link to="/manager/score/a">
-                      <FaRegChartBar />
+                    <Link to="/appraisal">
+                      <FaVoteYea />
                     </Link>
                   </li>
                 </Tooltip>
-              )}
-              <Tooltip text="Start Appraisal">
-                <li>
-                  <Link to="/appraisal">
-                    <FaVoteYea />
-                  </Link>
-                </li>
-              </Tooltip>
-              <Tooltip text="Appraisal Result">
-                <li>
-                  <Link to="/report">
-                    <FaBook />
-                  </Link>
-                </li>
-              </Tooltip>
-              <Tooltip text="Initiatives">
-                <li>
-                  <Link to="/appraisal/initiative">
-                    <FaSortAlphaDown />
-                  </Link>
-                </li>
-              </Tooltip>
-            </ul>
-          </div>
+                <Tooltip text="Appraisal Result">
+                  <li>
+                    <Link to="/report">
+                      <FaBook />
+                    </Link>
+                  </li>
+                </Tooltip>
+                <Tooltip text="Initiatives">
+                  <li>
+                    <Link to="/appraisal/initiative">
+                      <FaSortAlphaDown />
+                    </Link>
+                  </li>
+                </Tooltip>
+              </ul>
+            </div>
+          ) : (
+            <div
+              className={toggle ? styles.hra__showGuest : styles.hra__hideGuest}
+            >
+              <ul>
+                <li>Appraisal Not Started</li>
+              </ul>
+            </div>
+          )}
 
           {/* <Tooltip text="Leave request">
             <li>

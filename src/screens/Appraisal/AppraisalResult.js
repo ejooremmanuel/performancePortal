@@ -19,7 +19,6 @@ import { Greeting, Header, Navigation, Textarea } from "../../components";
 import { Skeleton } from "@chakra-ui/react";
 import { BASE_URL } from "../../config";
 
-
 const AppraisalResult = () => {
   const navigate = useNavigate();
 
@@ -68,7 +67,6 @@ const AppraisalResult = () => {
         },
       })
       .then((response) => {
-        console.log(resultType);
         setList(
           response.data.data.filter((res) => {
             return res._qid === resultType;
@@ -91,7 +89,6 @@ const AppraisalResult = () => {
   }, []);
 
   function getPerspective(id) {
-    console.log(id);
     if (id)
       return perspective.filter((item) => {
         return item._id === id;
