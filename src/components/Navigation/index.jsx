@@ -25,6 +25,7 @@ import { UserContext } from "../../context/UserContext";
 const Navigation = () => {
   const [toggle, setToggle] = useState(false);
   const [staff, setStaff] = useState({});
+  const [role, setRole] = useState("Staff");
   const { appraisalStarted } = React.useContext(UserContext);
   const dispatch = useDispatch();
 
@@ -42,10 +43,11 @@ const Navigation = () => {
       })
       .then(({ data }) => {
         setStaff(data.data.staff);
+        setRole(data.data.staff.role);
       });
   }, []);
 
-  console.log(staff.role);
+  console.log(role);
 
   return (
     <div className={styles.hra__navigation}>
@@ -90,7 +92,7 @@ const Navigation = () => {
               className={toggle ? styles.hra__showGuest : styles.hra__hideGuest}
             >
               <ul>
-                {staff.role == "Manager" && (
+                {role == "Manager" && (
                   <Tooltip text="Appraise Staff">
                     <li>
                       <Link to="/manager/score/a">
