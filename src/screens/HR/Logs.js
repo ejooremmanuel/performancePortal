@@ -31,11 +31,11 @@ const Logs = () => {
                 <div className="dashboard__activities__card__title">
                   <h3>{activity.title}</h3>
                 </div>
+                <div className="dashboard__activities__card__name">
+                  <h3>{activity.description}</h3>
+                </div>
                 <div className="dashboard__activities__card__date">
                   <h3>{new Date(activity.createdAt).toLocaleDateString()}</h3>
-                </div>
-                <div className="dashboard__activities__card__name">
-                  <h3>{activity.name}</h3>
                 </div>
               </div>
             );

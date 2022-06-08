@@ -33,6 +33,7 @@ const AppraisalResult = () => {
   const [accepted, setAccepted] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: rejectModal, onOpen: open, onClose: close } = useDisclosure();
+  const [hasManagerScore, setHasManagerScore] = React.useState(false);
 
   const onAccept = () => {
     acceptResult(setLoading, onClose, setAccepted);
@@ -50,10 +51,12 @@ const AppraisalResult = () => {
         },
       })
       .then((res) => {
-        if (res.data.data.status === "Accepted") {
+        if (res.data.data.status === "Accepted" && res.data.data.managerscore) {
           setAccepted(true);
         } else if (res.data.data.status === "Rejected") {
           setRejected(true);
+        } else if (res.data.data.managerscore > 0) {
+          setHasManagerScore(true);
         }
       });
   }, [navigate]);
@@ -80,7 +83,6 @@ const AppraisalResult = () => {
     axios
       .get(`${BASE_URL}/api/v1/perspective`)
       .then(({ data }) => {
-        console.log(data.data);
         setPerspective(data.data);
       })
       .catch((err) => {
@@ -180,7 +182,11 @@ const AppraisalResult = () => {
                             {item.question.description}
                           </td>
                           <td>{item.score.title}</td>
-                          <td>{item.managerscore.title}</td>
+                          <td>
+                            {item.managerscore
+                              ? item.managerscore.title
+                              : "No Manager rating yet"}
+                          </td>
                         </tr>
                       );
                     })
@@ -208,7 +214,11 @@ const AppraisalResult = () => {
                             {item.question.initiative}
                           </td>
                           <td>{item.score.title}</td>
-                          <td>{item.managerscore.title}</td>
+                          <td>
+                            {item.managerscore
+                              ? item.managerscore.title
+                              : "No Manager rating yet"}
+                          </td>
                         </tr>
                       );
                     })}
@@ -238,24 +248,29 @@ const AppraisalResult = () => {
                         >
                           See Section A Report
                         </Button>
-                        <Button
-                          onClick={() => {
-                            onOpen();
-                          }}
-                          mx={3}
-                          colorScheme="green"
-                          isDisabled={rejected ? true : accepted}
-                        >
-                          Accept
-                        </Button>
-                        <Button
-                          onClick={open}
-                          mx={3}
-                          colorScheme="red"
-                          isDisabled={accepted ? true : rejected}
-                        >
-                          Reject
-                        </Button>
+
+                        {hasManagerScore && (
+                          <>
+                            <Button
+                              onClick={() => {
+                                onOpen();
+                              }}
+                              mx={3}
+                              colorScheme="green"
+                              isDisabled={rejected ? true : accepted}
+                            >
+                              Accept
+                            </Button>
+                            <Button
+                              onClick={open}
+                              mx={3}
+                              colorScheme="red"
+                              isDisabled={accepted ? true : rejected}
+                            >
+                              Reject
+                            </Button>
+                          </>
+                        )}
                       </>
                     )}
                   </td>

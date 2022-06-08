@@ -13,7 +13,6 @@ import {
   GET_DP_SUCCESS,
 } from "../constants/userConstants";
 
-
 export const userLogin = (accessToken) => async (dispatch) => {
   try {
     dispatch({ type: AUTH_REQUEST });
@@ -62,10 +61,7 @@ export const getMe = (setDepartment) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `${BASE_URL}/api/v1/staff/auth/`,
-      config
-    );
+    const { data } = await axios.get(`${BASE_URL}/api/v1/staff/auth/`, config);
     setDepartment(data.data.staff.department);
     dispatch({
       type: GET_ME_SUCCESS,
@@ -89,14 +85,12 @@ export const logout = () => (dispatch) => {
 
 export const getDp = (accessToken) => async (dispatch, getState) => {
   try {
-    console.log(accessToken);
     dispatch({ type: GET_DP_REQUEST });
 
     const {
       auth: { staffInfo },
     } = getState();
 
-    console.log(staffInfo.token, "staffInfo");
     const config = {
       headers: {
         "Content-Type": "application/json",

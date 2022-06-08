@@ -49,8 +49,6 @@ const Navigation = () => {
       });
   }, []);
 
-  console.log(role);
-
   return (
     <div className={styles.hra__navigation}>
       <div className={styles.hra__logo}>

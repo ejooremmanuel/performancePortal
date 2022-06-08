@@ -17,7 +17,7 @@ const Chart = ({ first, second, third, fourth, id }) => {
         },
       })
       .then((response) => {
-        setData(response.data.data[quarter][0]);
+        response.data.data[quarter] && setData(response.data.data[quarter][0]);
       });
   }, [id]);
 
@@ -59,6 +59,8 @@ const Chart = ({ first, second, third, fourth, id }) => {
   //   ];
   //   const total = totalScores.reduce((a, b) => a + b, 0);
 
+  console.log(data);
+
   const option = {
     tooltip: {
       trigger: "item",
@@ -95,7 +97,7 @@ const Chart = ({ first, second, third, fourth, id }) => {
         },
         data: [
           {
-            value: data.score,
+            value: (data && data.score) || 0,
             name:
               quarter === "firstQuarter"
                 ? "First Quarter"

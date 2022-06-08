@@ -37,6 +37,7 @@ function App() {
   const [myTeam, setMyTeam] = React.useState([]);
   const [appraisalStarted, setAppraisalStarted] = React.useState(true);
   const [quarter, setQuarter] = React.useState("firstQuarter");
+
   return (
     <UserContext.Provider
       value={{

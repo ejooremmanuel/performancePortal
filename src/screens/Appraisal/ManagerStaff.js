@@ -31,7 +31,7 @@ const ManagerStaff = () => {
   const [question, setQuestion] = React.useState();
   const [staff, setStaff] = React.useState({});
   const { quarter } = React.useContext(UserContext);
-  const [rejected, setRejected] = React.useState(false);
+  const [accepted, setAccepted] = React.useState(false);
 
   const onNextClick = () => {
     setChecked(JSON.parse(localStorage.getItem("m"))[index + 1]);
@@ -114,17 +114,14 @@ const ManagerStaff = () => {
         },
       })
       .then((response) => {
-        if (
-          response.data.data[quarter][0].status === "Pending" ||
-          response.data.data[quarter][0].status === "Accepted"
-        ) {
-          setRejected(true);
+        if (response.data.data[quarter][0].status === "Accepted") {
+          setAccepted(true);
         }
       });
   }, [id]);
 
   React.useEffect(() => {
-    if (rejected) {
+    if (accepted) {
       swal({
         buttons: [false],
         text: "Staff already rated",
@@ -133,7 +130,7 @@ const ManagerStaff = () => {
         icon: "info",
       });
     }
-  }, [rejected]);
+  }, [accepted]);
 
   React.useEffect(() => {
     axios

@@ -108,8 +108,8 @@ const AppraisalB = () => {
             },
             closeOnClickOutside: false,
             closeOnEsc: false,
-          }).then((willDelete) => {
-            if (willDelete) {
+          }).then((ok) => {
+            if (ok) {
               navigate("/report");
             }
           });

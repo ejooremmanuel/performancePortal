@@ -170,14 +170,14 @@ export const getResult = async (navigate, setLoading, swal) => {
       },
     };
 
-    const res = await axios.post(
+    await axios.post(
       `${BASE_URL}/api/v1/check/section/a/result`,
       {
         status: "Completed",
       },
       config
     );
-    console.log(res.data);
+    // console.log(res.data);
     // setLoading(false);
     localStorage.removeItem("userRes");
     // navigate("/appraisal/section/b");
@@ -203,7 +203,6 @@ export const getResultB = async (navigate, setLoading) => {
     };
 
     const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
-    console.log(res.data);
     setLoading(false);
     localStorage.removeItem("userResB");
     navigate(`/user/score/b/${res.data.data.score}`);
