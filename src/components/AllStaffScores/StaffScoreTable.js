@@ -11,7 +11,21 @@ const StaffScoreTable = ({ list }) => {
     navigate(`/manager/rating/${id}`);
   };
 
-  const columns = [{ title: "Staff", field: "fullname" }];
+  const columns = [
+    { title: "Staff", field: "user[fullname]" },
+    {
+      title: "Status",
+      field: "status",
+    },
+    {
+      title: "Manager Score",
+      field: "managerscore",
+    },
+    {
+      title: "Staff Score",
+      field: "score",
+    },
+  ];
 
   return (
     <>
@@ -43,7 +57,7 @@ const StaffScoreTable = ({ list }) => {
             icon: "visibility",
             tooltip: "View Staff Rating",
             onClick: (event, rowData) => {
-              onGetUserScore(rowData._id, rowData.fullname);
+              onGetUserScore(rowData.user._id, rowData.fullname);
             },
           },
         ]}

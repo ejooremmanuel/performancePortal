@@ -108,10 +108,7 @@ const ManagerStaffSectionB = () => {
         },
       })
       .then((response) => {
-        if (
-          response.data.data[quarter][0].status === "Pending" ||
-          response.data.data[quarter][0].status === "Accepted"
-        ) {
+        if (response.data.data[quarter][0].status === "Accepted") {
           setRejected(true);
         }
       });
@@ -229,8 +226,12 @@ const ManagerStaffSectionB = () => {
                         />
                         <span>
                           Staff Selection: <strong>{item.score.title}</strong>
-                          Manager Selection:&nbsp;
-                          <strong>{item.managerscore.title}</strong>
+                          {item.managerscore && (
+                            <>
+                              Manager Selection:&nbsp;
+                              <strong>{item.managerscore.title}</strong>
+                            </>
+                          )}
                         </span>
                         {options.map((option) => {
                           return (
@@ -322,31 +323,21 @@ const ManagerStaffSectionB = () => {
                               >
                                 Previous
                               </Button>
-                              {loading ? (
-                                <Button
-                                  colorScheme="white"
-                                  leftIcon={<loadingSpinner />}
-                                >
-                                  <img
-                                    src={loadingSpinner}
-                                    alt=""
-                                    style={{ height: "100%", width: "100%" }}
-                                  />
-                                </Button>
-                              ) : (
-                                <Button
-                                  type="submit"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setLoading(true);
-                                    onSubmit(item.user._id, item.question._id);
-                                    getManagerResultB(navigate, setLoading);
-                                  }}
-                                  colorScheme="yellow"
-                                >
-                                  Finish Staff Appraisal
-                                </Button>
-                              )}
+
+                              <Button
+                                type="submit"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setLoading(true);
+                                  onSubmit(item.user._id, item.question._id);
+                                  getManagerResultB(navigate, setLoading);
+                                }}
+                                colorScheme="yellow"
+                                isLoading={loading}
+                                loadingText="Calculating..."
+                              >
+                                Finish Staff Appraisal
+                              </Button>
                             </div>
                           ) : (
                             ""

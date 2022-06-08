@@ -54,7 +54,7 @@ const CreateAppraisal = () => {
       <HRHeader />
       <div className="create__appraisal__container">
         <div className="hr__dashboard__text">
-          <h1>Create Appraisal</h1>
+          <h1>Create Section A Grading Criteria</h1>
         </div>
         <form onSubmit={onSubmit}>
           <div>
@@ -82,6 +82,7 @@ const CreateAppraisal = () => {
               isLoading={loading}
               colorScheme="green"
               rightIcon={<AddIcon />}
+              disabled={!description && !title}
             >
               Create Appraisal
             </Button>

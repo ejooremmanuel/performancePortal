@@ -5,8 +5,10 @@ import { BASE_URL } from "../../config";
 
 const HeaderImageUpload = () => {
   const [img, setImg] = React.useState("");
-  const reader = new FileReader();
+  const [loading, setLoading] = React.useState(false);
+
   React.useEffect(() => {
+    setLoading(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
       .get(`${BASE_URL}/api/v1/staff/auth/`, {
@@ -18,38 +20,34 @@ const HeaderImageUpload = () => {
       })
       .then(({ data }) => {
         setImg(data.data.staff.photo);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err.message || err.msg);
+        setLoading(false);
       });
   }, []);
 
   const uploadDp = (event) => {
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (e) => {
-      setImg(reader.result);
-      const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
-      axios
-        .patch(
-          `${BASE_URL}/api/v1/staff/auth/userdp`,
-          { img: reader.result },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "access-token": `${accessToken}`,
-            },
-          }
-        )
-        .then((response) => {
-          setImg(response.data.photo);
-        });
-    };
+    const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const data = new FormData();
+    data.append("profile", event.target.files[0]);
+    axios
+      .patch(`${BASE_URL}/api/v1/staff/auth/userdp`, data, {
+        headers: {
+          "access-token": `${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setImg(response.data.photo);
+      });
   };
 
   return (
     <>
       <div className="header__details">
-        <img src={img} alt="" />
+        {loading ? null : <img src={img} alt="DP" />}
+
         <label htmlFor="upload" className="uploadDp">
           <FiCamera />
         </label>
@@ -58,6 +56,9 @@ const HeaderImageUpload = () => {
           id="upload"
           style={{ display: "none" }}
           onChange={(event) => {
+            // reader.readAsBinaryString(event.target.files[0]);
+            setImg(URL.createObjectURL(event.target.files[0]));
+
             uploadDp(event);
           }}
         />

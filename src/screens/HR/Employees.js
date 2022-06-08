@@ -41,6 +41,13 @@ const Employees = () => {
   const [fetching, setFetching] = React.useState(false);
 
   const columns = [
+    {
+      title: "Photo",
+      field: `photo`,
+      render: ({ photo }) => {
+        return <img src={`${photo}`} alt="" />;
+      },
+    },
     { title: "Staff Name", field: `fullname` },
     { title: "Email Address", field: "email", type: "string" },
     { title: "Department", field: "department", type: "string" },

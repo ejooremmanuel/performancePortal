@@ -40,10 +40,19 @@ const Calibrate = () => {
   const [data, setData] = React.useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fetching, setFetching] = React.useState(false);
-
+  let SN = 0;
   const columns = [
+    {
+      title: "SN",
+      field: "tableData[id]",
+      render: (rowData) => {
+        return <>{SN++}</>;
+      },
+      type: "string",
+    },
     { title: "Staff", field: "user[fullname]", type: "string" },
     { title: "Staff Score", field: "score", type: "string" },
+    { title: "Manager Score", field: "managerscore", type: "string" },
     { title: "Quarter", field: "quarter", type: "string" },
     { title: "Status", field: "status" },
     {
@@ -65,7 +74,6 @@ const Calibrate = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setList(response.data.data);
         setFetching(false);
       })

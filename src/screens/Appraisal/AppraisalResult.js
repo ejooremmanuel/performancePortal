@@ -51,11 +51,14 @@ const AppraisalResult = () => {
         },
       })
       .then((res) => {
-        if (res.data.data.status === "Accepted" && res.data.data.managerscore) {
+        if (res.data.data.status === "Accepted") {
           setAccepted(true);
-        } else if (res.data.data.status === "Rejected") {
+        }
+        if (res.data.data.status === "Rejected") {
           setRejected(true);
-        } else if (res.data.data.managerscore > 0) {
+        }
+
+        if (res.data.data.managerscore > 0) {
           setHasManagerScore(true);
         }
       });
@@ -106,7 +109,9 @@ const AppraisalResult = () => {
         <Greeting />
         <section className="appraisal__intro__text">
           <div>
-            <strong>{section}: 360 DEGREE PERFORMANCE REVIEW</strong>
+            <strong>
+              {section}: 360 DEGREE PERFORMANCE REVIEW (APPRAISAL RESULT)
+            </strong>
             <br />
             <strong>INSTRUCTIONS:</strong>
             <br /> This form is used to evaluate supervisory, professional and
@@ -319,7 +324,7 @@ export function AcceptPermissionModal({ isOpen, onClose, onAccept, loading }) {
             >
               <h3>Are you sure you want to Accept this result?</h3>
               <div>
-                <Button onClick={onClose} mx={3}>
+                <Button onClick={onClose} mx={3} isDisabled={loading}>
                   No
                 </Button>
                 <Button
@@ -368,13 +373,15 @@ export function RejectPermissionModal({ isOpen, onClose, onReject, loading }) {
                 />
               </div>
               <div>
-                <Button onClick={onClose} mx={3}>
+                <Button onClick={onClose} mx={3} isDisabled={loading}>
                   No
                 </Button>
                 <Button
                   onClick={onReject}
                   isLoading={loading}
                   loadingText="Rejecting..."
+                  isDisabled={reason.trim().length < 5}
+                  colorScheme="green"
                 >
                   Yes
                 </Button>

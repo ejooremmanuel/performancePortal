@@ -9,6 +9,7 @@ import {
   Select,
   Textarea,
 } from "../../components";
+import { BASE_URL } from "../../config";
 import styles from "./styles.module.css";
 
 const BasicInfo = () => {
@@ -30,7 +31,7 @@ const BasicInfo = () => {
     setFetching(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("https://lotusportalapi.herokuapp.com/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,

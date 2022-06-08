@@ -4,17 +4,19 @@ import styles from "./header.module.css";
 // import { useNavigate } from "react-router-dom";
 import { FiCamera } from "react-icons/fi";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const Header = ({ title, children, name }) => {
   // const navigate = useNavigate();
   // const photo = JSON.parse(localStorage.getItem("photo"));
   const [img, setImg] = React.useState("");
-  const reader = new FileReader();
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
+    setLoading(true);
     const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
-      .get("/api/v1/staff/auth/", {
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${staffInfo.token}`,
@@ -23,32 +25,27 @@ const Header = ({ title, children, name }) => {
       })
       .then(({ data }) => {
         setImg(data.data.staff.photo);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err.message || err.msg);
+        setLoading(false);
       });
   }, []);
 
   const uploadDp = (event) => {
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (e) => {
-      setImg(reader.result);
-      const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
-      axios
-        .patch(
-          "/api/v1/staff/auth/userdp",
-          { img: reader.result },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "access-token": `${accessToken}`,
-            },
-          }
-        )
-        .then((response) => {
-          setImg(response.data.photo);
-        });
-    };
+    const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const data = new FormData();
+    data.append("profile", event.target.files[0]);
+    axios
+      .patch(`${BASE_URL}/api/v1/staff/auth/userdp`, data, {
+        headers: {
+          "access-token": `${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setImg(response.data.photo);
+      });
   };
 
   return (
@@ -60,7 +57,7 @@ const Header = ({ title, children, name }) => {
         <div className={styles.most__name}>
           <h5>Welcome {name}</h5>
           <div className={styles.dp}>
-            <img src={img} alt="DP" />
+            {loading ? null : <img src={img} alt="DP" />}
           </div>
           <label htmlFor="upload" className="uploadDp">
             <FiCamera />
@@ -71,6 +68,7 @@ const Header = ({ title, children, name }) => {
             style={{ display: "none" }}
             onChange={(event) => {
               // reader.readAsBinaryString(event.target.files[0]);
+              setImg(URL.createObjectURL(event.target.files[0]));
 
               uploadDp(event);
             }}

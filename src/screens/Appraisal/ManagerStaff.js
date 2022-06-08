@@ -215,8 +215,12 @@ const ManagerStaff = () => {
                         <span>
                           Staff Selection: <strong>{item.score.title}</strong>
                           <br />
-                          Manager Selection:&nbsp;
-                          <strong>{item.managerscore.title}</strong>
+                          {item.managerscore && (
+                            <>
+                              Manager Selection:&nbsp;
+                              <strong>{item.managerscore.title}</strong>
+                            </>
+                          )}
                         </span>
                         {options.map((option) => {
                           return (
