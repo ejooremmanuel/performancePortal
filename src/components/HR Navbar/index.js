@@ -1,6 +1,7 @@
 import logo from "../../assets/purple.png";
 import React from "react";
 import {
+  FaBook,
   // FaBook,
   FaEdit,
   FaHome,
@@ -54,14 +55,14 @@ const HRNavbar = () => {
           <FaPlus />
           <span>Add</span>
         </div>
-        {/* <div
+        <div
           onClick={() => {
             navigate("/hr/report/appraisal");
           }}
         >
           <FaBook />
           <span>Report</span>
-        </div> */}
+        </div>
         <div
           onClick={() => {
             navigate("/hr/calibrate");

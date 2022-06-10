@@ -113,7 +113,7 @@ const StaffSectionAResult = () => {
                             Your Selection: <strong>{item.score.title}</strong>
                           </div>
                           <div>
-                            Your Manager's Selection:{" "}
+                            Your Manager's Selection:
                             <strong>{item.managerscore.title}</strong>
                           </div>
 

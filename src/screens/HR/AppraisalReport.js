@@ -21,20 +21,41 @@ import MaterialTable from "material-table";
 import { HRNavbar } from "../../components";
 import { HRHeader } from "./CreateAppraisal";
 import { useNavigate } from "react-router-dom";
-import Filter from "../../components/Filter/Filter";
+// import Filter from "../../components/Filter/Filter";
 import { BASE_URL } from "../../config";
 
 const AppraisalReport = () => {
   const [list, setList] = React.useState([]);
-  const [filtered, setFiltered] = React.useState([]);
-  const [selected, setSelected] = React.useState("Choose Division");
-  const [showDivisionSelect, setShowDivisionSelection] = React.useState(false);
+  // const [filtered, setFiltered] = React.useState([]);
+  // const [selected, setSelected] = React.useState("Choose Division");
+  // const [showDivisionSelect, setShowDivisionSelection] = React.useState(false);
 
   const columns = [
-    { title: "Staff", field: "user[fullname]", type: "string" },
+    {
+      title: "SN",
+      field: "tableData[id]",
+      render: (rowData) => {
+        return rowData.tableData.id + 1;
+      },
+      type: "number",
+    },
+    {
+      title: "Staff Photo",
+      field: "user[photo]",
+      render: (rowData) => {
+        return <img src={`${rowData.user.photo}`} alt="" />;
+      },
+      type: "string",
+    },
+    { title: "Staff Name", field: "user[fullname]", type: "string" },
+    { title: "Staff Unit", field: "user[department]", type: "string" },
     { title: "Staff Score", field: "score", type: "string" },
+    { title: "Manager Score", field: "managerscore", type: "string" },
+    { title: "Overall", field: "managerscore", type: "string" },
+    { title: "Calibrated", field: "managerscore", type: "string" },
     { title: "Quarter", field: "quarter", type: "string" },
     { title: "Status", field: "status" },
+    { title: "Year", field: "session" },
     {
       title: "Date Completed",
       field: `createdAt`,
@@ -42,6 +63,7 @@ const AppraisalReport = () => {
     },
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -53,7 +75,6 @@ const AppraisalReport = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setList(response.data.data);
       })
       .catch((error) => {
@@ -61,16 +82,14 @@ const AppraisalReport = () => {
       });
   }, []);
 
-  const filterHandler = (param) => {
-    setSelected(param);
+  // const filterHandler = (param) => {
+  //   setSelected(param);
 
-    const filteredData = list.filter((item) => {
-      return item.division === param;
-    });
-    setFiltered(filteredData);
-  };
-
-  console.log(filtered);
+  //   const filteredData = list.filter((item) => {
+  //     return item.division === param;
+  //   });
+  //   setFiltered(filteredData);
+  // };
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -87,41 +106,7 @@ const AppraisalReport = () => {
         <div className="hr__dashboard__text">
           <h1>Appraisal Report</h1>
         </div>
-        <div style={{ width: "30%", paddingLeft: "30px" }}>
-          <Filter
-            showSelect={showDivisionSelect}
-            setShowSelection={setShowDivisionSelection}
-            value={selected}
-          >
-            <div
-              style={{
-                maxHeight: "450px",
-                border: "1px solid rgba(0, 0, 0, 0.31)",
-                overflowY: "scroll",
-                backgroundColor: "#fff",
-              }}
-            >
-              <div
-                className={"container__content__select"}
-                onClick={() => {
-                  setShowDivisionSelection(false);
-                  filterHandler("First Quarter");
-                }}
-              >
-                First Quarter
-              </div>
-              <div
-                className={"container__content__select"}
-                onClick={() => {
-                  setShowDivisionSelection(false);
-                  filterHandler("Second Quarter");
-                }}
-              >
-                Second Quarter
-              </div>
-            </div>
-          </Filter>
-        </div>
+
         <MaterialTable
           icons={{
             Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -166,7 +151,7 @@ const AppraisalReport = () => {
               <ViewColumn {...props} ref={ref} />
             )),
           }}
-          title=""
+          title="Staff Appraisal Report"
           columns={columns}
           data={list}
           options={{
@@ -175,6 +160,7 @@ const AppraisalReport = () => {
               color: "#FF00dd",
             },
             actionsColumnIndex: -1,
+            showTitle: false,
 
             headerStyle: {
               backgroundColor: "rgba(196, 196, 196, 0.32)",
@@ -187,29 +173,29 @@ const AppraisalReport = () => {
             paddingLeft: "20px",
             background: "none",
           }}
-          actions={[
-            {
-              icon: "visibility",
-              iconProps: {
-                style: { fontSize: "20px", color: "gold" },
-              },
-              tooltip: "View More",
+          // actions={[
+          //   {
+          //     icon: "visibility",
+          //     iconProps: {
+          //       style: { fontSize: "20px", color: "gold" },
+          //     },
+          //     tooltip: "View More",
 
-              onClick: (event, rowData) => {
-                navigate(`/staff/report/${rowData._id}`);
-              },
-            },
-          ]}
-          components={{
-            Action: (props) => (
-              <button
-                onClick={(event) => props.action.onClick(event, props.data)}
-                className=""
-              >
-                <span>{props.action.tooltip}</span>
-              </button>
-            ),
-          }}
+          //     onClick: (event, rowData) => {
+          //       navigate(`/staff/report/${rowData._id}`);
+          //     },
+          //   },
+          // ]}
+          // components={{
+          //   Action: (props) => (
+          //     <button
+          //       onClick={(event) => props.action.onClick(event, props.data)}
+          //       className=""
+          //     >
+          //       <span>{props.action.tooltip}</span>
+          //     </button>
+          //   ),
+          // }}
         />
       </div>
     </div>
@@ -217,3 +203,39 @@ const AppraisalReport = () => {
 };
 
 export default AppraisalReport;
+
+// <div style={{ width: "30%", paddingLeft: "30px" }}>
+//   <Filter
+//     showSelect={showDivisionSelect}
+//     setShowSelection={setShowDivisionSelection}
+//     value={selected}
+//   >
+//     <div
+//       style={{
+//         maxHeight: "450px",
+//         border: "1px solid rgba(0, 0, 0, 0.31)",
+//         overflowY: "scroll",
+//         backgroundColor: "#fff",
+//       }}
+//     >
+//       <div
+//         className={"container__content__select"}
+//         onClick={() => {
+//           setShowDivisionSelection(false);
+//           filterHandler("First Quarter");
+//         }}
+//       >
+//         First Quarter
+//       </div>
+//       <div
+//         className={"container__content__select"}
+//         onClick={() => {
+//           setShowDivisionSelection(false);
+//           filterHandler("Second Quarter");
+//         }}
+//       >
+//         Second Quarter
+//       </div>
+//     </div>
+//   </Filter>
+// </div>;

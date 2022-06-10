@@ -46,7 +46,7 @@ export const CustomSelect = ({
         </option>
         {options &&
           options.map((item) => (
-            <option value={item._id} key={item._id}>
+            <option value={item.id} key={item.id}>
               {item.value}
             </option>
           ))}

@@ -18,13 +18,16 @@ const ManagerRating = () => {
         },
       })
       .then(({ data }) => {
+        setLoading(false);
         setStaffScore(
           data.data.filter((staff) => {
             return staff.user && staff.user.manager === staffId;
           })
         );
+      })
+      .catch((err) => {
+        console.log(err.response.data.msg);
         setLoading(false);
-        // setStaffScore(data.data);
       });
   }, [staffId]);
 
@@ -39,6 +42,10 @@ const ManagerRating = () => {
       })
       .then(({ data }) => {
         setStaffId(data.data.staff._id);
+      })
+      .catch((err) => {
+        console.log(err.response.data.msg);
+        setLoading(false);
       });
   }, []);
 

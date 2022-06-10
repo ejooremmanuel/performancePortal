@@ -46,9 +46,9 @@ const Dashboard = () => {
         },
       })
       .then(({ data }) => {
-        setAppraisalScore(data.data.sectionascore + data.data.sectionbscore);
+        setAppraisalScore(data.data.score);
         setManagerscore(data.data.managerscore);
-        setOverallScore(data.data.score);
+        setOverallScore(data.data.managerscore);
         axios
           .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
           .then((response) => {
@@ -88,6 +88,13 @@ const Dashboard = () => {
           />
           <Card
             title="Overall Score"
+            count={overallScore}
+            Icon={BsReception4}
+            color={styles.purple}
+            url="#"
+          />
+          <Card
+            title="Calibrated Score"
             count={overallScore}
             Icon={BsReception4}
             color={styles.purple}

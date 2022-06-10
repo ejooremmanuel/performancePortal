@@ -226,6 +226,7 @@ const ManagerStaffSectionB = () => {
                         />
                         <span>
                           Staff Selection: <strong>{item.score.title}</strong>
+                          <br />
                           {item.managerscore && (
                             <>
                               Manager Selection:&nbsp;
@@ -324,20 +325,30 @@ const ManagerStaffSectionB = () => {
                                 Previous
                               </Button>
 
-                              <Button
-                                type="submit"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setLoading(true);
-                                  onSubmit(item.user._id, item.question._id);
-                                  getManagerResultB(navigate, setLoading);
-                                }}
-                                colorScheme="yellow"
-                                isLoading={loading}
-                                loadingText="Calculating..."
-                              >
-                                Finish Staff Appraisal
-                              </Button>
+                              {loading ? (
+                                <Button
+                                  type="submit"
+                                  disabled
+                                  colorScheme="yellow"
+                                >
+                                  Calculating...
+                                </Button>
+                              ) : (
+                                <Button
+                                  type="submit"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setLoading(true);
+                                    onSubmit(item.user._id, item.question._id);
+                                    getManagerResultB(navigate, setLoading);
+                                  }}
+                                  colorScheme="yellow"
+                                  isLoading={loading}
+                                  loadingText="Calculating..."
+                                >
+                                  Finish Staff Appraisal
+                                </Button>
+                              )}
                             </div>
                           ) : (
                             ""

@@ -18,7 +18,7 @@ const ViewResultB = () => {
   };
   const proceed = () => {
     localStorage.removeItem("userRes");
-    navigate("/appraisal/section/b");
+    navigate("/dashboard");
   };
   return (
     <div className="appContainer">
@@ -35,19 +35,12 @@ const ViewResultB = () => {
           </article>
           <section className="score__btns">
             <div>
-              <strong>Note:</strong> You will not be allowed to take Section B
-              again once you end the appraisal and Notify your Manager.
-            </div>
-            <div>
               <Button
-                colorScheme="red"
-                rightIcon={<FaSpinner />}
-                onClick={startOver}
+                colorScheme="green"
+                rightIcon={<FaArrowRight />}
+                onClick={proceed}
               >
-                Start Over
-              </Button>
-              <Button colorScheme="green" rightIcon={<FaArrowRight />}>
-                Notify your Manager
+                Goto Dashboard
               </Button>
             </div>
           </section>

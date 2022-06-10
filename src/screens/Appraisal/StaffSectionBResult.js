@@ -68,7 +68,6 @@ const StaffSectionBResult = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setList(response.data.data.filter(({ _qid }) => _qid === "Initiative"));
         setFetching(false);
       })
@@ -160,7 +159,7 @@ const StaffSectionBResult = () => {
                             Your Selection: <strong>{item.score.title}</strong>
                           </div>
                           <div>
-                            Your Manager's Selection:{" "}
+                            Your Manager's Selection:
                             <strong>{item.managerscore.title}</strong>
                           </div>
 

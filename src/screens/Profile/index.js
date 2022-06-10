@@ -127,7 +127,9 @@ const Profile = () => {
                   </span>
                 </div>
                 <div>
-                  <h2>Brief Description</h2>
+                  <strong>
+                    <h2>Brief Description:</h2>
+                  </strong>
                   <span>{bio}</span>
                 </div>
               </div>

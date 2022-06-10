@@ -7,18 +7,18 @@ const ProfileLinks = [
     name: "02 Official Info",
     url: "/profile/official",
   },
-  // {
-  //   name: "03 Emergency Contact",
-  //   url: "/profile/emergency",
-  // },
+  {
+    name: "03 Emergency Contact",
+    url: "/profile/emergency",
+  },
   // {
   //   name: "04 Educational Info",
   //   url: "/profile/education",
   // },
-  // {
-  //   name: "05 Bank Info",
-  //   url: "/profile/bank",
-  // },
+  {
+    name: "04 Bank Info",
+    url: "/profile/bank",
+  },
 ];
 
 const Gender = [
@@ -94,7 +94,38 @@ const Months = [
   "December",
 ];
 
+const Banks = [
+  { value: "Access Bank" },
+  { value: "Citibank" },
+  { value: "Diamond Bank" },
+  { value: "Ecobank" },
+  { value: "Fidelity Bank" },
+  { value: "First Bank" },
+  { value: "First City Monument Bank" },
+  { value: "Guaranty Trust Bank" },
+  { value: "Heritage Bank" },
+  { value: "Keystone Bank" },
+  { value: "MainStreet Bank" },
+  { value: "Polaris Bank" },
+  { value: "Stanbic IBTC Bank" },
+  { value: "Standard Chartered Bank" },
+  { value: "Sterling Bank" },
+  { value: "Union Bank" },
+  { value: "United Bank For Africa" },
+  { value: "Unity Bank" },
+  { value: "Wema Bank" },
+  { value: "Zenith Bank" },
+];
+
 const Locations = [{ value: "Abuja" }, { value: "Lagos" }, { value: "Others" }];
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { ProfileLinks, Gender, States, Departments, Locations, Months };
+export default {
+  ProfileLinks,
+  Gender,
+  States,
+  Departments,
+  Locations,
+  Months,
+  Banks,
+};

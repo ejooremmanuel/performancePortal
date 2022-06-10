@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -25,6 +26,8 @@ const BasicInfo = () => {
   const [mobile, setMobile] = useState("");
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
+
+  const toast = useToast();
 
   // Get user data from server
   React.useEffect(() => {
@@ -79,8 +82,16 @@ const BasicInfo = () => {
         },
       })
       .then(({ data }) => {
-        console.log(data);
         setLoading(false);
+
+        toast({
+          title: "Success",
+          description: "Profile updated successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
       })
       .catch((err) => {
         console.log(err.message || err.msg);

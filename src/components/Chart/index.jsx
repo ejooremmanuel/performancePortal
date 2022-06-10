@@ -17,7 +17,8 @@ const Chart = ({ first, second, third, fourth, id }) => {
         },
       })
       .then((response) => {
-        response.data.data[quarter] && setData(response.data.data[quarter][0]);
+        console.log(response.data.data);
+        setData(response.data.data);
       });
   }, [id]);
 
@@ -30,36 +31,34 @@ const Chart = ({ first, second, third, fourth, id }) => {
 
   // const { firstQuarter, secondQuarter, thirdQuarter, fourthQuarter } = data;
 
-  // first =
-  //   firstQuarter &&
-  //   firstQuarter.map(({ score }) => {
-  //     return score;
-  //   });
-  // second =
-  //   secondQuarter &&
-  //   secondQuarter.map(({ score }) => {
-  //     return score;
-  //   });
-  // third =
-  //   thirdQuarter &&
-  //   thirdQuarter.map(({ score }) => {
-  //     return score;
-  //   });
-  // fourth =
-  //   fourthQuarter &&
-  //   fourthQuarter.map(({ score }) => {
-  //     return score;
-  //   });
+  first = (data &&
+    data.firstQuarter &&
+    data.firstQuarter.map(({ managerscore }) => {
+      return managerscore;
+    })) || [0];
+  second = (data &&
+    data.secondQuarter &&
+    data.secondQuarter.map(({ managerscore }) => {
+      return managerscore;
+    })) || [0];
+  third = (data &&
+    data.thirdQuarter &&
+    data.thirdQuarter.map(({ managerscore }) => {
+      return managerscore;
+    })) || [0];
+  fourth = (data &&
+    data.fourthQuarter &&
+    data.fourthQuarter.map(({ managerscore }) => {
+      return managerscore;
+    })) || [0];
 
-  //   let totalScores = [
-  //     first.length > 0 && first[0],
-  //     second.length > 0 && second[0],
-  //     third.length > 0 && third[0],
-  //     fourth.length > 0 && fourth[0],
-  //   ];
-  //   const total = totalScores.reduce((a, b) => a + b, 0);
-
-  console.log(data);
+  let totalScores = [
+    first.length > 0 && first[0],
+    second.length > 0 && second[0],
+    third.length > 0 && third[0],
+    fourth.length > 0 && fourth[0],
+  ];
+  const total = Math.floor(totalScores.reduce((a, b) => a + b, 0) / 4);
 
   const option = {
     tooltip: {
@@ -96,20 +95,21 @@ const Chart = ({ first, second, third, fourth, id }) => {
           show: false,
         },
         data: [
-          {
-            value: (data && data.score) || 0,
-            name:
-              quarter === "firstQuarter"
-                ? "First Quarter"
-                : quarter === "secondQuarter"
-                ? "Second Quarter"
-                : "Third Quarter",
-          },
+          // {
+          //   value: (data && data.score) || 0,
+          //   name:
+          //     quarter === "firstQuarter"
+          //       ? "First Quarter"
+          //       : quarter === "secondQuarter"
+          //       ? "Second Quarter"
+          //       : "Third Quarter",
+          // },
 
-          // { value: 2, name: "Second Quarter" },
-          // { value: 3, name: "Third Quarter" },
-          // { value: 4, name: "Four Quarter" },
-          //   { value: total, name: "Overall" },
+          { value: first, name: "First Quarter" },
+          { value: second, name: "Second Quarter" },
+          { value: third, name: "Third Quarter" },
+          { value: fourth, name: "Four Quarter" },
+          { value: total, name: "Overall" },
         ],
       },
     ],
