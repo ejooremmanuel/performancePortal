@@ -33,6 +33,7 @@ import {
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { BASE_URL } from "../../config";
+import { Tooltip } from "@material-ui/core";
 
 const Calibrate = () => {
   const [list, setList] = React.useState([]);
@@ -40,25 +41,54 @@ const Calibrate = () => {
   const [data, setData] = React.useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [fetching, setFetching] = React.useState(false);
-  let SN = 0;
+
   const columns = [
     {
       title: "SN",
       field: "tableData[id]",
+      type: "number",
       render: (rowData) => {
-        return <>{SN++}</>;
+        return rowData.tableData.id + 1;
       },
+    },
+    {
+      title: "Staff Name",
+      field: "staffName",
       type: "string",
     },
-    { title: "Staff", field: "user[fullname]", type: "string" },
-    { title: "Staff Score", field: "score", type: "string" },
-    { title: "Manager Score", field: "managerscore", type: "string" },
-    { title: "Quarter", field: "quarter", type: "string" },
-    { title: "Status", field: "status" },
     {
-      title: "Date Completed",
-      field: `createdAt`,
-      type: "date",
+      title: "Department",
+      field: "department",
+      type: "string",
+    },
+    {
+      title: "Year",
+      field: "session",
+      type: "string",
+    },
+    {
+      title: "First Quarter",
+      field: "First Quarter",
+    },
+    {
+      title: "Second Quarter",
+      field: "Second Quarter",
+    },
+    {
+      title: "Third Quarter",
+      field: "Third Quarter",
+    },
+    {
+      title: "Fourth Quarter",
+      field: "Fourth Quarter",
+    },
+    {
+      title: "Overall Score",
+      field: "overall",
+    },
+    {
+      title: "Calibrated Score",
+      field: "calibration",
     },
   ];
 
@@ -67,7 +97,7 @@ const Calibrate = () => {
   const getEmployees = () => {
     setFetching(true);
     axios
-      .get(`${BASE_URL}/api/v1/result`, {
+      .get(`${BASE_URL}/api/v1/report`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -157,11 +187,13 @@ const Calibrate = () => {
                 <ViewColumn {...props} ref={ref} />
               )),
             }}
-            title=""
+            title="Annual Report"
             columns={columns}
             data={list}
             options={{
               exportButton: true,
+              showTitle: false,
+              exportFileName: "LBAN Staff Appraisal Annual Report",
               actionsCellStyle: {
                 color: "#FF00dd",
               },
@@ -197,7 +229,9 @@ const Calibrate = () => {
                   onClick={(event) => actionHandler(props)}
                   className={actionBtn ? "btn__action" : "btn__action--hide"}
                 >
-                  <FaEdit />
+                  <Tooltip title="Calibrate staff score">
+                    <FaEdit />
+                  </Tooltip>
                 </button>
               ),
             }}
@@ -226,17 +260,14 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
     setScore(e.target.value);
   };
 
-  console.log(data);
-
   const calibrateHandler = (e) => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post(
-        `/api/v1/calibration/`,
+      .patch(
+        `${BASE_URL}/api/v1/report/${data && data.data._id}`,
         {
-          score,
-          staff: data.data && data.data._id,
+          calibration: score,
         },
         {
           headers: {
@@ -250,7 +281,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
         onClose();
         toast({
           title: "Success",
-          description: `${response.data.msg}`,
+          description: `Employee score calibrated successfully`,
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -260,7 +291,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
         setScore("");
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error.response.data.msg);
         toast({
           title: "Error",
           description: `An error has occurred!`,
@@ -277,12 +308,30 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "white",
+              padding: "20px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ModalCloseButton />
+            <div>
+              Calibrate <br />
+              <strong>{data && data.data && data.data.staffName}'s</strong>{" "}
+              Score.
+            </div>
             <form
               onSubmit={calibrateHandler}
               style={{
-                width: "300px",
+                width: "100%",
                 height: "200px",
                 display: "flex",
                 flexDirection: "column",
@@ -296,9 +345,10 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                 type="text"
                 value={score}
                 onChange={onChangeHandler}
+                placeholder="Enter score"
                 required
                 style={{
-                  width: "300px",
+                  width: "100%",
                   height: "50px",
                   border: "1px solid #e6e6e6",
                   padding: "30px",

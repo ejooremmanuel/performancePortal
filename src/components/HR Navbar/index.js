@@ -8,6 +8,7 @@ import {
   FaPlus,
   FaRocket,
   FaSignOutAlt,
+  FaThLarge,
   FaUsers,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -70,6 +71,14 @@ const HRNavbar = () => {
         >
           <FaEdit />
           <span>Calibrate</span>
+        </div>
+        <div
+          onClick={() => {
+            navigate("/dashboard");
+          }}
+        >
+          <FaThLarge />
+          <span>Staff Portal</span>
         </div>
         <div
           onClick={() => {

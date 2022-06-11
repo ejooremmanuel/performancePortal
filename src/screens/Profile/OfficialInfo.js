@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navigation, Header, Input, Options, Select } from "../../components";
-import { CustomSelect } from "../../components/Select";
+import { NativeSelect } from "../../components/Select";
 import { BASE_URL } from "../../config";
 import styles from "./styles.module.css";
 
@@ -19,8 +19,6 @@ const OfficialInfo = () => {
   const [fetching, setFetching] = useState(false);
   const [selectedManager, setSelectedManager] = useState("");
   const toast = useToast();
-
-  console.log(showManagerField);
 
   const selectBranchHandler = (e) => {
     setBranch(e.target.value);
@@ -50,46 +48,6 @@ const OfficialInfo = () => {
         setDepartment(data.data.staff.department);
         setBranch(data.data.staff.branch);
         setManager(data.data.staff.manager.fullname);
-
-        if (data.data.staff.department) {
-          setShowManagerField(true);
-          const accessToken = JSON.parse(
-            localStorage.getItem("staffInfo")
-          ).token;
-          axios
-            .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
-              headers: {
-                "Content-Type": "application/json",
-                // Authorization: `Bearer ${staffInfo.token}`,
-                "access-token": `${accessToken}`,
-              },
-            })
-            .then((items) => {
-              //find manager for staff department
-              const foundManagers = items.data.data.filter((item) => {
-                return (
-                  item.department === data.data.staff.department &&
-                  item.role === "Manager"
-                );
-              });
-
-              for (let i = 0; i < foundManagers.length; i++) {
-                // managers.push({ value: fullname, id: _id });
-                setManagers((prev) => {
-                  return [
-                    ...prev,
-                    {
-                      value: foundManagers[i].fullname,
-                      id: foundManagers[i]._id,
-                    },
-                  ];
-                });
-              }
-            })
-            .catch((err) => {
-              console.log(err.response.data.msg);
-            });
-        }
         setFetching(false);
       })
       .catch((err) => {
@@ -103,6 +61,36 @@ const OfficialInfo = () => {
     getStaffData();
   }, []);
 
+  React.useEffect(() => {
+    if (department) {
+      setShowManagerField(true);
+      const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
+      axios
+        .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${staffInfo.token}`,
+            "access-token": `${accessToken}`,
+          },
+        })
+        .then((items) => {
+          //find manager for staff department
+          const foundManagers = items.data.data.filter((item) => {
+            return (
+              item.department === department &&
+              (item.role === "Manager" ||
+                (item.roles && item.roles.includes("Manager")))
+            );
+          });
+
+          setManagers(foundManagers);
+        })
+        .catch((err) => {
+          console.log(err.response.data.msg);
+        });
+    }
+  }, [department]);
+
   //form handler
   const saveDataHandler = (e) => {
     e.preventDefault();
@@ -111,7 +99,7 @@ const OfficialInfo = () => {
       cug,
       branch,
       department,
-      manager: selectedManager,
+      manager: selectedManager || manager,
     };
     setLoading(true);
     axios
@@ -126,7 +114,10 @@ const OfficialInfo = () => {
         setCug(data.data.cug);
         setDepartment(data.data.department);
         setBranch(data.data.branch);
-        setManager(data.data.manager.fullname);
+        setManager((prev) => {
+          prev = data.data.manager.fullname;
+          return prev;
+        });
         setSelectedManager(data.data.manager._id);
         setLoading(false);
         toast({
@@ -183,21 +174,30 @@ const OfficialInfo = () => {
                   disabled={true}
                 />
               </div>
-
-              {showManagerField && (
-                <CustomSelect
-                  title="Select Your Manager"
-                  options={managers}
-                  onChange={selectManagerHandler}
-                  value={selectedManager}
-                />
-              )}
               <Select
                 title="Select Your Department"
                 options={Options.Departments}
                 onChange={selectDepartmentHandler}
                 value={department}
               />
+
+              {showManagerField && (
+                <NativeSelect
+                  title="Select Your Manager"
+                  onChange={selectManagerHandler}
+                  value={selectedManager}
+                >
+                  <option value="">Select Manager</option>
+                  {managers.map((item, i) => {
+                    return (
+                      <option key={i} value={item._id}>
+                        {item.fullname}
+                      </option>
+                    );
+                  })}
+                </NativeSelect>
+              )}
+
               <Select
                 title="Select Your Location"
                 value={branch}

@@ -52,7 +52,6 @@ const AppraisalReport = () => {
     { title: "Staff Score", field: "score", type: "string" },
     { title: "Manager Score", field: "managerscore", type: "string" },
     { title: "Overall", field: "managerscore", type: "string" },
-    { title: "Calibrated", field: "managerscore", type: "string" },
     { title: "Quarter", field: "quarter", type: "string" },
     { title: "Status", field: "status" },
     { title: "Year", field: "session" },

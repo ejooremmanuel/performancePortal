@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 import React from "react";
 import "./hr.styles.css";
@@ -41,6 +42,13 @@ const Employees = () => {
   const [fetching, setFetching] = React.useState(false);
 
   const columns = [
+    {
+      title: "SN",
+      field: `tableData[id]`,
+      render: ({ tableData }) => {
+        return tableData.id + 1;
+      },
+    },
     {
       title: "Photo",
       field: `photo`,
@@ -219,11 +227,39 @@ export default Employees;
 export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
   const [department, setDepartment] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [showDepartment, setShowDepartment] = React.useState(false);
+  const [roles, setRoles] = React.useState([]);
+  const [role, setRole] = React.useState("");
 
   const toast = useToast();
 
   const onChangeHandler = (e) => {
     setDepartment(e.target.value);
+  };
+
+  const showDepartmentHandler = (e) => {
+    if (e.target.checked && e.target.value === "Manager") {
+      setRole("Manager");
+      setShowDepartment(true);
+      setRoles((prevState) => [...prevState, "Manager"]);
+      return;
+    }
+    if (e.target.checked && e.target.value === "HR") {
+      setRole("HR");
+      setRoles((prevState) => [...prevState, "HR"]);
+      return;
+    }
+    if (!e.target.checked && e.target.value === "Manager") {
+      setRole("");
+      setRoles((prevState) => prevState.filter((role) => role !== "Manager"));
+      setShowDepartment(false);
+      return;
+    }
+    if (!e.target.checked && e.target.value === "HR") {
+      setRole("");
+      setRoles((prevState) => prevState.filter((role) => role !== "HR"));
+      return;
+    }
   };
 
   const yesHandler = (id) => {
@@ -232,7 +268,8 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
       .patch(
         `${BASE_URL}/api/v1/staff/auth/manager/${id}`,
         {
-          department: department,
+          roles,
+          role,
         },
         {
           headers: {
@@ -272,40 +309,79 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "white",
+              padding: "20px",
+              display: "flex",
+              flexDirection: "column",
+              width: "30vw",
+              minHeight: "30vh",
+              boxSizing: "border-box",
+            }}
+          >
+            <ModalCloseButton />
             <div
               style={{
-                margin: "80px auto",
                 boxSizing: "border-box",
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
+                gap: "20px",
               }}
             >
-              <>
-                <h3>
-                  Do you want to make &nbsp;
-                  <strong>{data.data && data.data.fullname}</strong> a Manager?
-                </h3>
-                <div>
-                  <br />
-                  <div>Choose Department</div>
-                  <Select
-                    options={Options.Departments}
-                    value={department}
-                    onChange={onChangeHandler}
-                    required={true}
+              <h1 className="formHeading">
+                Configure Role | {data.data && data.data.fullname}
+              </h1>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  yesHandler(data.data && data.data._id);
+                }}
+                style={{
+                  boxSizing: "border-box",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "20px",
+                }}
+              >
+                <div className="checkbox">
+                  <input
+                    type="checkbox"
+                    value="Manager"
+                    onChange={showDepartmentHandler}
                   />
+                  <div>Manager</div>
                 </div>
+                {/* {showDepartment && (
+                  <div>
+                    <div>Choose Department</div>
+                    <Select
+                      options={Options.Departments}
+                      value={department}
+                      onChange={onChangeHandler}
+                      required={true}
+                    />
+                  </div>
+                )} */}
+                <div className="checkbox">
+                  <input
+                    type="checkbox"
+                    value="HR"
+                    onChange={showDepartmentHandler}
+                  />
+                  <div>Human Resource</div>
+                </div>
+
                 <div
                   style={{
                     display: "flex",
-                    alignItems: "center",
                     gap: "20px",
-                    justifyContent: "center",
                     width: "100%",
                   }}
                 >
@@ -314,25 +390,23 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                       onClick={() => {
                         onClose();
                       }}
+                      type="button"
                     >
-                      No
+                      Cancel
                     </button>
                   </div>
+
                   <div className="btn">
                     {loading ? (
-                      <button>Updating...</button>
+                      <button disabled>Assigning...</button>
                     ) : (
-                      <button
-                        onClick={() => {
-                          yesHandler(data.data && data.data._id);
-                        }}
-                      >
-                        Yes
+                      <button type="submit" disabled={!role || !roles.length}>
+                        Configure
                       </button>
                     )}
                   </div>
                 </div>
-              </>
+              </form>
             </div>
           </ModalBody>
         </ModalContent>

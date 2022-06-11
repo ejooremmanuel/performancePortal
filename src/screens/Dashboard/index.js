@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import {
   FaRegChartBar,
   FaSortAlphaDown,
+  FaSuitcase,
   // FaRegClock,
   FaUsers,
   // FaSwimmer,
@@ -126,10 +127,13 @@ const Dashboard = () => {
                 <FaSortAlphaDown />
                 Initiatives
               </Link>
-              {/* <Link to="/" className={styles.link}>
-                <FaRegClock />
-                Clockin
-              </Link> */}
+              {(staff.role === "HR" ||
+                (staff.roles && staff.roles.includes("HR"))) && (
+                <Link to="/hr/home" className={styles.link}>
+                  <FaSuitcase />
+                  HR Portal
+                </Link>
+              )}
               <Link to="/team" className={styles.link}>
                 <FaUsers />
                 My Team

@@ -10,7 +10,6 @@ const Select = ({ onChange, value, title, options, required = false }) => {
         // defaultValue={title}
         required={required}
       >
-        {" "}
         <option value="" disabled>
           {title}
         </option>
@@ -50,6 +49,22 @@ export const CustomSelect = ({
               {item.value}
             </option>
           ))}
+      </select>
+    </div>
+  );
+};
+export const NativeSelect = ({
+  onChange,
+  value,
+  title,
+  required = false,
+  children,
+}) => {
+  return (
+    <div className="hra__InputContainer hra__child">
+      <label>{title}</label>
+      <select onChange={onChange} value={value} required={required}>
+        {children}
       </select>
     </div>
   );

@@ -92,7 +92,8 @@ const Navigation = () => {
               className={toggle ? styles.hra__showGuest : styles.hra__hideGuest}
             >
               <ul>
-                {role == "Manager" && (
+                {(role == "Manager" ||
+                  (staff.roles && staff.roles.includes("Manager"))) && (
                   <Tooltip text="Appraise Staff">
                     <li>
                       <Link to="/manager/score/a">
