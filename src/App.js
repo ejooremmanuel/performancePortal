@@ -29,6 +29,7 @@ import ManagerStaffSectionB from "./screens/Appraisal/ManagerStaffSectionB";
 import NotifyStaff from "./screens/Appraisal/NotifyStaff";
 import StaffSectionAResult from "./screens/Appraisal/StaffSectionAResult";
 import StaffSectionBResult from "./screens/Appraisal/StaffSectionBResult";
+import ActivityLogs from "./screens/HR/ActivityLogs";
 import Calibrate from "./screens/HR/Calibrate";
 import HRDashboard from "./screens/HR/Dashboard";
 import StartAppraisal from "./screens/HR/StartAppraisal";
@@ -109,6 +110,15 @@ function App() {
           <Route path="/hr/employees" exact element={<Employees />} />
           <Route path="/hr/start" exact element={<StartAppraisal />} />
           <Route path="/hr/calibrate" exact element={<Calibrate />} />
+          <Route path="/hr/logs" exact element={<ActivityLogs />} />
+          <Route
+            path="*"
+            element={
+              <>
+                <h1>Page Not Found</h1>
+              </>
+            }
+          />
         </Routes>
       </Router>
     </UserContext.Provider>

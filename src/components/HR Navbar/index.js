@@ -13,9 +13,17 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Hrnavbar.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/userActions";
 
 const HRNavbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logoutUser = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className="hrnavbar__container">
       <div className="hrnavbar__container__logo">
@@ -82,7 +90,7 @@ const HRNavbar = () => {
         </div>
         <div
           onClick={() => {
-            navigate("/hr/logout");
+            logoutUser();
           }}
         >
           <FaSignOutAlt />

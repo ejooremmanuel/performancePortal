@@ -108,9 +108,7 @@ const AppraisalA = () => {
             "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
           },
         })
-        .then((res) => {
-          console.log(res.data.data);
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log(err);
         }),

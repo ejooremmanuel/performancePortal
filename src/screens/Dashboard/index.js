@@ -25,7 +25,7 @@ import { BASE_URL } from "../../config";
 const Dashboard = () => {
   // Helpers
   const dispatch = useDispatch();
-  const { setMyTeam } = React.useContext(UserContext);
+  const { setMyTeam, quarter } = React.useContext(UserContext);
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
   const [appraisalScore, setAppraisalScore] = React.useState(0);
@@ -33,6 +33,7 @@ const Dashboard = () => {
   const [overallScore, setOverallScore] = React.useState(0);
   const [department, setDepartment] = React.useState("");
   const [team, setTeam] = React.useState([]);
+  const [calibration, setCalibration] = React.useState(0);
 
   useEffect(() => {
     dispatch(getMe(setDepartment));
@@ -49,7 +50,7 @@ const Dashboard = () => {
       .then(({ data }) => {
         setAppraisalScore(data.data.score);
         setManagerscore(data.data.managerscore);
-        setOverallScore(data.data.managerscore);
+
         axios
           .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
           .then((response) => {
@@ -66,6 +67,21 @@ const Dashboard = () => {
           });
       });
   }, [department, setMyTeam]);
+
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/report/staff`, {
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+        },
+      })
+      .then((response) => {
+        setOverallScore(response.data.data.overall);
+        setCalibration(response.data.data.calibration);
+      });
+  }, []);
+
   return (
     <div className="appContainer">
       <Navigation />
@@ -96,7 +112,7 @@ const Dashboard = () => {
           />
           <Card
             title="Calibrated Score"
-            count={overallScore}
+            count={calibration}
             Icon={BsReception4}
             color={styles.purple}
             url="#"

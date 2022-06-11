@@ -66,6 +66,7 @@ const ManagerStaff = () => {
   const onReset = () => {
     localStorage.setItem("m", JSON.stringify({}));
     setChecked(null);
+    setIndex(0);
   };
 
   const next = () => {

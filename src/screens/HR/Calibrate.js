@@ -37,6 +37,7 @@ import { Tooltip } from "@material-ui/core";
 
 const Calibrate = () => {
   const [list, setList] = React.useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [actionBtn, setActionBtn] = React.useState(false);
   const [data, setData] = React.useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -115,7 +116,6 @@ const Calibrate = () => {
 
   React.useEffect(() => {
     getEmployees();
-    console.log(setActionBtn);
   }, []);
 
   const actionHandler = (response) => {
@@ -277,7 +277,6 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
         }
       )
       .then((response) => {
-        console.log(response.data);
         onClose();
         toast({
           title: "Success",

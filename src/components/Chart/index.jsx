@@ -7,6 +7,7 @@ import { UserContext } from "../../context/UserContext";
 
 const Chart = ({ first, second, third, fourth, id }) => {
   const [data, setData] = React.useState({});
+  // eslint-disable-next-line no-unused-vars
   const { quarter } = React.useContext(UserContext);
 
   React.useEffect(() => {
@@ -17,7 +18,7 @@ const Chart = ({ first, second, third, fourth, id }) => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setData(response.data.data);
       });
   }, [id]);

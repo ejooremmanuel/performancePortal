@@ -15,11 +15,17 @@ const CreateAppraisal = () => {
 
   const toast = useToast();
   const onSubmit = (e) => {
+    const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     e.preventDefault();
     setLoading(true);
     const data = { title, description };
     axios
-      .post(`${BASE_URL}/api/v1/section/a`, data)
+      .post(`${BASE_URL}/api/v1/section/a`, data, {
+        headers: {
+          accept: "application/json",
+          "access-token": `${accessToken}`,
+        },
+      })
       .then((res) => {
         toast({
           title: "Success",
