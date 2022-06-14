@@ -18,6 +18,7 @@ const OfficialInfo = () => {
   const [showManagerField, setShowManagerField] = useState(false);
   const [fetching, setFetching] = useState(false);
   const [selectedManager, setSelectedManager] = useState("");
+  const [managerId, setManagerId] = useState("");
   const toast = useToast();
 
   const selectBranchHandler = (e) => {
@@ -48,6 +49,7 @@ const OfficialInfo = () => {
         setDepartment(data.data.staff.department);
         setBranch(data.data.staff.branch);
         setManager(data.data.staff.manager.fullname);
+        setManagerId(data.data.staff.manager.id);
         setFetching(false);
       })
       .catch((err) => {
@@ -99,7 +101,7 @@ const OfficialInfo = () => {
       cug,
       branch,
       department,
-      manager: selectedManager || manager,
+      manager: selectedManager || managerId,
     };
     setLoading(true);
     axios
@@ -186,8 +188,11 @@ const OfficialInfo = () => {
                   title="Select Your Manager"
                   onChange={selectManagerHandler}
                   value={selectedManager}
+                  required={true}
                 >
-                  <option value="">Select Manager</option>
+                  <option value="" disabled>
+                    Select Manager
+                  </option>
                   {managers.map((item, i) => {
                     return (
                       <option key={i} value={item._id}>
