@@ -23,6 +23,13 @@ const Team = () => {
   const { myTeam } = React.useContext(UserContext);
 
   const columns = [
+    {
+      title: "SN",
+      field: `tableData[id]`,
+      render: ({ tableData }) => {
+        return tableData.id + 1;
+      },
+    },
     { title: "Staff Name", field: `fullname` },
     { title: "Email Address", field: "email", type: "string" },
     { title: "Department", field: "department", type: "string" },
@@ -34,7 +41,7 @@ const Team = () => {
     <div className="appContainer">
       <Navigation />
       <div className="contentsRight">
-        <Header title="My Team" />
+        <Header title="" />
         <Greeting name="" />
         <div>
           <MaterialTable

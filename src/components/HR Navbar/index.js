@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./Hrnavbar.css";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
+import { BsGearFill } from "react-icons/bs";
 
 const HRNavbar = () => {
   const navigate = useNavigate();
@@ -79,6 +80,14 @@ const HRNavbar = () => {
         >
           <FaEdit />
           <span>Calibrate</span>
+        </div>
+        <div
+          onClick={() => {
+            navigate("/hr/configure");
+          }}
+        >
+          <BsGearFill />
+          <span>Roles</span>
         </div>
         <div
           onClick={() => {

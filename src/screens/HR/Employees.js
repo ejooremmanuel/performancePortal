@@ -53,14 +53,34 @@ const Employees = () => {
       title: "Photo",
       field: `photo`,
       render: ({ photo }) => {
-        return <img src={`${photo}`} alt="" />;
+        return (
+          <img
+            src={`${photo}`}
+            alt=""
+            style={{
+              width: "50px",
+              height: "50px",
+              objectFit: "cover",
+              borderRadius: "100%",
+            }}
+          />
+        );
       },
     },
     { title: "Staff Name", field: `fullname` },
+    { title: "Gender", field: `gender` },
     { title: "Email Address", field: "email", type: "string" },
     { title: "Department", field: "department", type: "string" },
     { title: "Role", field: "role" },
+    { title: "State", field: "state" },
+    { title: "Mobile No", field: "mobile" },
     { title: "Manager", field: "manager[fullname]" },
+    { title: "Date of Birth", field: "dob" },
+    { title: "Short Bio", field: "bio" },
+    { title: "CUG", field: "cug" },
+    { title: "Emergency Contact Name", field: "emergencyContactName" },
+    { title: "Emergency Contact Email", field: "emergencyContactEmail" },
+    { title: "Emergency Contact Address", field: "emergencyContactAddress" },
     {
       title: "Date Created",
       field: `createdAt`,
@@ -69,8 +89,6 @@ const Employees = () => {
   ];
 
   const navigate = useNavigate();
-
-  console.log(setActionBtn);
 
   const getEmployees = () => {
     setFetching(true);
@@ -174,6 +192,7 @@ const Employees = () => {
                 color: "#FF00dd",
               },
               actionsColumnIndex: -1,
+              pageSizeOptions: [1, 3, 5],
 
               headerStyle: {
                 backgroundColor: "rgba(196, 196, 196, 0.32)",
@@ -186,29 +205,29 @@ const Employees = () => {
               paddingLeft: "20px",
               background: "none",
             }}
-            actions={[
-              {
-                icon: "more_horiz",
-                iconProps: {
-                  style: { fontSize: "20px", color: "gold" },
-                },
-                tooltip: "View More",
+            // actions={[
+            //   {
+            //     icon: "more_horiz",
+            //     iconProps: {
+            //       style: { fontSize: "20px", color: "gold" },
+            //     },
+            //     tooltip: "View More",
 
-                onClick: (event, rowData) => {
-                  navigate(`/staff/report/${rowData._id}`);
-                },
-              },
-            ]}
-            components={{
-              Action: (props) => (
-                <button
-                  onClick={(event) => actionHandler(props)}
-                  className={actionBtn ? "btn__action" : "btn__action--hide"}
-                >
-                  <MoreHorizOutlined />
-                </button>
-              ),
-            }}
+            //     onClick: (event, rowData) => {
+            //       navigate(`/staff/report/${rowData._id}`);
+            //     },
+            //   },
+            // ]}
+            // components={{
+            //   Action: (props) => (
+            //     <button
+            //       onClick={(event) => actionHandler(props)}
+            //       className={actionBtn ? "btn__action" : "btn__action--hide"}
+            //     >
+            //       <MoreHorizOutlined />
+            //     </button>
+            //   ),
+            // }}
           />
         )}
         <EditEmployee

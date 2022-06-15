@@ -119,6 +119,13 @@ const Banks = [
 
 const Locations = [{ value: "Abuja" }, { value: "Lagos" }, { value: "Others" }];
 
+const Quarters = [
+  "First Quarter",
+  "Second Quarter",
+  "Third Quarter",
+  "Fourth Quarter",
+];
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   ProfileLinks,
@@ -128,4 +135,5 @@ export default {
   Locations,
   Months,
   Banks,
+  Quarters,
 };

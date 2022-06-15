@@ -12,6 +12,13 @@ const StaffScoreTable = ({ list }) => {
   };
 
   const columns = [
+    {
+      title: "SN",
+      field: `tableData[id]`,
+      render: ({ tableData }) => {
+        return tableData.id + 1;
+      },
+    },
     { title: "Staff", field: "user[fullname]" },
     {
       title: "Status",
@@ -31,7 +38,7 @@ const StaffScoreTable = ({ list }) => {
     <>
       <MaterialTable
         icons={TableIcons}
-        title="Team Members"
+        title="Appraise Team Members"
         columns={columns}
         data={list}
         options={{

@@ -54,6 +54,7 @@ const Dashboard = () => {
         axios
           .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
           .then((response) => {
+            console.log(response.data.data);
             setTeam(
               response.data.data.filter(
                 (item) => item.department === department

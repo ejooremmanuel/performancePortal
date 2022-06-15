@@ -54,7 +54,7 @@ const ManagerRating = () => {
       <Navigation />
 
       <div className="contentsRight">
-        <Header title="Manager Appraisal of Staff" />
+        <Header title="" />
         <div style={{ width: "100%", height: "100%" }}>
           {loading ? (
             <div>Loading...</div>

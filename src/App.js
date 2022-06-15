@@ -113,6 +113,7 @@ function App() {
           <Route path="/hr/logs" exact element={<ActivityLogs />} />
           <Route
             path="*"
+            exact
             element={
               <>
                 <h1>Page Not Found</h1>
