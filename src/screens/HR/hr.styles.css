@@ -270,9 +270,12 @@ tr {
 .btn button {
   width: 100px;
   height: 40px;
-  background: rgb(76, 97, 237);
+  /* background: rgb(76, 97, 237); */
   color: #fff;
   border-radius: 5px;
+  display: "flex";
+  align-items: "center";
+  justify-content: "center";
 }
 
 .btn__start {

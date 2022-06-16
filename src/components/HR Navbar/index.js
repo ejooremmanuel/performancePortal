@@ -87,7 +87,7 @@ const HRNavbar = () => {
           }}
         >
           <BsGearFill />
-          <span>Roles</span>
+          <span>Departments</span>
         </div>
         <div
           onClick={() => {

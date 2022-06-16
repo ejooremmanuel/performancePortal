@@ -50,22 +50,22 @@ const Dashboard = () => {
       .then(({ data }) => {
         setAppraisalScore(data.data.score);
         setManagerscore(data.data.managerscore);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, [department, setMyTeam]);
 
-        axios
-          .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
-          .then((response) => {
-            console.log(response.data.data);
-            setTeam(
-              response.data.data.filter(
-                (item) => item.department === department
-              )
-            );
-            setMyTeam(
-              response.data.data.filter(
-                (item) => item.department === department
-              )
-            );
-          });
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
+      .then((response) => {
+        setTeam(
+          response.data.data.filter((item) => item.department === department)
+        );
+        setMyTeam(
+          response.data.data.filter((item) => item.department === department)
+        );
       });
   }, [department, setMyTeam]);
 
@@ -106,7 +106,7 @@ const Dashboard = () => {
           />
           <Card
             title="Overall Score"
-            count={overallScore}
+            count={managerscore}
             Icon={BsReception4}
             color={styles.purple}
             url="#"

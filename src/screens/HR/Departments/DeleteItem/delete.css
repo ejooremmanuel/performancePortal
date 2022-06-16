@@ -1,0 +1,29 @@
+.deleteContent {
+  font-size: 16px;
+}
+
+.deleteBtnContainer {
+  display: flex;
+  width: 70%;
+  height: 50px;
+  gap: 5px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.button {
+  width: 100px;
+  cursor: pointer;
+  background: none;
+  color: rgb(42, 42, 243);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  box-sizing: border-box;
+  padding: 10px 0;
+  text-transform: uppercase;
+}

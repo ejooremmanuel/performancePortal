@@ -14,3 +14,5 @@ export { default as Chart } from "./Chart";
 export { default as StaffScoreTable } from "./AllStaffScores/StaffScoreTable";
 export { default as HRNavbar } from "./HR Navbar";
 export { default as Filter } from "./Filter/Filter";
+export { default as Button } from "./Button/Button";
+export { default as CancelButton } from "./CancelButton/CancelButton";

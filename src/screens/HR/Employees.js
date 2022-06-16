@@ -81,6 +81,10 @@ const Employees = () => {
     { title: "Emergency Contact Name", field: "emergencyContactName" },
     { title: "Emergency Contact Email", field: "emergencyContactEmail" },
     { title: "Emergency Contact Address", field: "emergencyContactAddress" },
+    { title: "Account Number", field: "accountNumber" },
+    { title: "Bank Name", field: "bank" },
+    { title: "BVN", field: "bvn" },
+    { title: "NIN", field: "nin" },
     {
       title: "Date Created",
       field: `createdAt`,
@@ -205,29 +209,29 @@ const Employees = () => {
               paddingLeft: "20px",
               background: "none",
             }}
-            // actions={[
-            //   {
-            //     icon: "more_horiz",
-            //     iconProps: {
-            //       style: { fontSize: "20px", color: "gold" },
-            //     },
-            //     tooltip: "View More",
+            actions={[
+              {
+                icon: "more_horiz",
+                iconProps: {
+                  style: { fontSize: "20px", color: "gold" },
+                },
+                tooltip: "View More",
 
-            //     onClick: (event, rowData) => {
-            //       navigate(`/staff/report/${rowData._id}`);
-            //     },
-            //   },
-            // ]}
-            // components={{
-            //   Action: (props) => (
-            //     <button
-            //       onClick={(event) => actionHandler(props)}
-            //       className={actionBtn ? "btn__action" : "btn__action--hide"}
-            //     >
-            //       <MoreHorizOutlined />
-            //     </button>
-            //   ),
-            // }}
+                onClick: (event, rowData) => {
+                  navigate(`/staff/report/${rowData._id}`);
+                },
+              },
+            ]}
+            components={{
+              Action: (props) => (
+                <button
+                  onClick={(event) => actionHandler(props)}
+                  className={actionBtn ? "btn__action" : "btn__action--hide"}
+                >
+                  <MoreHorizOutlined />
+                </button>
+              ),
+            }}
           />
         )}
         <EditEmployee

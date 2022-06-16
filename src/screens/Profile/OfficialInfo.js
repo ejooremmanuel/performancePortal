@@ -11,6 +11,7 @@ import styles from "./styles.module.css";
 const OfficialInfo = () => {
   const [cug, setCug] = useState("");
   const [department, setDepartment] = useState("");
+  const [departments, setDepartments] = useState([]);
   const [branch, setBranch] = useState("");
   const [manager, setManager] = useState("");
   const [managers, setManagers] = useState([]);
@@ -61,6 +62,17 @@ const OfficialInfo = () => {
   //get staff data
   React.useEffect(() => {
     getStaffData();
+  }, []);
+
+  React.useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/v1/departments/`)
+      .then(({ data }) => {
+        setDepartments(data.results);
+      })
+      .catch((err) => {
+        console.log(err.message || err.msg);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -176,12 +188,20 @@ const OfficialInfo = () => {
                   disabled={true}
                 />
               </div>
-              <Select
+              <NativeSelect
                 title="Select Your Department"
-                options={Options.Departments}
                 onChange={selectDepartmentHandler}
                 value={department}
-              />
+              >
+                <option value="">Select Your Department</option>
+                {departments.map((item, i) => {
+                  return (
+                    <option key={i} value={item.name}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+              </NativeSelect>
 
               {showManagerField && (
                 <NativeSelect
