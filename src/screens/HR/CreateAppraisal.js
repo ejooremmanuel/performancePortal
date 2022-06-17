@@ -112,6 +112,7 @@ export function HRHeader() {
         <input type="text" placeholder="Search here..." />
       </div>
       <div className="header__divider"></div>
+
       <HeaderImageUpload />
     </div>
   );

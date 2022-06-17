@@ -23,15 +23,6 @@ import MaterialTable from "material-table";
 import { HRNavbar, Options, Select } from "../../components";
 import { HRHeader } from "./CreateAppraisal";
 import { useNavigate } from "react-router-dom";
-import {
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
-  useToast,
-} from "@chakra-ui/react";
 import { BASE_URL } from "../../config";
 
 const ActivityLogs = () => {

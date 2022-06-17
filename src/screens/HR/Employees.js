@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 import React from "react";
@@ -95,12 +96,21 @@ const Employees = () => {
   const navigate = useNavigate();
 
   const getEmployees = () => {
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+
+    if (!token) {
+      navigate("/");
+      return;
+    }
+
     setFetching(true);
     axios
       .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
         headers: {
           "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          "access-token": token,
         },
       })
       .then((response) => {

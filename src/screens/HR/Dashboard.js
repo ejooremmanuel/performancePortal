@@ -11,25 +11,35 @@ import styles from "../Dashboard/styles.module.css";
 import HeaderImageUpload from "./HeaderImageUpload";
 import { BASE_URL } from "../../config";
 import Logs from "./Logs";
+import { useNavigate } from "react-router-dom";
 
 const HRDashboard = () => {
   const [numberOfEmployees, setNumberOfEmployees] = React.useState(0);
 
+  const navigate = useNavigate();
+
   React.useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
-        headers: {
-          "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-        },
-      })
-      .then(({ data }) => {
-        setNumberOfEmployees(data.data.length);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  }, []);
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    if (!token) {
+      navigate("/");
+      return;
+    } else
+      axios
+        .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": token,
+          },
+        })
+        .then(({ data }) => {
+          setNumberOfEmployees(data.data.length);
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+  }, [navigate]);
   return (
     <div style={{ overflowX: "hidden" }}>
       <HRNavbar />
@@ -85,52 +95,6 @@ const HRDashboard = () => {
 export default HRDashboard;
 
 export function HRHeader() {
-  const [img, setImg] = React.useState("");
-  const reader = new FileReader();
-
-  console.log(img);
-  React.useEffect(() => {
-    const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
-    axios
-      .get(`${BASE_URL}/api/v1/staff/auth/`, {
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: `Bearer ${staffInfo.token}`,
-          "access-token": `${accessToken}`,
-        },
-      })
-      .then(({ data }) => {
-        setImg(data.data.staff.photo);
-      })
-      .catch((err) => {
-        console.log(err.message || err.msg);
-      });
-  }, []);
-
-  const uploadDp = (event) => {
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (e) => {
-      setImg(reader.result);
-      const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
-      axios
-        .patch(
-          `${BASE_URL}/api/v1/staff/auth/userdp`,
-          { img: reader.result },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "access-token": `${accessToken}`,
-            },
-          }
-        )
-        .then((response) => {
-          setImg(response.data.photo);
-        });
-    };
-  };
-
-  console.log(uploadDp);
-
   return (
     <div className="hr__dashboard__header">
       <div className="header__search">

@@ -11,12 +11,12 @@ import { NativeSelect } from "../../components/Select";
 import MaterialTable from "material-table";
 import { TableIcons } from "../../components/TableIcons/TableIcons";
 import { CircularProgress } from "@material-ui/core";
-import { UserContext } from "../../context/UserContext";
+// import { UserContext } from "../../context/UserContext";
 
 const StartAppraisal = () => {
   const [loading, setLoading] = React.useState(false);
-  const { setQuarter: setCurrentQuarter, quarter: currentQuarter } =
-    React.useContext(UserContext);
+  // const { setQuarter: setCurrentQuarter, quarter: currentQuarter } =
+  //   React.useContext(UserContext);
   const toast = useToast();
   const [quarter, setQuarter] = React.useState("");
   const [session, setSession] = React.useState(

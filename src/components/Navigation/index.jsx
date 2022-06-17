@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./styles.module.css";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaThLarge,
   FaUserCircle,
@@ -30,24 +30,32 @@ const Navigation = () => {
   const [role, setRole] = useState("Staff");
   const { appraisalStarted } = React.useContext(UserContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutUser = () => {
     dispatch(logout());
   };
 
   React.useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/v1/staff/auth/`, {
-        headers: {
-          "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-        },
-      })
-      .then(({ data }) => {
-        setStaff(data.data.staff);
-        setRole(data.data.staff.role);
-      });
-  }, []);
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    if (!token) {
+      navigate("/");
+      return;
+    } else
+      axios
+        .get(`${BASE_URL}/api/v1/staff/auth/`, {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": token,
+          },
+        })
+        .then(({ data }) => {
+          setStaff(data.data.staff);
+          setRole(data.data.staff.role);
+        });
+  }, [navigate]);
 
   return (
     <div className={styles.hra__navigation}>

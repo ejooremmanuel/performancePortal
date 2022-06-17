@@ -4,24 +4,33 @@ import ReactECharts from "echarts-for-react";
 import axios from "axios";
 import { BASE_URL } from "../../config";
 import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Chart = ({ first, second, third, fourth, id }) => {
   const [data, setData] = React.useState({});
   // eslint-disable-next-line no-unused-vars
   const { quarter } = React.useContext(UserContext);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
-    axios
-      .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
-        headers: {
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
-        },
-      })
-      .then((response) => {
-        // console.log(response.data.data);
-        setData(response.data.data);
-      });
-  }, [id]);
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    if (!token) {
+      navigate("/");
+      return;
+    } else
+      axios
+        .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
+          headers: {
+            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          },
+        })
+        .then((response) => {
+          // console.log(response.data.data);
+          setData(response.data.data);
+        });
+  }, [id, navigate]);
 
   // const a = first ? first : 30;
   // const b = second ? second : 10;

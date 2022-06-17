@@ -7,7 +7,7 @@ import {
   BsReception4,
 } from "react-icons/bs";
 import styles from "./styles.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaRegChartBar,
   FaSortAlphaDown,
@@ -25,7 +25,8 @@ import { BASE_URL } from "../../config";
 const Dashboard = () => {
   // Helpers
   const dispatch = useDispatch();
-  const { setMyTeam, quarter } = React.useContext(UserContext);
+  const navigate = useNavigate();
+  const { setMyTeam } = React.useContext(UserContext);
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {}, photo = "" } = userProfile;
   const [appraisalScore, setAppraisalScore] = React.useState(0);
@@ -40,11 +41,18 @@ const Dashboard = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    if (!token) {
+      navigate("/");
+      return;
+    }
     axios
       .get(`${BASE_URL}/api/v1/result/current`, {
         headers: {
           "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          "access-token": token,
         },
       })
       .then(({ data }) => {
@@ -54,7 +62,7 @@ const Dashboard = () => {
       .catch((err) => {
         console.log(err.response);
       });
-  }, [department, setMyTeam]);
+  }, [department, setMyTeam, navigate]);
 
   React.useEffect(() => {
     axios
@@ -70,18 +78,25 @@ const Dashboard = () => {
   }, [department, setMyTeam]);
 
   React.useEffect(() => {
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    if (!token) {
+      navigate("/");
+      return;
+    }
     axios
       .get(`${BASE_URL}/api/v1/report/staff`, {
         headers: {
           "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          "access-token": token,
         },
       })
       .then((response) => {
         setOverallScore(response.data.data.overall);
         setCalibration(response.data.data.calibration);
       });
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="appContainer">

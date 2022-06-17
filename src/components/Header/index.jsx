@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./header.module.css";
 // import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FiCamera } from "react-icons/fi";
 import axios from "axios";
 import { BASE_URL } from "../../config";
@@ -11,10 +11,17 @@ const Header = ({ title, children, name }) => {
   // const photo = JSON.parse(localStorage.getItem("photo"));
   const [img, setImg] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
+    const accessToken =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    if (!accessToken) {
+      navigate("/");
+      return;
+    }
     setLoading(true);
-    const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
     axios
       .get(`${BASE_URL}/api/v1/staff/auth/`, {
         headers: {
@@ -31,10 +38,12 @@ const Header = ({ title, children, name }) => {
         console.log(err.message || err.msg);
         setLoading(false);
       });
-  }, []);
+  }, [navigate]);
 
   const uploadDp = (event) => {
-    const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
+    const accessToken =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
     const data = new FormData();
     data.append("profile", event.target.files[0]);
     axios
