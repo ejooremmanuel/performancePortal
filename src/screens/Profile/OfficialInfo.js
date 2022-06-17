@@ -14,11 +14,8 @@ const OfficialInfo = () => {
   const [departments, setDepartments] = useState([]);
   const [branch, setBranch] = useState("");
   const [manager, setManager] = useState("");
-  const [managers, setManagers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showManagerField, setShowManagerField] = useState(false);
   const [fetching, setFetching] = useState(false);
-  const [selectedManager, setSelectedManager] = useState("");
   const [managerId, setManagerId] = useState("");
   const toast = useToast();
 
@@ -27,9 +24,7 @@ const OfficialInfo = () => {
   };
   const selectDepartmentHandler = (e) => {
     setDepartment(e.target.value);
-  };
-  const selectManagerHandler = (e) => {
-    setSelectedManager(e.target.value);
+    setManagerId(JSON.parse(e.target[e.target.selectedIndex].id));
   };
 
   // console.log(selectManagerHandler);
@@ -75,36 +70,6 @@ const OfficialInfo = () => {
       });
   }, []);
 
-  React.useEffect(() => {
-    if (department) {
-      setShowManagerField(true);
-      const accessToken = JSON.parse(localStorage.getItem("staffInfo")).token;
-      axios
-        .get(`${BASE_URL}/api/v1/staff/auth/employees/all`, {
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${staffInfo.token}`,
-            "access-token": `${accessToken}`,
-          },
-        })
-        .then((items) => {
-          //find manager for staff department
-          const foundManagers = items.data.data.filter((item) => {
-            return (
-              item.department === department &&
-              (item.role === "Manager" ||
-                (item.roles && item.roles.includes("Manager")))
-            );
-          });
-
-          setManagers(foundManagers);
-        })
-        .catch((err) => {
-          console.log(err.response.data.msg);
-        });
-    }
-  }, [department]);
-
   //form handler
   const saveDataHandler = (e) => {
     e.preventDefault();
@@ -113,7 +78,7 @@ const OfficialInfo = () => {
       cug,
       branch,
       department,
-      manager: selectedManager || managerId,
+      manager: managerId,
     };
     setLoading(true);
     axios
@@ -132,7 +97,7 @@ const OfficialInfo = () => {
           prev = data.data.manager.fullname;
           return prev;
         });
-        setSelectedManager(data.data.manager._id);
+
         setLoading(false);
         toast({
           title: "Success",
@@ -193,17 +158,24 @@ const OfficialInfo = () => {
                 onChange={selectDepartmentHandler}
                 value={department}
               >
-                <option value="">Select Your Department</option>
+                <option value="" disabled>
+                  Select Your Department
+                </option>
                 {departments.map((item, i) => {
                   return (
-                    <option key={i} value={item.name}>
+                    <option
+                      key={i}
+                      value={item.name}
+                      id={JSON.stringify(item.manager._id)}
+                      // data-manager={JSON.stringify(item.manager._id)}
+                    >
                       {item.name}
                     </option>
                   );
                 })}
               </NativeSelect>
 
-              {showManagerField && (
+              {/* {showManagerField && (
                 <NativeSelect
                   title="Select Your Manager"
                   onChange={selectManagerHandler}
@@ -221,7 +193,7 @@ const OfficialInfo = () => {
                     );
                   })}
                 </NativeSelect>
-              )}
+              )} */}
 
               <Select
                 title="Select Your Location"
@@ -229,14 +201,17 @@ const OfficialInfo = () => {
                 onChange={selectBranchHandler}
                 options={Options.Locations}
               />
-              <div></div>
 
               {loading ? (
                 <button>Updating...</button>
               ) : (
                 <button
                   onClick={saveDataHandler}
-                  disabled={!branch && !department && !selectedManager}
+                  disabled={
+                    !branch.trim().length &&
+                    !department.trim().length &&
+                    !managerId.trim().length
+                  }
                 >
                   Save Information
                 </button>

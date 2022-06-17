@@ -86,6 +86,139 @@ const Calibrate = () => {
     {
       title: "Overall Score",
       field: "overall",
+      render: (rowData) => {
+        if (rowData.overall) {
+          return <div className="name">{rowData.overall}</div>;
+        } else if (
+          !rowData.overall &&
+          rowData["First Quarter"] &&
+          rowData["Second Quarter"] &&
+          rowData["Third Quarter"] &&
+          rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["First Quarter"] +
+              rowData["Second Quarter"] +
+              rowData["Third Quarter"] +
+              rowData["Fourth Quarter"]) /
+              4
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          rowData["Third Quarter"] &&
+          rowData["Fourth Quarter"] &&
+          rowData["Second Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["Second Quarter"] +
+              rowData["Third Quarter"] +
+              rowData["Fourth Quarter"]) /
+              3
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["Second Quarter"] &&
+          rowData["Third Quarter"] &&
+          rowData["Fourth Quarter"] &&
+          rowData["First Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["First Quarter"] +
+              rowData["Third Quarter"] +
+              rowData["Fourth Quarter"]) /
+              3
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["Third Quarter"] &&
+          rowData["Fourth Quarter"] &&
+          rowData["Second Quarter"] &&
+          rowData["First Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["Second Quarter"] +
+              rowData["First Quarter"] +
+              rowData["Fourth Quarter"]) /
+              3
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["Fouth Quarter"] &&
+          rowData["Third Quarter"] &&
+          rowData["Second Quarter"] &&
+          rowData["First Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["Second Quarter"] +
+              rowData["Third Quarter"] +
+              rowData["First Quarter"]) /
+              3
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          !rowData["Second Quarter"] &&
+          rowData["Third Quarter"] &&
+          rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["Third Quarter"] + rowData["Fourth Quarter"]) / 2
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          !rowData["Third Quarter"] &&
+          rowData["Second Quarter"] &&
+          rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["Second Quarter"] + rowData["Fourth Quarter"]) / 2
+          );
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          !rowData["Fourth Quarter"] &&
+          rowData["Third Quarter"] &&
+          rowData["Second Quarter"]
+        ) {
+          return Math.ceil(
+            (rowData["Third Quarter"] + rowData["Second Quarter"]) / 2
+          );
+        } else if (
+          !rowData.overall &&
+          rowData["First Quarter"] &&
+          !rowData["Second Quarter"] &&
+          !rowData["Third Quarter"] &&
+          !rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(rowData["First Quarter"]);
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          rowData["Second Quarter"] &&
+          !rowData["Third Quarter"] &&
+          !rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(rowData["Second Quarter"]);
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          !rowData["Second Quarter"] &&
+          rowData["Third Quarter"] &&
+          !rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(rowData["Third Quarter"]);
+        } else if (
+          !rowData.overall &&
+          !rowData["First Quarter"] &&
+          !rowData["Second Quarter"] &&
+          !rowData["Third Quarter"] &&
+          rowData["Fourth Quarter"]
+        ) {
+          return Math.ceil(rowData["Fourth Quarter"]);
+        }
+      },
     },
     {
       title: "Calibrated Score",
@@ -191,7 +324,8 @@ const Calibrate = () => {
             columns={columns}
             data={list}
             options={{
-              exportButton: true,
+              exportButton: { csv: true, pdf: false },
+              exportAllData: true,
               showTitle: false,
               exportFileName: "LBAN Staff Appraisal Annual Report",
               actionsCellStyle: {

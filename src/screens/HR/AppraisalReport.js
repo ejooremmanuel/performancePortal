@@ -39,14 +39,7 @@ const AppraisalReport = () => {
       },
       type: "number",
     },
-    {
-      title: "Staff Photo",
-      field: "user[photo]",
-      render: (rowData) => {
-        return <img src={`${rowData.user.photo}`} alt="" />;
-      },
-      type: "string",
-    },
+
     { title: "Staff Name", field: "user[fullname]", type: "string" },
     { title: "Staff Unit", field: "user[department]", type: "string" },
     { title: "Staff Score", field: "score", type: "string" },
@@ -67,7 +60,7 @@ const AppraisalReport = () => {
 
   React.useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/v1/result`, {
+      .get(`${BASE_URL}/api/v1/result/hr`, {
         headers: {
           "Content-Type": "application/json",
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
@@ -154,7 +147,8 @@ const AppraisalReport = () => {
           columns={columns}
           data={list}
           options={{
-            exportButton: true,
+            exportButton: { csv: true, pdf: false },
+            exportAllData: true,
             actionsCellStyle: {
               color: "#FF00dd",
             },

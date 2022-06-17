@@ -115,6 +115,7 @@ const ManagerStaff = () => {
         },
       })
       .then((response) => {
+        console.log(response.data.data);
         if (response.data.data[quarter][0].status === "Accepted") {
           setAccepted(true);
         }
