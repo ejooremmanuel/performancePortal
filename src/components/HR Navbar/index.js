@@ -22,7 +22,7 @@ const HRNavbar = () => {
   const dispatch = useDispatch();
 
   const logoutUser = () => {
-    dispatch(logout());
+    dispatch(logout(navigate));
   };
 
   return (

@@ -33,7 +33,7 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const logoutUser = () => {
-    dispatch(logout());
+    dispatch(logout(navigate));
   };
 
   React.useEffect(() => {

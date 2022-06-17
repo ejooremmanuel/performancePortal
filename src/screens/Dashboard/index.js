@@ -28,7 +28,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { setMyTeam } = React.useContext(UserContext);
   const userProfile = useSelector((state) => state.userProfile);
-  const { staff = {}, photo = "" } = userProfile;
+  const { staff = {} } = userProfile;
   const [appraisalScore, setAppraisalScore] = React.useState(0);
   const [managerscore, setManagerscore] = React.useState(0);
   const [overallScore, setOverallScore] = React.useState(0);
@@ -102,7 +102,7 @@ const Dashboard = () => {
     <div className="appContainer">
       <Navigation />
       <div className="contentsRight">
-        <Header title="Dashboard" name={staff.fullname} photo={photo} />
+        <Header title="Dashboard" name={staff.fullname} />
         <Greeting name={staff.fullname} />
         <div className={styles.cardContainer}>
           <Card

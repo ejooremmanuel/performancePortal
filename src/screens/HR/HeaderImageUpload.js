@@ -17,29 +17,26 @@ const HeaderImageUpload = () => {
       JSON.parse(localStorage.getItem("staffInfo")).token;
 
     if (!accessToken) {
-      setLoading(false);
       navigate("/");
       return;
-    } else {
-      setLoading(true);
-      axios
-        .get(`${BASE_URL}/api/v1/staff/auth/`, {
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${staffInfo.token}`,
-            "access-token": `${accessToken}`,
-          },
-        })
-        .then(({ data }) => {
-          setImg(data.data.staff.photo);
-          setStaffName(data.data.staff.fullname);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err.message || err.msg);
-          setLoading(false);
-        });
-    }
+    } else setLoading(true);
+    axios
+      .get(`${BASE_URL}/api/v1/staff/auth/`, {
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${staffInfo.token}`,
+          "access-token": `${accessToken}`,
+        },
+      })
+      .then(({ data }) => {
+        setImg(data.data.staff.photo);
+        setStaffName(data.data.staff.fullname);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.message || err.msg);
+        setLoading(false);
+      });
   }, [navigate]);
 
   const uploadDp = (event) => {

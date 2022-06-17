@@ -78,9 +78,10 @@ export const getMe = (setDepartment) => async (dispatch, getState) => {
   }
 };
 
-export const logout = () => (dispatch) => {
+export const logout = (navigate) => (dispatch) => {
   localStorage.removeItem("staffInfo");
   dispatch({ type: AUTH_RESET });
+  navigate("/");
 };
 
 export const getDp = (accessToken) => async (dispatch, getState) => {
