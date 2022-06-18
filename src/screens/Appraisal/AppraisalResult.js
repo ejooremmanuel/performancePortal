@@ -36,9 +36,11 @@ const AppraisalResult = () => {
   const [hasManagerScore, setHasManagerScore] = React.useState(false);
 
   const onAccept = () => {
+    setLoading(true);
     acceptResult(setLoading, onClose, setAccepted);
   };
   const onReject = () => {
+    setLoading(true);
     rejectResult(setLoading, close, setRejected);
   };
 

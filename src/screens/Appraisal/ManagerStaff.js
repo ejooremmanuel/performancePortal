@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Greeting, Header, Navigation } from "../../components";
 import AppraisalHeading from "../../components/AppraisalHeading/AppraisalHeading";
 import { BASE_URL } from "../../config";
-import { UserContext } from "../../context/UserContext";
+// import { UserContext } from "../../context/UserContext";
 import {
   patchStaffScore,
   getManagerResult,
@@ -30,7 +30,7 @@ const ManagerStaff = () => {
   const [loading, setLoading] = React.useState(false);
   const [question, setQuestion] = React.useState();
   const [staff, setStaff] = React.useState({});
-  const { quarter } = React.useContext(UserContext);
+  // const { quarter } = React.useContext(UserContext);
   const [accepted, setAccepted] = React.useState(false);
 
   const onNextClick = () => {
@@ -109,14 +109,16 @@ const ManagerStaff = () => {
   }, [id]);
   React.useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
+      .get(`${BASE_URL}/api/v1/result/manager/staff/${id}`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
       })
       .then((response) => {
-        console.log(response.data.data);
-        if (response.data.data[quarter][0].status === "Accepted") {
+        if (
+          response.data.data.result.length > 0 &&
+          response.data.data.result[0].status === "Accepted"
+        ) {
           setAccepted(true);
         }
       });
@@ -125,11 +127,14 @@ const ManagerStaff = () => {
   React.useEffect(() => {
     if (accepted) {
       swal({
-        buttons: [false],
         text: "Staff already rated",
         closeOnClickOutside: false,
         closeOnEsc: false,
         icon: "info",
+      }).then((ok) => {
+        if (ok) {
+          navigate("/manager/score/a");
+        }
       });
     }
   }, [accepted]);

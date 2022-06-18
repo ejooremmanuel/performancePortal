@@ -13,9 +13,9 @@ import {
   patchStaffScore,
   getManagerResultB,
 } from "../../redux/actions/appraisal.actions";
-import loadingSpinner from "../../assets/loading.gif";
+// import loadingSpinner from "../../assets/loading.gif";
 import { BASE_URL } from "../../config";
-import { UserContext } from "../../context/UserContext";
+// import { UserContext } from "../../context/UserContext";
 import swal from "sweetalert";
 
 const ManagerStaffSectionB = () => {
@@ -34,7 +34,7 @@ const ManagerStaffSectionB = () => {
   const [question, setQuestion] = React.useState();
   const [perspective, setPerspective] = React.useState([]);
   const [staff, setStaff] = React.useState({});
-  const { quarter } = React.useContext(UserContext);
+  // const { quarter } = React.useContext(UserContext);
   const [rejected, setRejected] = React.useState(false);
   const onNextClick = () => {
     setChecked(JSON.parse(localStorage.getItem("mb"))[index + 1]);
@@ -101,15 +101,31 @@ const ManagerStaffSectionB = () => {
         setStaff(response.data.data);
       });
   }, [id]);
+  // React.useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
+  //       headers: {
+  //         "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.data.data[quarter][0].status === "Accepted") {
+  //         setRejected(true);
+  //       }
+  //     });
+  // }, [id]);
   React.useEffect(() => {
     axios
-      .get(`${BASE_URL}/api/v1/result/staff/${id}`, {
+      .get(`${BASE_URL}/api/v1/result/manager/staff/${id}`, {
         headers: {
           "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
         },
       })
       .then((response) => {
-        if (response.data.data[quarter][0].status === "Accepted") {
+        if (
+          response.data.data.result.length > 0 &&
+          response.data.data.result[0].status === "Accepted"
+        ) {
           setRejected(true);
         }
       });
@@ -118,11 +134,14 @@ const ManagerStaffSectionB = () => {
   React.useEffect(() => {
     if (rejected) {
       swal({
-        buttons: [false],
         text: "Staff already rated",
         closeOnClickOutside: false,
         closeOnEsc: false,
         icon: "info",
+      }).then((ok) => {
+        if (ok) {
+          navigate("/manager/score/a");
+        }
       });
     }
   }, [rejected]);
