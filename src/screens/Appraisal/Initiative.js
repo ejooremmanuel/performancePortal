@@ -56,18 +56,31 @@ const Initiative = () => {
   return (
     <div className="appContainer">
       <Navigation />
-      <div className="contentsRight">
+      <div className="contentsRight__Initiative">
         <Header title="Appraisal" name={staff.fullname} photo={photo} />
         <Greeting name={staff.fullname} />
         <div className="appraisal__intro__text">
           <h2>Balanced Scorecard</h2>
         </div>
         <div className="button">
-          <Button colorScheme="green" onClick={onOpen} ml={3}>
-            Set Initiative
+          <Button
+            colorScheme="green"
+            onClick={onOpen}
+            ml={3}
+            px={4}
+            width="350px"
+          >
+            Set
           </Button>
         </div>
-        <div className="display__initiative" style={{ marginLeft: "20px" }}>
+        <div
+          className="display__initiative"
+          style={{
+            marginLeft: "20px",
+            height: "100%",
+            width: "90%",
+          }}
+        >
           <TableDisplay
             itemsPerPage={5}
             list={list}
@@ -90,6 +103,7 @@ export default Initiative;
 
 export function CreateInititiveForm({ isOpen, onClose, setList }) {
   const [options, setOptions] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
   const btnRef = React.useRef();
 
   React.useEffect(() => {
@@ -105,6 +119,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
   const [objective, setObjective] = React.useState("");
 
   const submitData = () => {
+    setLoading(true);
     const data = {
       target,
       initiative,
@@ -124,6 +139,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
         },
       })
       .then((response) => {
+        setLoading(false);
         setList((prev) => {
           return [response.data.data, ...prev];
         });
@@ -134,7 +150,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
       })
       .catch((err) => {
         console.log(err.response);
-        onClose();
+        setLoading(false);
       });
 
     axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
@@ -224,6 +240,9 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
             <Button
               colorScheme="blue"
               rightIcon={<FaPlus />}
+              disabled={!initiative || !target || !perspective || !measures}
+              isLoading={loading}
+              loadingText="Creating..."
               onClick={(e) => {
                 e.preventDefault();
                 submitData();

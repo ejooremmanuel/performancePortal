@@ -11,7 +11,8 @@ import { Greeting, Header, Navigation } from "../../components";
 import AppraisalHeadingB from "../../components/AppraisalHeading/AppraisalHeadingB";
 import {
   patchStaffScore,
-  getManagerResultB,
+  // getManagerResultB,
+  patchStaffScoreFinal,
 } from "../../redux/actions/appraisal.actions";
 // import loadingSpinner from "../../assets/loading.gif";
 import { BASE_URL } from "../../config";
@@ -63,6 +64,17 @@ const ManagerStaffSectionB = () => {
       section: "B",
     };
     dispatch(patchStaffScore(staffid, questionId, data, next));
+  };
+  const onSubmitFinal = (staffid, questionId, setLoading, navigate) => {
+    const data = {
+      question: questionId,
+      _qid: "Initiative",
+      score: question,
+      section: "B",
+    };
+    dispatch(
+      patchStaffScoreFinal(staffid, questionId, data, setLoading, navigate)
+    );
   };
 
   const onReset = () => {
@@ -215,6 +227,7 @@ const ManagerStaffSectionB = () => {
             <Button
               colorScheme="red"
               rightIcon={<RepeatIcon />}
+              disabled={loading}
               onClick={onReset}
             >
               Reset
@@ -341,16 +354,13 @@ const ManagerStaffSectionB = () => {
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"
+                                disabled={loading}
                               >
                                 Previous
                               </Button>
 
                               {loading ? (
-                                <Button
-                                  type="submit"
-                                  disabled
-                                  colorScheme="yellow"
-                                >
+                                <Button type="button" colorScheme="green">
                                   Calculating...
                                 </Button>
                               ) : (
@@ -359,12 +369,14 @@ const ManagerStaffSectionB = () => {
                                   onClick={(e) => {
                                     e.preventDefault();
                                     setLoading(true);
-                                    onSubmit(item.user._id, item.question._id);
-                                    getManagerResultB(navigate, setLoading);
+                                    onSubmitFinal(
+                                      item.user._id,
+                                      item.question._id,
+                                      setLoading,
+                                      navigate
+                                    );
                                   }}
                                   colorScheme="yellow"
-                                  isLoading={loading}
-                                  loadingText="Calculating..."
                                 >
                                   Finish Staff Appraisal
                                 </Button>

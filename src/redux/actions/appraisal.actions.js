@@ -68,12 +68,59 @@ export const patchStaffScore = (staffid, questionid, data, next, toast) => {
       });
       next();
     } catch (err) {
-      toast({
-        status: "error",
-        description: err.response.data.msg,
-        isClosable: true,
-        duration: 9000,
+      console.log(err);
+      // toast({
+      //   status: "error",
+      //   description: `error occured while updating score`,
+      //   isClosable: true,
+      //   duration: 9000,
+      // });
+      dispatch({
+        type: PATCH_SCORE_FAIL,
+        payload: err,
       });
+      //   next();
+    }
+  };
+};
+export const patchStaffScoreFinal = (
+  staffid,
+  questionid,
+  data,
+  setLoading,
+  navigate
+) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: START_PATCH_SCORE,
+      });
+      const token = JSON.parse(localStorage.getItem("staffInfo"));
+      const config = {
+        url: `${BASE_URL}/api/v1/score/staff/${staffid}/${questionid}`,
+        method: "patch",
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": token.token,
+        },
+        data: data,
+      };
+      const res = await axios(config);
+      console.log("done>>>>>>", res.data);
+      dispatch({
+        type: PATCH_SCORE_SUCCESS,
+        payload: res.data,
+      });
+      console.log("next page", res.data);
+      getManagerResultB(navigate, setLoading);
+    } catch (err) {
+      console.log(err);
+      // toast({
+      //   status: "error",
+      //   description: `error occured while updating score`,
+      //   isClosable: true,
+      //   duration: 9000,
+      // });
       dispatch({
         type: PATCH_SCORE_FAIL,
         payload: err,
@@ -116,21 +163,19 @@ export const createScoreB = (data, next) => {
 
 export const getManagerResult = async (navigate, setLoading) => {
   try {
-    const token = JSON.parse(localStorage.getItem("staffInfo")).token;
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "access-token": token,
-      },
-    };
+    // const token = JSON.parse(localStorage.getItem("staffInfo")).token;
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "access-token": token,
+    //   },
+    // };
 
-    const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
+    // const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
 
     setLoading(false);
     localStorage.removeItem("m");
-    navigate(
-      `/manager/staff/${res.data.data.score}/${res.data.data.managerscore}`
-    );
+    navigate(`/manager/rating/b/`);
   } catch (err) {
     console.log(err);
     setLoading(false);
@@ -148,7 +193,6 @@ export const getManagerResultB = async (navigate, setLoading) => {
     };
 
     const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
-    console.log(res.data);
     setLoading(false);
     localStorage.removeItem("mb");
     navigate(

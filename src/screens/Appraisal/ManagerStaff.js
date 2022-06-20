@@ -53,7 +53,8 @@ const ManagerStaff = () => {
   };
 
   const onSubmit = (staffid, questionId, next) => {
-    localStorage.setItem("staffRecord", JSON.stringify({ id }));
+    localStorage.setItem("staffRecord", JSON.stringify({ id: staffid }));
+
     const data = {
       question: questionId,
       _qid: "AppraisalA",
@@ -61,6 +62,26 @@ const ManagerStaff = () => {
       section: "A",
     };
     dispatch(patchStaffScore(staffid, questionId, data, next, toast));
+  };
+  const onSubmitFinal = (staffid, questionId, next) => {
+    localStorage.setItem("staffRecord", JSON.stringify({ id: staffid }));
+    const permissionToProceed = window.confirm(
+      "Are you sure you want to proceed to section B?"
+    );
+
+    if (permissionToProceed) {
+      const data = {
+        question: questionId,
+        _qid: "AppraisalA",
+        score: question,
+        section: "A",
+      };
+      dispatch(patchStaffScore(staffid, questionId, data, next, toast));
+      getManagerResult(navigate, setLoading);
+    } else {
+      setLoading(false);
+      return;
+    }
   };
 
   const onReset = () => {
@@ -199,6 +220,7 @@ const ManagerStaff = () => {
               colorScheme="red"
               rightIcon={<RepeatIcon />}
               onClick={onReset}
+              disabled={loading}
             >
               Reset
             </Button>
@@ -318,6 +340,7 @@ const ManagerStaff = () => {
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"
+                                disabled={loading}
                               >
                                 Previous
                               </Button>
@@ -334,12 +357,14 @@ const ManagerStaff = () => {
                                   onClick={(e) => {
                                     e.preventDefault();
                                     setLoading(true);
-                                    onSubmit(item.user._id, item.question._id);
-                                    getManagerResult(navigate, setLoading);
+                                    onSubmitFinal(
+                                      item.user._id,
+                                      item.question._id
+                                    );
                                   }}
                                   colorScheme="yellow"
                                 >
-                                  Finish Staff Appraisal
+                                  Section B
                                 </Button>
                               )}
                             </div>

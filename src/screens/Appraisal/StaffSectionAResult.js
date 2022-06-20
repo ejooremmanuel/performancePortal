@@ -39,7 +39,6 @@ const StaffSectionAResult = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setList(
           response.data.data.filter((res) => {
             return res._qid === "AppraisalA";

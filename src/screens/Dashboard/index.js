@@ -31,6 +31,7 @@ const Dashboard = () => {
   const { staff = {} } = userProfile;
   const [appraisalScore, setAppraisalScore] = React.useState(0);
   const [managerscore, setManagerscore] = React.useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [overallScore, setOverallScore] = React.useState(0);
   const [department, setDepartment] = React.useState("");
   const [team, setTeam] = React.useState([]);

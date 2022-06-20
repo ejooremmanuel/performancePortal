@@ -202,7 +202,7 @@ const OfficialInfo = () => {
               />
 
               {loading ? (
-                <button>Updating...</button>
+                <button type="button">Updating...</button>
               ) : (
                 <button
                   // onClick={saveDataHandler}

@@ -95,7 +95,7 @@ function App() {
           <Route path="/manager/score/a" exact element={<ManagerRating />} />
           <Route path="/manager/rating/:id" exact element={<ManagerStaff />} />
           <Route
-            path="/manager/rating/b/:id"
+            path="/manager/rating/b/"
             exact
             element={<ManagerStaffSectionB />}
           />

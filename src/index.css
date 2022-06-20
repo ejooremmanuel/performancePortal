@@ -52,6 +52,14 @@ body {
   flex: 0.95;
   background: rgb(250, 248, 248);
 }
+.contentsRight__Initiative {
+  padding: 0;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  flex: 0.95;
+  background: rgb(250, 248, 248);
+}
 
 /* INput Styles */
 

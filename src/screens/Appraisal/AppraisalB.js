@@ -177,6 +177,7 @@ const AppraisalB = () => {
               colorScheme="red"
               rightIcon={<RepeatIcon />}
               onClick={onReset}
+              disabled={loading}
             >
               Reset
             </Button>
@@ -280,6 +281,7 @@ const AppraisalB = () => {
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"
+                                disabled={loading}
                               >
                                 Previous
                               </Button>

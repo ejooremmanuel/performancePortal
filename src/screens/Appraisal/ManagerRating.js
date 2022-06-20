@@ -45,7 +45,6 @@ const ManagerRating = () => {
       })
       .catch((err) => {
         console.log(err.response.data.msg);
-        setLoading(false);
       });
   }, []);
 

@@ -23,7 +23,6 @@ const TableDisplay = ({
           },
         })
         .then((response) => {
-          console.log(response.data);
           setList(list.filter((item) => item._id !== id));
         });
     }
@@ -50,7 +49,7 @@ const TableDisplay = ({
               </tr>
             </thead>
             <tbody>
-              {currentItems &&
+              {currentItems && currentItems.length > 0 ? (
                 currentItems.map((item, index) => {
                   return (
                     <tr key={index}>
@@ -74,18 +73,14 @@ const TableDisplay = ({
                       </td>
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <tr>
+                  <td colspan="8">You have not set any initiative!</td>
+                </tr>
+              )}
             </tbody>
           </table>
-        )}
-
-        {list.length < 0 && (
-          <div style={{ width: "80%", height: "200px", textAlign: "center" }}>
-            <h4>You have not set any initiative</h4>
-            <span>
-              Click <strong>Set initiative</strong> to get started.
-            </span>
-          </div>
         )}
       </>
     );
