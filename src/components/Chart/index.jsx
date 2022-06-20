@@ -6,7 +6,7 @@ import { BASE_URL } from "../../config";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-const Chart = ({ first, second, third, fourth, id }) => {
+const Chart = ({ first, second, third, fourth, id, overallScore }) => {
   const [data, setData] = React.useState({});
   // eslint-disable-next-line no-unused-vars
   const { quarter } = React.useContext(UserContext);
@@ -62,13 +62,13 @@ const Chart = ({ first, second, third, fourth, id }) => {
       return managerscore;
     })) || [0];
 
-  let totalScores = [
-    first.length > 0 && first[0],
-    second.length > 0 && second[0],
-    third.length > 0 && third[0],
-    fourth.length > 0 && fourth[0],
-  ];
-  const total = Math.floor(totalScores.reduce((a, b) => a + b, 0) / 4);
+  // let totalScores = [
+  //   first.length > 0 && first[0],
+  //   second.length > 0 && second[0],
+  //   third.length > 0 && third[0],
+  //   fourth.length > 0 && fourth[0],
+  // ];
+  // const total = Math.floor(totalScores.reduce((a, b) => a + b, 0) / 4);
 
   const option = {
     tooltip: {
@@ -119,7 +119,7 @@ const Chart = ({ first, second, third, fourth, id }) => {
           { value: second, name: "Second Quarter" },
           { value: third, name: "Third Quarter" },
           { value: fourth, name: "Four Quarter" },
-          { value: total, name: "Overall" },
+          { value: overallScore, name: "Overall" },
         ],
       },
     ],

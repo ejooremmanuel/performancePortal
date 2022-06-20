@@ -143,7 +143,7 @@ const Dashboard = () => {
           />
         </div>
         <div className={styles.objectContainer}>
-          <Chart id={staff && staff._id} />
+          <Chart id={staff && staff._id} overallScore={overallScore} />
           <div className={styles.quickLinks}>
             <h2>Quick Links</h2>
             <br />
