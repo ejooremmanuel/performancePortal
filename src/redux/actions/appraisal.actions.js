@@ -106,13 +106,13 @@ export const patchStaffScoreFinal = (
         data: data,
       };
       const res = await axios(config);
-      console.log("done>>>>>>", res.data);
+
       dispatch({
         type: PATCH_SCORE_SUCCESS,
         payload: res.data,
       });
-      console.log("next page", res.data);
-      getManagerResultB(navigate, setLoading);
+
+      getManagerResultB(navigate, setLoading, staffid);
     } catch (err) {
       console.log(err);
       // toast({
@@ -182,7 +182,7 @@ export const getManagerResult = async (navigate, setLoading) => {
     return err;
   }
 };
-export const getManagerResultB = async (navigate, setLoading) => {
+export const getManagerResultB = async (navigate, setLoading, id) => {
   try {
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
     const config = {
@@ -192,7 +192,11 @@ export const getManagerResultB = async (navigate, setLoading) => {
       },
     };
 
-    const res = await axios.post(`${BASE_URL}/api/v1/result/`, {}, config);
+    const res = await axios.patch(
+      `${BASE_URL}/api/v1/result/staff/${id}`,
+      {},
+      config
+    );
     setLoading(false);
     localStorage.removeItem("mb");
     navigate(
