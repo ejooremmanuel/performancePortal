@@ -126,7 +126,7 @@ const OfficialInfo = () => {
       <Navigation />
       <div className="contentsRight">
         <Header title="Official Information" />
-        <div className={styles.formContainer}>
+        <form className={styles.formContainer} onSubmit={saveDataHandler}>
           <div className={styles.smContainer}>
             {Options.ProfileLinks.map((item, i) => (
               <Link to={item.url} key={i}>
@@ -150,13 +150,14 @@ const OfficialInfo = () => {
                   value={manager}
                   // onChange={(e) => setCug(e.target.value)}
                   type="text"
-                  disabled={true}
+                  readOnly={true}
                 />
               </div>
               <NativeSelect
                 title="Select Your Department"
                 onChange={selectDepartmentHandler}
                 value={department}
+                required={true}
               >
                 <option value="" disabled>
                   Select Your Department
@@ -206,19 +207,16 @@ const OfficialInfo = () => {
                 <button>Updating...</button>
               ) : (
                 <button
-                  onClick={saveDataHandler}
-                  disabled={
-                    !branch.trim().length &&
-                    !department.trim().length &&
-                    !managerId.trim().length
-                  }
+                  // onClick={saveDataHandler}
+                  type="submit"
+                  disabled={!branch || !department || !managerId}
                 >
                   Save Information
                 </button>
               )}
             </div>
           )}
-        </div>
+        </form>
       </div>
     </div>
   );
