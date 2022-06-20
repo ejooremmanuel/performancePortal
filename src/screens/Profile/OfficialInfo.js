@@ -159,9 +159,7 @@ const OfficialInfo = () => {
                 value={department}
                 required={true}
               >
-                <option value="" disabled>
-                  Select Your Department
-                </option>
+                <option value="">Select Your Department</option>
                 {departments.map((item, i) => {
                   return (
                     <option
@@ -209,7 +207,6 @@ const OfficialInfo = () => {
                 <button
                   // onClick={saveDataHandler}
                   type="submit"
-                  disabled={!branch || !department || !managerId}
                 >
                   Save Information
                 </button>
