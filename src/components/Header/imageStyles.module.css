@@ -1,0 +1,18 @@
+.uploadImage {
+  position: relative;
+  background: none;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  left: 90px;
+  color: rgba(255, 255, 255, 0.008);
+  border-radius: 50%;
+  bottom: 200px;
+}
+.uploadImage:hover {
+  background: rgba(0, 0, 0, 0.53);
+  color: #000;
+}

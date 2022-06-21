@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigation, Header, Options } from "../../components";
+import { UploadImage } from "../../components/Header";
 import { BASE_URL } from "../../config";
 import styles from "./styles.module.css";
 
@@ -83,9 +84,14 @@ const Profile = () => {
             <div className={styles.loading}>Loading...</div>
           ) : (
             <div className={styles.profile__container}>
+              {/* <img src={profileImage} alt="" /> */}
               <div className={styles.profile__image}>
-                <img src={profileImage} alt="" />
+                <UploadImage
+                  profileImage={profileImage}
+                  setProfileImage={setProfileImage}
+                />
               </div>
+
               <div className={styles.profile__details}>
                 <div
                   style={{

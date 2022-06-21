@@ -263,6 +263,11 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
   const [showDepartment, setShowDepartment] = React.useState(false);
   const [roles, setRoles] = React.useState([]);
   const [role, setRole] = React.useState("");
+  const [rolesData, setRolesData] = React.useState([]);
+
+  React.useMemo(() => {
+    data.data && data.data.role && setRole(data.data.role);
+  }, [data]);
 
   const toast = useToast();
 
@@ -271,27 +276,12 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
   };
 
   const showDepartmentHandler = (e) => {
-    if (e.target.checked && e.target.value === "Manager") {
+    if (e.target.value === "Manager") {
       setRole("Manager");
-      setShowDepartment(true);
-      setRoles((prevState) => [...prevState, "Manager"]);
-      return;
-    }
-    if (e.target.checked && e.target.value === "HR") {
+    } else if (e.target.value === "HR") {
       setRole("HR");
-      setRoles((prevState) => [...prevState, "HR"]);
-      return;
-    }
-    if (!e.target.checked && e.target.value === "Manager") {
+    } else {
       setRole("");
-      setRoles((prevState) => prevState.filter((role) => role !== "Manager"));
-      setShowDepartment(false);
-      return;
-    }
-    if (!e.target.checked && e.target.value === "HR") {
-      setRole("");
-      setRoles((prevState) => prevState.filter((role) => role !== "HR"));
-      return;
     }
   };
 
@@ -301,7 +291,6 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
       .patch(
         `${BASE_URL}/api/v1/staff/auth/manager/${id}`,
         {
-          roles,
           role,
         },
         {
@@ -385,27 +374,20 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
               >
                 <div className="checkbox">
                   <input
-                    type="checkbox"
+                    type="radio"
                     value="Manager"
+                    name="role"
                     onChange={showDepartmentHandler}
+                    checked={role === "Manager"}
                   />
                   <div>Manager</div>
                 </div>
-                {/* {showDepartment && (
-                  <div>
-                    <div>Choose Department</div>
-                    <Select
-                      options={Options.Departments}
-                      value={department}
-                      onChange={onChangeHandler}
-                      required={true}
-                    />
-                  </div>
-                )} */}
                 <div className="checkbox">
                   <input
-                    type="checkbox"
+                    type="radio"
+                    name="role"
                     value="HR"
+                    checked={role === "HR"}
                     onChange={showDepartmentHandler}
                   />
                   <div>Human Resource</div>
@@ -418,26 +400,63 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                     width: "100%",
                   }}
                 >
-                  <div className="btn">
+                  <>
                     <button
                       onClick={() => {
                         onClose();
                       }}
                       type="button"
+                      style={{
+                        display: "flex",
+                        width: "100px",
+                        height: "40px",
+                        background: "rgb(76, 97, 237)",
+                        color: "white",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: "5px",
+                      }}
                     >
                       Cancel
                     </button>
-                  </div>
+                  </>
 
-                  <div className="btn">
+                  <>
                     {loading ? (
-                      <button disabled>Assigning...</button>
+                      <button
+                        style={{
+                          display: "flex",
+                          width: "150px",
+                          height: "40px",
+                          background: "rgb(76, 97, 237)",
+                          color: "white",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: "5px",
+                        }}
+                        disabled
+                      >
+                        Assigning...
+                      </button>
                     ) : (
-                      <button type="submit" disabled={!role || !roles.length}>
+                      <button
+                        type="submit"
+                        disabled={!role}
+                        style={{
+                          display: "flex",
+                          width: "100px",
+                          height: "40px",
+                          background: "rgb(76, 97, 237)",
+                          color: "white",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          borderRadius: "5px",
+                        }}
+                      >
                         Configure
                       </button>
                     )}
-                  </div>
+                  </>
                 </div>
               </form>
             </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./header.module.css";
+import imageStyles from "./imageStyles.module.css";
 // import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FiCamera } from "react-icons/fi";
@@ -69,7 +70,7 @@ const Header = ({ title, children, name }) => {
             {loading ? null : <img src={img} alt="DP" />}
           </div>
           <label htmlFor="upload" className="uploadDp">
-            <FiCamera />
+            <FiCamera style={{ fontSize: "20px" }} />
           </label>
           <input
             type="file"
@@ -90,3 +91,45 @@ const Header = ({ title, children, name }) => {
 };
 
 export default Header;
+
+export const UploadImage = ({ profileImage, setProfileImage }) => {
+  const [loading, setLoading] = React.useState(false);
+
+  const uploadDp = (event) => {
+    setLoading(true);
+    const accessToken =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+    const data = new FormData();
+    data.append("profile", event.target.files[0]);
+    axios
+      .patch(`${BASE_URL}/api/v1/staff/auth/userdp`, data, {
+        headers: {
+          "access-token": `${accessToken}`,
+        },
+      })
+      .then((response) => {
+        setProfileImage(response.data.photo);
+      });
+  };
+
+  return (
+    <div>
+      <div style={{ width: "300px", height: "300px" }}>
+        {loading ? null : <img src={profileImage} alt="DP" />}
+      </div>
+      <label htmlFor="upload1" className={imageStyles.uploadImage}>
+        <FiCamera style={{ fontSize: "30px" }} />
+      </label>
+      <input
+        type="file"
+        id="upload1"
+        style={{ display: "none" }}
+        onChange={(event) => {
+          setProfileImage(URL.createObjectURL(event.target.files[0]));
+          uploadDp(event);
+        }}
+      />
+    </div>
+  );
+};

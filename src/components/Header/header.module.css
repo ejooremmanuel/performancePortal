@@ -57,6 +57,34 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile__imagedp {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  border-radius: 100%;
+  height: 300px;
+  width: 300px;
+  background: url("../../assets/user.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+}
+
+.profile__imagedp img {
+  border: 1px solid rgba(184, 187, 184, 0.185);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  object-fit: cover;
 }
 
 .uploadDp {
@@ -73,6 +101,22 @@
   color: rgba(255, 255, 255, 0.008);
   border-radius: 50%;
 }
+.uploadImage {
+  position: relative;
+  background: none;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  right: 55px;
+  /* top: -5px; */
+  color: rgba(255, 255, 255, 0.008);
+  border-radius: 50%;
+  bottom: -100px;
+}
+
 .uploadDp:hover {
   background: rgba(0, 0, 0, 0.53);
   color: #000;

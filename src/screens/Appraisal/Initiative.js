@@ -66,8 +66,9 @@ const Initiative = () => {
           <Button
             colorScheme="green"
             onClick={onOpen}
-            ml={3}
-            px={4}
+            style={{
+              marginLeft: "30px",
+            }}
             width="350px"
           >
             Set
@@ -76,7 +77,7 @@ const Initiative = () => {
         <div
           className="display__initiative"
           style={{
-            marginLeft: "20px",
+            marginLeft: "30px",
             height: "100%",
             width: "90%",
           }}
@@ -126,7 +127,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
       perspective,
       measures,
       objective,
-      session: 2022,
+      session: new Date(Date.now).getFullYear(),
     };
 
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;

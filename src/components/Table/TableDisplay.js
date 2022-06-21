@@ -3,6 +3,7 @@ import "../../screens/HR/hr.styles.css";
 import ReactPaginate from "react-paginate";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const TableDisplay = ({
   itemsPerPage,
@@ -16,7 +17,7 @@ const TableDisplay = ({
     const check = window.confirm(`Are you sure you want to delete this item?`);
     if (check) {
       axios
-        .delete(`/api/v1/initiative/${id}`, {
+        .delete(`${BASE_URL}/api/v1/initiative/${id}`, {
           headers: {
             "Content-Type": "application/json",
             "access-token": token,
