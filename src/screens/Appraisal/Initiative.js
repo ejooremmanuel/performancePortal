@@ -127,7 +127,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
       perspective,
       measures,
       objective,
-      session: new Date(Date.now).getFullYear(),
+      session: 2022,
     };
 
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
