@@ -264,43 +264,49 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
   const calibrateHandler = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios
-      .patch(
-        `${BASE_URL}/api/v1/report/${data && data.data._id}`,
-        {
-          calibration: score,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+    try {
+      axios
+        .patch(
+          `${BASE_URL}/api/v1/report/${data && data.data._id}`,
+          {
+            calibration: score,
           },
-        }
-      )
-      .then((response) => {
-        onClose();
-        toast({
-          title: "Success",
-          description: `Employee score calibrated successfully`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "access-token": JSON.parse(localStorage.getItem("staffInfo"))
+                .token,
+            },
+          }
+        )
+        .then((response) => {
+          onClose();
+          toast({
+            title: "Success",
+            description: `Employee score calibrated successfully`,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          getEmployees();
+          setLoading(false);
+          setScore("");
+        })
+        .catch((error) => {
+          console.log(error.response.data.msg);
+          toast({
+            title: "Error",
+            description: `An error has occurred!`,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+          setLoading(false);
         });
-        getEmployees();
-        setLoading(false);
-        setScore("");
-      })
-      .catch((error) => {
-        console.log(error.response.data.msg);
-        toast({
-          title: "Error",
-          description: `An error has occurred!`,
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-        setLoading(false);
-      });
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
   };
 
   return (
