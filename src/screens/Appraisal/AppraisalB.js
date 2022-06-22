@@ -188,6 +188,8 @@ const AppraisalB = () => {
             <div>
               {list.length < 1 ? (
                 <h4>You have not created any initiative yet!</h4>
+              ) : list.length < 3 ? (
+                <h4>Create three or more initiatives before you proceed!</h4>
               ) : (
                 list
                   .filter((item, i) => {
