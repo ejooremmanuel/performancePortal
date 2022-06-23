@@ -45,11 +45,20 @@ const AppraisalResult = () => {
   };
 
   React.useEffect(() => {
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+
+    if (!token) {
+      navigate("/");
+      return;
+    }
+
     axios
       .get(`${BASE_URL}/api/v1/result/current`, {
         headers: {
           "Content-Type": "application/json",
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          "access-token": token,
         },
       })
       .then((res) => {
@@ -67,11 +76,20 @@ const AppraisalResult = () => {
   }, [navigate]);
 
   React.useEffect(() => {
+    const token =
+      JSON.parse(localStorage.getItem("staffInfo")) &&
+      JSON.parse(localStorage.getItem("staffInfo")).token;
+
+    if (!token) {
+      navigate("/");
+      return;
+    }
+
     setFetching(true);
     axios
       .get(`${BASE_URL}/api/v1/score/current`, {
         headers: {
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          "access-token": token,
         },
       })
       .then((response) => {
@@ -82,7 +100,7 @@ const AppraisalResult = () => {
         );
         setFetching(false);
       });
-  }, [resultType]);
+  }, [resultType, navigate]);
 
   React.useEffect(() => {
     axios
