@@ -6,7 +6,7 @@ import { BASE_URL } from "../../config";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-const Chart = ({ first, second, third, fourth, id, overallScore }) => {
+const Chart = ({ id, overallScore }) => {
   const [data, setData] = React.useState({});
   // eslint-disable-next-line no-unused-vars
   const { quarter } = React.useContext(UserContext);
@@ -41,34 +41,26 @@ const Chart = ({ first, second, third, fourth, id, overallScore }) => {
 
   // const { firstQuarter, secondQuarter, thirdQuarter, fourthQuarter } = data;
 
-  first = (data &&
-    data.firstQuarter &&
-    data.firstQuarter.map(({ managerscore }) => {
-      return managerscore;
-    })) || [0];
-  second = (data &&
+  // first = (data &&
+  //   data.firstQuarter &&
+  //   data.firstQuarter.map(({ managerscore }) => {
+  //     return managerscore;
+  //   })) || [0];
+  const second = (data &&
     data.secondQuarter &&
     data.secondQuarter.map(({ managerscore }) => {
       return managerscore;
     })) || [0];
-  third = (data &&
-    data.thirdQuarter &&
-    data.thirdQuarter.map(({ managerscore }) => {
-      return managerscore;
-    })) || [0];
-  fourth = (data &&
+  // third = (data &&
+  //   data.thirdQuarter &&
+  //   data.thirdQuarter.map(({ managerscore }) => {
+  //     return managerscore;
+  //   })) || [0];
+  const fourth = (data &&
     data.fourthQuarter &&
     data.fourthQuarter.map(({ managerscore }) => {
       return managerscore;
     })) || [0];
-
-  // let totalScores = [
-  //   first.length > 0 && first[0],
-  //   second.length > 0 && second[0],
-  //   third.length > 0 && third[0],
-  //   fourth.length > 0 && fourth[0],
-  // ];
-  // const total = Math.floor(totalScores.reduce((a, b) => a + b, 0) / 4);
 
   const option = {
     tooltip: {
@@ -115,10 +107,9 @@ const Chart = ({ first, second, third, fourth, id, overallScore }) => {
           //       : "Third Quarter",
           // },
 
-          { value: first, name: "First Quarter" },
           { value: second, name: "Second Quarter" },
-          { value: third, name: "Third Quarter" },
-          { value: fourth, name: "Four Quarter" },
+
+          { value: fourth, name: "Fourth Quarter" },
           { value: overallScore, name: "Overall" },
         ],
       },

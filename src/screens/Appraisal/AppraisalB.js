@@ -67,17 +67,57 @@ const AppraisalB = () => {
         },
       })
       .then((response) => {
-        setList(response.data.data);
         if (response.data.data.length < 1) {
-          alert("No data found");
+          swal({
+            title: "No data found!",
+            text: "Add initiatives to continue!",
+            icon: "error",
+            button: "OK",
+          }).then((ok) => {
+            if (ok) {
+              navigate("/dashboard");
+            }
+          });
+          return;
         }
-        setFetching(false);
+
+        axios.get(`${BASE_URL}/api/v1/perspective`).then(({ data }) => {
+          const perspectives = data.data.map(({ title }) => title);
+
+          let foundPerspectivesByStaff = response.data.data.map(
+            ({ perspective }) => {
+              return perspective.title;
+            }
+          );
+
+          foundPerspectivesByStaff = [...new Set(foundPerspectivesByStaff)];
+
+          if (
+            JSON.stringify(foundPerspectivesByStaff.sort()) ===
+            JSON.stringify(perspectives.sort())
+          ) {
+            setList(response.data.data);
+          } else {
+            swal({
+              title: "Missing Perspective",
+              text: "A perspective is missing from your set initiatives! Check your initiatives list and try again.",
+              buttons: "Ok",
+              icon: "error",
+            }).then((ok) => {
+              if (ok) {
+                navigate("/appraisal/initiative");
+              }
+            });
+          }
+
+          setFetching(false);
+        });
       })
       .catch((err) => {
         setFetching(false);
         console.log(err);
       });
-  }, []);
+  }, [navigate]);
   React.useEffect(() => {
     axios
       .get(`${BASE_URL}/api/v1/option`)
@@ -188,8 +228,6 @@ const AppraisalB = () => {
             <div>
               {list.length < 1 ? (
                 <h4>You have not created any initiative yet!</h4>
-              ) : list.length < 5 ? (
-                <h4>Create four or more initiatives to continue!</h4>
               ) : (
                 list
                   .filter((item, i) => {

@@ -120,9 +120,9 @@ const Banks = [
 const Locations = [{ value: "Abuja" }, { value: "Lagos" }, { value: "Others" }];
 
 const Quarters = [
-  "First Quarter",
+  // "First Quarter",
   "Second Quarter",
-  "Third Quarter",
+  // "Third Quarter",
   "Fourth Quarter",
 ];
 

@@ -67,18 +67,12 @@ const Calibrate = () => {
       field: "session",
       type: "string",
     },
-    {
-      title: "First Quarter",
-      field: "First Quarter",
-    },
+
     {
       title: "Second Quarter",
       field: "Second Quarter",
     },
-    {
-      title: "Third Quarter",
-      field: "Third Quarter",
-    },
+
     {
       title: "Fourth Quarter",
       field: "Fourth Quarter",
