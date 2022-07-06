@@ -45,7 +45,7 @@ const OfficialInfo = () => {
         setDepartment(data.data.staff.department);
         setBranch(data.data.staff.branch);
         setManager(data.data.staff.manager.fullname);
-        setManagerId(data.data.staff.manager.id);
+        setManagerId(data.data.staff.manager._id ?? data.data.staff.manager.id);
         setFetching(false);
       })
       .catch((err) => {
@@ -160,18 +160,21 @@ const OfficialInfo = () => {
                 required={true}
               >
                 <option value="">Select Your Department</option>
-                {departments.map((item, i) => {
-                  return (
-                    <option
-                      key={i}
-                      value={item.name}
-                      id={JSON.stringify(item.manager._id)}
-                      // data-manager={JSON.stringify(item.manager._id)}
-                    >
-                      {item.name}
-                    </option>
-                  );
-                })}
+                {departments
+                  .filter((department) => department.manager)
+                  .map((item, i) => {
+                    return (
+                      <option
+                        key={i}
+                        value={item.name}
+                        id={JSON.stringify(
+                          item?.manager?._id ?? item?.manager?.id
+                        )}
+                      >
+                        {item.name}
+                      </option>
+                    );
+                  })}
               </NativeSelect>
 
               {/* {showManagerField && (
