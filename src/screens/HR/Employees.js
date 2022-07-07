@@ -114,7 +114,6 @@ const Employees = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         setList(response.data.data);
         setFetching(false);
       })

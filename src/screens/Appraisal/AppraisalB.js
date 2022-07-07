@@ -138,7 +138,7 @@ const AppraisalB = () => {
         },
       })
       .then((res) => {
-        if (res.data.data.sectionbscore) {
+        if (res?.data?.data?.sectionbscore) {
           swal({
             title: "You have completed Section B of your Appraisal.",
             icon: "success",
@@ -237,11 +237,11 @@ const AppraisalB = () => {
                     return (
                       <div key={item._id}>
                         <AppraisalHeadingB
-                          title={item.perspective.title}
-                          target={item.target}
-                          objective={item.objective}
-                          measures={item.measures}
-                          initiative={item.initiative}
+                          title={item?.perspective?.title}
+                          target={item?.target}
+                          objective={item?.objective}
+                          measures={item?.measures}
+                          initiative={item?.initiative}
                           number={index + 1}
                           total={list.length}
                         />
