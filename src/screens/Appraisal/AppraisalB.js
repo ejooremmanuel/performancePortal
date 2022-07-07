@@ -67,7 +67,7 @@ const AppraisalB = () => {
         },
       })
       .then((response) => {
-        if (response.data.data.length < 1) {
+        if (response?.data?.data?.length < 1) {
           swal({
             title: "No data found!",
             text: "Add initiatives to continue!",
@@ -84,9 +84,9 @@ const AppraisalB = () => {
         axios.get(`${BASE_URL}/api/v1/perspective`).then(({ data }) => {
           const perspectives = data.data.map(({ title }) => title);
 
-          let foundPerspectivesByStaff = response.data.data.map(
+          let foundPerspectivesByStaff = response?.data?.data?.map(
             ({ perspective }) => {
-              return perspective.title;
+              return perspective?.title;
             }
           );
 
@@ -96,7 +96,7 @@ const AppraisalB = () => {
             JSON.stringify(foundPerspectivesByStaff.sort()) ===
             JSON.stringify(perspectives.sort())
           ) {
-            setList(response.data.data);
+            setList(response?.data?.data);
           } else {
             swal({
               title: "Missing Perspective",
@@ -122,7 +122,7 @@ const AppraisalB = () => {
     axios
       .get(`${BASE_URL}/api/v1/option`)
       .then((res) => {
-        setOptions(res.data.data);
+        setOptions(res?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -154,6 +154,9 @@ const AppraisalB = () => {
             }
           });
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [navigate]);
 
