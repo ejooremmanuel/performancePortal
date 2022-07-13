@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import "./appraisal.css";
 import {
   Button,
+  filter,
   Input,
   Select,
   Textarea,
@@ -144,32 +145,73 @@ export function CreateInititiveForm({
 
     const token = JSON.parse(localStorage.getItem("staffInfo")).token;
 
-    axios
-      .post(`${BASE_URL}/api/v1/initiative`, data, {
-        headers: {
-          "Content-Type": "application/json",
-          "access-token": token,
-        },
-      })
-      .then((response) => {
-        setLoading(false);
-        setList((prev) => {
-          return [response.data.data, ...prev];
+    if (edit) {
+      axios
+        .patch(`${BASE_URL}/api/v1/initiative/${initiatives?._id}`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": token,
+          },
+        })
+        .then((response) => {
+          axios
+            .get(`${BASE_URL}/api/v1/initiative`, {
+              headers: {
+                "Content-Type": "application/json",
+                "access-token": token,
+              },
+            })
+            .then((res) => {
+              setList(res.data.data);
+              setLoading(false);
+              setInitiative("");
+              setTarget("");
+              setObjective("");
+              onClose();
+              edit = false;
+            })
+            .catch((err) => {
+              console.log(err.response);
+              setLoading(false);
+            });
+          // setInitiatives(response.data.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setLoading(false);
         });
-        setInitiative("");
-        setTarget("");
-        setObjective("");
-        onClose();
-        edit = false;
-      })
-      .catch((err) => {
-        console.log(err.response);
-        setLoading(false);
-      });
 
-    axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
-      setPerspective(response.data.data);
-    });
+      axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
+        setPerspective(response.data.data);
+      });
+    } else {
+      axios
+        .post(`${BASE_URL}/api/v1/initiative`, data, {
+          headers: {
+            "Content-Type": "application/json",
+            "access-token": token,
+          },
+        })
+        .then((response) => {
+          setLoading(false);
+          setList((prev) => {
+            return [response.data.data, ...prev];
+          });
+          setInitiative("");
+          setTarget("");
+          setObjective("");
+          onClose();
+          edit = false;
+        })
+        .catch((err) => {
+          console.log(err.response);
+          setLoading(false);
+        });
+
+      axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
+        setPerspective(response.data.data);
+      });
+    }
   };
 
   return (
