@@ -102,7 +102,13 @@ const Initiative = () => {
 
 export default Initiative;
 
-export function CreateInititiveForm({ isOpen, onClose, setList }) {
+export function CreateInititiveForm({
+  isOpen,
+  onClose,
+  setList,
+  initiatives = {},
+  edit = false,
+}) {
   const [options, setOptions] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const btnRef = React.useRef();
@@ -113,11 +119,17 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
     });
   }, []);
 
-  const [initiative, setInitiative] = React.useState("");
-  const [target, setTarget] = React.useState("");
-  const [perspective, setPerspective] = React.useState("");
-  const [measures, setMeasures] = React.useState("");
-  const [objective, setObjective] = React.useState("");
+  const [initiative, setInitiative] = React.useState(
+    initiatives?.initiative ?? ""
+  );
+  const [target, setTarget] = React.useState(initiatives?.target ?? "");
+  const [perspective, setPerspective] = React.useState(
+    initiatives?.perspective?._id ?? ""
+  );
+  const [measures, setMeasures] = React.useState(initiatives?.measures ?? "");
+  const [objective, setObjective] = React.useState(
+    initiatives?.objective ?? ""
+  );
 
   const submitData = () => {
     setLoading(true);
@@ -148,6 +160,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
         setTarget("");
         setObjective("");
         onClose();
+        edit = false;
       })
       .catch((err) => {
         console.log(err.response);
@@ -186,7 +199,11 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
                 {options.map((option) => {
                   return (
                     <>
-                      <option value={option._id} key={option._id}>
+                      <option
+                        value={option._id}
+                        key={option._id}
+                        selected={option._id === perspective}
+                      >
                         {option.title}
                       </option>
                       ;
@@ -208,10 +225,18 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
               <label htmlFor="">Measures</label>
               <Select mb={4} onChange={(e) => setMeasures(e.target.value)}>
                 <option>Select...</option>
-                <option value="Annual">Annual</option>
-                <option value="Quarterly">Quarterly</option>
-                <option value="Bi-annual">Bi Annual</option>
-                <option value="Monthly">Monthly</option>
+                <option value="Annual" selected={measures === "Annual"}>
+                  Annual
+                </option>
+                <option value="Quarterly" selected={measures === "Quarterly"}>
+                  Quarterly
+                </option>
+                <option value="Bi-annual" selected={measures === "Bi-annual"}>
+                  Bi Annual
+                </option>
+                <option value="Monthly" selected={measures === "Monthly"}>
+                  Monthly
+                </option>
               </Select>
             </div>
             <div>
@@ -249,7 +274,7 @@ export function CreateInititiveForm({ isOpen, onClose, setList }) {
                 submitData();
               }}
             >
-              Add
+              {edit ? "Update" : "Add"}
             </Button>
           </DrawerFooter>
         </DrawerContent>

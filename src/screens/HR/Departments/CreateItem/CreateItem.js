@@ -67,15 +67,15 @@ const CreateItem = ({ open, handleClose, setItems, items }) => {
               >
                 <MenuItem value="">--Select Manager--</MenuItem>
                 {staffMembers
-                  .filter(
-                    (item) =>
-                      item.role === "Manager" ||
-                      (item.roles && item.roles.includes("Manager"))
-                  )
+                  // .filter(
+                  //   (item) =>
+                  //     item.role === "Manager" ||
+                  //     (item.roles && item.roles.includes("Manager"))
+                  // )
                   .map((item) => {
                     return (
                       <MenuItem value={item._id} key={item._id}>
-                        {item.fullname}
+                        {item?.fullname}
                       </MenuItem>
                     );
                   })}

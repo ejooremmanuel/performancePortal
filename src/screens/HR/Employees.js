@@ -34,6 +34,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { BASE_URL } from "../../config";
+import { NativeSelect } from "../../components/Select";
+import { EditIcon } from "@chakra-ui/icons";
+import image from "../../assets/user.png";
+import { Tooltip } from "@material-ui/core";
 
 const Employees = () => {
   const [list, setList] = React.useState([]);
@@ -56,7 +60,7 @@ const Employees = () => {
       render: ({ photo }) => {
         return (
           <img
-            src={`${photo}`}
+            src={`${photo ?? image}`}
             alt=""
             style={{
               width: "50px",
@@ -68,14 +72,49 @@ const Employees = () => {
         );
       },
     },
-    { title: "Staff Name", field: `fullname` },
+    {
+      title: "Staff Name",
+      field: `fullname`,
+      render: ({ fullname }) => {
+        return fullname ? fullname : <span style={{ color: "red" }}>NA</span>;
+      },
+    },
     { title: "Gender", field: `gender` },
     { title: "Email Address", field: "email", type: "string" },
     { title: "Department", field: "department", type: "string" },
     { title: "Role", field: "role" },
     { title: "State", field: "state" },
     { title: "Mobile No", field: "mobile" },
-    { title: "Manager", field: "manager[fullname]" },
+    {
+      title: "Line Manager",
+      field: "manager[fullname]",
+      render: (props) => {
+        return props?.manager?.fullname ? (
+          props?.manager?.fullname
+        ) : (
+          // <span style={{ color: "red" }}>Select staff line manager</span>
+          <Tooltip title="Select staff line manager" placement="top">
+            <button
+              onClick={(event) => actionHandler(props)}
+              className={actionBtn ? "btn__action" : "btn__action--hide"}
+            >
+              <EditIcon style={{ color: "red" }} />
+            </button>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: "Department Manager",
+      field: "departmentManager[fullname]",
+      render: ({ departmentManager }) => {
+        return departmentManager?.fullname ? (
+          departmentManager?.fullname
+        ) : (
+          <span style={{ color: "red" }}>NA</span>
+        );
+      },
+    },
     { title: "Date of Birth", field: "dob" },
     { title: "Short Bio", field: "bio" },
     { title: "CUG", field: "cug" },
@@ -248,6 +287,7 @@ const Employees = () => {
           onClose={onClose}
           data={data}
           getEmployees={getEmployees}
+          allStaff={list}
         />
       </div>
     </div>
@@ -256,16 +296,26 @@ const Employees = () => {
 
 export default Employees;
 
-export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
+export function EditEmployee({
+  isOpen,
+  onClose,
+  data,
+  getEmployees,
+  allStaff = [],
+}) {
   const [department, setDepartment] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [showDepartment, setShowDepartment] = React.useState(false);
   const [roles, setRoles] = React.useState([]);
   const [role, setRole] = React.useState("");
   const [rolesData, setRolesData] = React.useState([]);
+  const [lineManager, setLineManager] = React.useState("");
 
   React.useMemo(() => {
-    data.data && data.data.role && setRole(data.data.role);
+    data?.data && data?.data?.role && setRole(data.data.role);
+    data?.data &&
+      data?.data?.role &&
+      setLineManager(data.data?.manager?.fullname);
   }, [data]);
 
   const toast = useToast();
@@ -279,6 +329,8 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
       setRole("Manager");
     } else if (e.target.value === "HR") {
       setRole("HR");
+    } else if (e.target.value === "Staff") {
+      setRole("Staff");
     } else {
       setRole("");
     }
@@ -291,6 +343,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
         `${BASE_URL}/api/v1/staff/auth/manager/${id}`,
         {
           role,
+          manager: lineManager,
         },
         {
           headers: {
@@ -341,8 +394,9 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
               display: "flex",
               flexDirection: "column",
               width: "30vw",
-              minHeight: "30vh",
+              minHeight: "35vh",
               boxSizing: "border-box",
+              justifyContent: "flex-start",
             }}
           >
             <ModalCloseButton />
@@ -356,7 +410,8 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
               }}
             >
               <h1 className="formHeading">
-                Configure Role | {data.data && data.data.fullname}
+                Edit Staff Information {<EditIcon />} | &nbsp;
+                {(data?.data && data?.data?.fullname) ?? "Staff"}
               </h1>
               <form
                 onSubmit={(e) => {
@@ -371,6 +426,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                   gap: "20px",
                 }}
               >
+                <div>Select Role</div>
                 <div className="checkbox">
                   <input
                     type="radio"
@@ -390,6 +446,33 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                     onChange={showDepartmentHandler}
                   />
                   <div>Human Resource</div>
+                </div>
+                <div className="checkbox">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="Staff"
+                    checked={role === "Staff"}
+                    onChange={showDepartmentHandler}
+                  />
+                  <div>Staff</div>
+                </div>
+                <div>
+                  <NativeSelect
+                    title="Select Staff Line Manager"
+                    value={lineManager}
+                    onChange={(e) => {
+                      setLineManager(e.target.value);
+                    }}
+                    required
+                  >
+                    <option value="">--Select--</option>
+                    {allStaff.map((staff) => {
+                      return (
+                        <option value={staff._id}>{staff.fullname}</option>
+                      );
+                    })}
+                  </NativeSelect>
                 </div>
 
                 <div
@@ -452,7 +535,7 @@ export function EditEmployee({ isOpen, onClose, data, getEmployees }) {
                           borderRadius: "5px",
                         }}
                       >
-                        Configure
+                        Update
                       </button>
                     )}
                   </>

@@ -26,7 +26,7 @@ const Dashboard = () => {
   // Helpers
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { setMyTeam } = React.useContext(UserContext);
+  const { setMyTeam, setLineManagers } = React.useContext(UserContext);
   const userProfile = useSelector((state) => state.userProfile);
   const { staff = {} } = userProfile;
   const [appraisalScore, setAppraisalScore] = React.useState(0);
@@ -69,6 +69,9 @@ const Dashboard = () => {
     axios
       .get(`${BASE_URL}/api/v1/staff/auth/employees/all`)
       .then((response) => {
+        setLineManagers(
+          response.data.data.filter((item) => item.role === "Line Manager" || item.role === "Manager")
+        );
         setTeam(
           response.data.data.filter((item) => item.department === department)
         );
@@ -76,7 +79,7 @@ const Dashboard = () => {
           response.data.data.filter((item) => item.department === department)
         );
       });
-  }, [department, setMyTeam]);
+  }, [department, setMyTeam,setLineManagers]);
 
   React.useEffect(() => {
     const token =

@@ -62,7 +62,7 @@ const StaffScoreTable = ({ list }) => {
         actions={[
           {
             icon: "visibility",
-            tooltip: "View Staff Rating",
+            tooltip: "Rate Staff",
             onClick: (event, rowData) => {
               onGetUserScore(rowData.user._id, rowData.fullname);
             },

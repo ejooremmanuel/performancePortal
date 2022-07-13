@@ -304,10 +304,10 @@ const ManagerStaff = () => {
                             <div style={{ display: "flex", gridGap: "20px" }}>
                               <Button
                                 onClick={() => {
-                                  onPrevClick();
                                   setIndex((prev) => {
                                     return prev - 1;
                                   });
+                                  onPrevClick();
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"
@@ -333,10 +333,10 @@ const ManagerStaff = () => {
                             <div style={{ display: "flex", gridGap: "20px" }}>
                               <Button
                                 onClick={() => {
-                                  onPrevClick();
                                   setIndex((prev) => {
                                     return prev - 1;
                                   });
+                                  onPrevClick();
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"

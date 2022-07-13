@@ -93,11 +93,11 @@ const UpdateItem = ({ open, handleClose, data, setItems, items }) => {
               >
                 <option value="">--Select Manager--</option>
                 {staffMembers
-                  .filter(
-                    (item) =>
-                      item.role === "Manager" ||
-                      (item.roles && item.roles.includes("Manager"))
-                  )
+                  // .filter(
+                  //   (item) =>
+                  //     item.role === "Manager" ||
+                  //     (item.roles && item.roles.includes("Manager"))
+                  // )
                   .map((item) => {
                     return (
                       <option value={item._id} key={item._id}>

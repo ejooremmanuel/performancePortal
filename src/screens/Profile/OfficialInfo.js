@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import { Navigation, Header, Input, Options, Select } from "../../components";
 import { NativeSelect } from "../../components/Select";
 import { BASE_URL } from "../../config";
+import { UserContext } from "../../context/UserContext";
 import styles from "./styles.module.css";
 
 const OfficialInfo = () => {
+  const { lineManagers } = React.useContext(UserContext);
   const [cug, setCug] = useState("");
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
@@ -18,6 +20,7 @@ const OfficialInfo = () => {
   const [fetching, setFetching] = useState(false);
   const [managerId, setManagerId] = useState("");
   const toast = useToast();
+  const [lineManager, setLineManager] = useState("");
 
   const selectBranchHandler = (e) => {
     setBranch(e.target.value);
@@ -28,6 +31,10 @@ const OfficialInfo = () => {
   };
 
   // console.log(selectManagerHandler);
+
+  const selectLineManagerHandler = (e) => {
+    setLineManager(e.target.value);
+  };
 
   const getStaffData = () => {
     setFetching(true);
@@ -41,11 +48,18 @@ const OfficialInfo = () => {
         },
       })
       .then(({ data }) => {
+        console.log(data.data.staff, "data.data.staff");
         setCug(data.data.staff.cug);
         setDepartment(data.data.staff.department);
         setBranch(data.data.staff.branch);
-        setManager(data.data.staff.manager.fullname);
-        setManagerId(data.data.staff.manager._id ?? data.data.staff.manager.id);
+        setManager(
+          data.data.staff.departmentManager?.fullname ??
+            data.data.staff.departmentManager?.email
+        );
+        setManagerId(
+          data.data.staff.departmentManager._id ??
+            data.data.staff.departmentManager.id
+        );
         setFetching(false);
       })
       .catch((err) => {
@@ -78,7 +92,8 @@ const OfficialInfo = () => {
       cug,
       branch,
       department,
-      manager: managerId,
+      departmentManager: managerId,
+      // manager: lineManager,
     };
     setLoading(true);
     axios
@@ -94,7 +109,11 @@ const OfficialInfo = () => {
         setDepartment(data.data.department);
         setBranch(data.data.branch);
         setManager((prev) => {
-          prev = data.data.manager.fullname;
+          prev = data?.data?.manager?.fullname;
+          return prev;
+        });
+        setLineManager((prev) => {
+          prev = data.data.departmentManager.fullname;
           return prev;
         });
 
@@ -112,7 +131,7 @@ const OfficialInfo = () => {
         setLoading(false);
         toast({
           title: "Error",
-          description: `Profile update failed: ${err.response.data.msg}`,
+          description: `Profile update failed`,
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -146,7 +165,7 @@ const OfficialInfo = () => {
               />
               <div>
                 <Input
-                  title="Your Manager"
+                  title="Your Line Manager"
                   value={manager}
                   // onChange={(e) => setCug(e.target.value)}
                   type="text"
@@ -177,25 +196,23 @@ const OfficialInfo = () => {
                   })}
               </NativeSelect>
 
-              {/* {showManagerField && (
-                <NativeSelect
-                  title="Select Your Manager"
-                  onChange={selectManagerHandler}
-                  value={selectedManager}
-                  required={true}
-                >
-                  <option value="" disabled>
-                    Select Manager
-                  </option>
-                  {managers.map((item, i) => {
-                    return (
-                      <option key={i} value={item._id}>
-                        {item.fullname}
-                      </option>
-                    );
-                  })}
-                </NativeSelect>
-              )} */}
+              {/* <NativeSelect
+                title="Select Your Line Manager"
+                onChange={selectLineManagerHandler}
+                value={lineManager}
+                required={true}
+              >
+                <option value="" disabled>
+                  Select Line Manager
+                </option>
+                {lineManagers.map((item, i) => {
+                  return (
+                    <option key={i} value={item._id}>
+                      {item.fullname}
+                    </option>
+                  );
+                })}
+              </NativeSelect> */}
 
               <Select
                 title="Select Your Location"
@@ -203,6 +220,7 @@ const OfficialInfo = () => {
                 onChange={selectBranchHandler}
                 options={Options.Locations}
               />
+              {/* <div></div> */}
 
               {loading ? (
                 <button type="button">Updating...</button>

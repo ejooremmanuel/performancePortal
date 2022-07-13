@@ -39,6 +39,7 @@ function App() {
   const [myTeam, setMyTeam] = React.useState([]);
   const [appraisalStarted, setAppraisalStarted] = React.useState(true);
   const [quarter, setQuarter] = React.useState("firstQuarter");
+  const [lineManagers, setLineManagers] = React.useState([])
 
   return (
     <UserContext.Provider
@@ -49,6 +50,9 @@ function App() {
         setAppraisalStarted,
         quarter,
         setQuarter,
+        setLineManagers,
+        lineManagers
+
       }}
     >
       <Router>

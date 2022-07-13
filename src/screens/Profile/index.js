@@ -24,6 +24,7 @@ const Profile = () => {
   const [fetching, setFetching] = useState(false);
   const [role, setRole] = useState("");
   const [department, setDepartment] = useState("");
+  const [departmentManager, setDepartmentManager] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,6 +56,7 @@ const Profile = () => {
         setManager(data.data.staff.manager.fullname);
         setRole(data.data.staff.role);
         setDepartment(data.data.staff.department);
+        setDepartmentManager(data.data.staff.departmentManager?.fullname);
         setFetching(false);
 
         console.log(middleName, email, dob, gender, state, mobile, addresses);
@@ -128,7 +130,13 @@ const Profile = () => {
                 </div>
                 <div>
                   <span>
-                    <strong>Manager:</strong>&nbsp;
+                    <strong>Department Manager:</strong>&nbsp;
+                    {departmentManager}
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    <strong>Line Manager:</strong>&nbsp;
                     {manager}
                   </span>
                 </div>

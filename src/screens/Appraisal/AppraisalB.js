@@ -269,6 +269,7 @@ const AppraisalB = () => {
                                     setQuestion(option._id);
                                   }}
                                   checked={checked == option.value}
+                                  required
                                 />
                                 <span>{option.title}</span>
                               </>
@@ -292,10 +293,10 @@ const AppraisalB = () => {
                             <div style={{ display: "flex", gridGap: "20px" }}>
                               <Button
                                 onClick={() => {
-                                  onPrevClick();
                                   setIndex((prev) => {
                                     return prev - 1;
                                   });
+                                  onPrevClick();
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"
@@ -317,10 +318,10 @@ const AppraisalB = () => {
                             <div style={{ display: "flex", gridGap: "20px" }}>
                               <Button
                                 onClick={() => {
-                                  onPrevClick();
                                   setIndex((prev) => {
                                     return prev - 1;
                                   });
+                                  onPrevClick();
                                 }}
                                 leftIcon={<ArrowBackIcon />}
                                 colorScheme="orange"

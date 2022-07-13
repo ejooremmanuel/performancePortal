@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import { BASE_URL } from "../../config";
+import { CreateInititiveForm } from "../../screens/Appraisal/Initiative";
 
 const TableDisplay = ({
   itemsPerPage,
@@ -12,6 +13,11 @@ const TableDisplay = ({
   perspective,
   loading,
 }) => {
+  const [initiative, setInitiative] = React.useState({});
+  const [open, setOpen] = React.useState(false);
+
+  const toggleOpen = () => setOpen(!open);
+
   const token = JSON.parse(localStorage.getItem("staffInfo")).token;
   const onDelete = (id) => {
     const check = window.confirm(`Are you sure you want to delete this item?`);
@@ -27,6 +33,23 @@ const TableDisplay = ({
           setList(list.filter((item) => item._id !== id));
         });
     }
+  };
+
+  const onEdit = (id) => {
+    axios
+      .get(`${BASE_URL}/api/v1/initiative/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "access-token": token,
+        },
+      })
+      .then((response) => {
+        setInitiative(response.data.data);
+        toggleOpen();
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   function Items({ currentItems }) {
@@ -72,6 +95,16 @@ const TableDisplay = ({
                           Delete
                         </Button>
                       </td>
+                      <td>
+                        <Button
+                          colorScheme="green"
+                          onClick={() => {
+                            onEdit(item._id);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                      </td>
                     </tr>
                   );
                 })
@@ -81,6 +114,13 @@ const TableDisplay = ({
                 </tr>
               )}
             </tbody>
+            <CreateInititiveForm
+              isOpen={open}
+              onClose={toggleOpen}
+              setList={setList}
+              initiatives={initiative}
+              edit={true}
+            />
           </table>
         )}
       </>
