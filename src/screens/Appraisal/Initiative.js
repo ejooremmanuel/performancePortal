@@ -10,6 +10,7 @@ import {
   Select,
   Textarea,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import TableDisplay from "../../components/Table/TableDisplay";
@@ -113,6 +114,7 @@ export function CreateInititiveForm({
   const [options, setOptions] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const btnRef = React.useRef();
+  const toast = useToast();
 
   React.useEffect(() => {
     axios.get(`${BASE_URL}/api/v1/perspective`).then((response) => {
@@ -169,6 +171,13 @@ export function CreateInititiveForm({
               setObjective("");
               onClose();
               edit = false;
+              toast({
+                title: "Success",
+                description: "Initiative updated successfully",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
             })
             .catch((err) => {
               console.log(err.response);

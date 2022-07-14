@@ -57,6 +57,7 @@ const Employees = () => {
     {
       title: "Photo",
       field: `photo`,
+      export: false,
       render: ({ photo }) => {
         return (
           <img
@@ -245,6 +246,7 @@ const Employees = () => {
               },
               actionsColumnIndex: -1,
               pageSizeOptions: [1, 3, 5],
+              exportAllData: true,
 
               headerStyle: {
                 backgroundColor: "rgba(196, 196, 196, 0.32)",
@@ -313,8 +315,9 @@ export function EditEmployee({
   const [staff, setStaff] = React.useState({});
 
   React.useEffect(() => {
-    setRole(data?.role);
-    setStaff(data);
+    console.log(data?.data);
+    setRole(data?.data?.role);
+    setStaff(data?.data);
   }, [data]);
 
   const toast = useToast();

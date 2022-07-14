@@ -70,6 +70,7 @@ const TableDisplay = ({
                 <th>SESSION</th>
                 <th>DATE ADDED</th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
