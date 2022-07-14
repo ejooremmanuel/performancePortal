@@ -310,12 +310,11 @@ export function EditEmployee({
   const [role, setRole] = React.useState("");
   const [rolesData, setRolesData] = React.useState([]);
   const [lineManager, setLineManager] = React.useState("");
+  const [staff, setStaff] = React.useState({});
 
-  React.useMemo(() => {
-    data?.data && data?.data?.role && setRole(data.data.role);
-    data?.data &&
-      data?.data?.role &&
-      setLineManager(data.data?.manager?.fullname);
+  React.useEffect(() => {
+    setRole(data?.role);
+    setStaff(data);
   }, [data]);
 
   const toast = useToast();
@@ -364,6 +363,8 @@ export function EditEmployee({
         getEmployees();
         setLoading(false);
         setDepartment("");
+        setRole("");
+        setLineManager("");
       })
       .catch((error) => {
         console.log(error.response.data.msg);
@@ -411,12 +412,12 @@ export function EditEmployee({
             >
               <h1 className="formHeading">
                 Edit Staff Information {<EditIcon />} | &nbsp;
-                {(data?.data && data?.data?.fullname) ?? "Staff"}
+                {staff?.fullname ?? "Staff"}
               </h1>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  yesHandler(data.data && data.data._id);
+                  yesHandler(staff?._id);
                 }}
                 style={{
                   boxSizing: "border-box",
@@ -467,10 +468,8 @@ export function EditEmployee({
                     required
                   >
                     <option value="">--Select--</option>
-                    {allStaff.map((staff) => {
-                      return (
-                        <option value={staff._id}>{staff.fullname}</option>
-                      );
+                    {allStaff.map(({ _id, fullname }) => {
+                      return <option value={_id}>{fullname}</option>;
                     })}
                   </NativeSelect>
                 </div>
