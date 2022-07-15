@@ -316,8 +316,8 @@ export function EditEmployee({
 
   React.useEffect(() => {
     console.log(data?.data);
-    setRole(data?.data?.role);
-    setStaff(data?.data);
+    setRole(data?.data?.role ?? data?.role);
+    setStaff(data?.data ?? data);
   }, [data]);
 
   const toast = useToast();
@@ -333,6 +333,8 @@ export function EditEmployee({
       setRole("HR");
     } else if (e.target.value === "Staff") {
       setRole("Staff");
+    } else if (e.target.value === "Line Manager") {
+      setRole("Line Manager");
     } else {
       setRole("");
     }
@@ -440,6 +442,16 @@ export function EditEmployee({
                     checked={role === "Manager"}
                   />
                   <div>Manager</div>
+                </div>
+                <div className="checkbox">
+                  <input
+                    type="radio"
+                    value="Line Manager"
+                    name="role"
+                    onChange={showDepartmentHandler}
+                    checked={role === "Line Manager"}
+                  />
+                  <div>Line Manager</div>
                 </div>
                 <div className="checkbox">
                   <input

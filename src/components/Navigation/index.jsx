@@ -101,6 +101,7 @@ const Navigation = () => {
             >
               <ul>
                 {(role == "Manager" ||
+                  role == "Line Manager" ||
                   (staff.roles && staff.roles.includes("Manager"))) && (
                   <Tooltip text="Appraise Staff">
                     <li>
