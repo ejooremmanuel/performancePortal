@@ -318,6 +318,7 @@ export function EditEmployee({
     console.log(data?.data);
     setRole(data?.data?.role ?? data?.role);
     setStaff(data?.data ?? data);
+    setLineManager(data?.data?.manager._id ?? data?.manager?._id);
   }, [data]);
 
   const toast = useToast();
@@ -482,7 +483,9 @@ export function EditEmployee({
                     }}
                     required
                   >
-                    <option value="">--Select--</option>
+                    <option value="" disabled>
+                      --Select--
+                    </option>
                     {allStaff.map(({ _id, fullname }) => {
                       return <option value={_id}>{fullname}</option>;
                     })}
