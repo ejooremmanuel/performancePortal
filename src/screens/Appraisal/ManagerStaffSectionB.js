@@ -98,7 +98,9 @@ const ManagerStaffSectionB = () => {
         },
       })
       .then((response) => {
-        setList(response.data.data.filter(({ _qid }) => _qid === "Initiative"));
+        setList(
+          response?.data?.data?.filter(({ _qid }) => _qid === "Initiative")
+        );
       });
   }, [id]);
 
@@ -106,11 +108,11 @@ const ManagerStaffSectionB = () => {
     axios
       .get(`${BASE_URL}/api/v1/staff/auth/${id}`, {
         headers: {
-          "access-token": JSON.parse(localStorage.getItem("staffInfo")).token,
+          "access-token": JSON.parse(localStorage.getItem("staffInfo"))?.token,
         },
       })
       .then((response) => {
-        setStaff(response.data.data);
+        setStaff(response?.data?.data);
       });
   }, [id]);
   // React.useEffect(() => {
@@ -135,8 +137,8 @@ const ManagerStaffSectionB = () => {
       })
       .then((response) => {
         if (
-          response.data.data.result.length > 0 &&
-          response.data.data.result[0].status === "Accepted"
+          response?.data?.data?.result?.length > 0 &&
+          response?.data?.data?.result[0]?.status === "Accepted"
         ) {
           setRejected(true);
         }
@@ -197,7 +199,7 @@ const ManagerStaffSectionB = () => {
             totalled and averaged for overall performance score.
             <br />
             <span>
-              Staff Name: <strong>{staff.fullname}</strong>
+              Staff Name: <strong>{staff?.fullname}</strong>
             </span>
           </div>
           <section>
@@ -243,34 +245,34 @@ const ManagerStaffSectionB = () => {
                   })
                   .map((item, i) => {
                     return (
-                      <div key={item._id}>
+                      <div key={item?._id}>
                         <AppraisalHeadingB
                           title={
                             perspective.filter(
-                              ({ _id }) => _id === item.question.perspective
-                            )[0].title
+                              ({ _id }) => _id === item?.question?.perspective
+                            )[0]?.title
                           }
-                          target={item.question.target}
-                          objective={item.question.objective}
-                          measures={item.question.measures}
-                          initiative={item.question.initiative}
+                          target={item?.question?.target}
+                          objective={item?.question?.objective}
+                          measures={item?.question?.measures}
+                          initiative={item?.question?.initiative}
                           number={index + 1}
                           total={list.length}
                         />
                         <span>
-                          Staff Selection: <strong>{item.score.title}</strong>
+                          Staff Selection: <strong>{item?.score?.title}</strong>
                           <br />
-                          {item.managerscore && (
+                          {item?.managerscore && (
                             <>
                               Manager Selection:&nbsp;
-                              <strong>{item.managerscore.title}</strong>
+                              <strong>{item?.managerscore?.title}</strong>
                             </>
                           )}
                         </span>
                         {options.map((option) => {
                           return (
                             <div
-                              key={option._id}
+                              key={option?._id}
                               style={{
                                 display: "flex",
                                 alignItems: "center",
@@ -281,18 +283,18 @@ const ManagerStaffSectionB = () => {
                               <>
                                 <input
                                   type="radio"
-                                  name={item.title}
-                                  value={option.value}
+                                  name={item?.title}
+                                  value={option?.value}
                                   onChange={(e) => {
-                                    onChange(e, item._id, option._id);
-                                    setQuestion(option._id);
+                                    onChange(e, item?._id, option?._id);
+                                    setQuestion(option?._id);
                                   }}
                                   checked={
                                     // eslint-disable-next-line eqeqeq
-                                    checked == option.value
+                                    checked == option?.value
                                   }
                                 />
-                                <span>{option.title}</span>
+                                <span>{option?.title}</span>
                               </>
                             </div>
                           );
@@ -304,8 +306,8 @@ const ManagerStaffSectionB = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 onSubmit(
-                                  item.user._id,
-                                  item.question._id,
+                                  item?.user?._id,
+                                  item?.question?._id,
                                   next
                                 );
                               }}
@@ -332,8 +334,8 @@ const ManagerStaffSectionB = () => {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   onSubmit(
-                                    item.user._id,
-                                    item.question._id,
+                                    item?.user?._id,
+                                    item?.question?._id,
                                     next
                                   );
                                 }}
@@ -370,8 +372,8 @@ const ManagerStaffSectionB = () => {
                                     e.preventDefault();
                                     setLoading(true);
                                     onSubmitFinal(
-                                      item.user._id,
-                                      item.question._id,
+                                      item?.user?._id,
+                                      item?.question?._id,
                                       setLoading,
                                       navigate
                                     );
@@ -391,7 +393,7 @@ const ManagerStaffSectionB = () => {
                   })}
               </>
             ) : (
-              <div>{staff.fullname} is yet to start Appraisal Section B</div>
+              <div>{staff?.fullname} is yet to start Appraisal Section B</div>
             )}
           </div>
         </section>
